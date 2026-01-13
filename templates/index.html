@@ -1,9 +1,114 @@
-<!doctype html>
-<html>
-  <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  </head>
-  <body>
-    <h1>Helló Render!</h1>
-  </body>
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>CyberCare – Kapcsolat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: #e5e7eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .card {
+            background: #020617;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.4);
+        }
+
+        h1 {
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            margin-top: 0.75rem;
+            padding: 0.6rem;
+            border-radius: 6px;
+            border: none;
+            font-size: 1rem;
+        }
+
+        input, textarea {
+            background: #1e293b;
+            color: white;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        #status {
+            margin-top: 1rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>Kapcsolat</h1>
+
+    <form id="contactForm">
+        <input id="name" placeholder="Név" required>
+        <input id="email" type="email" placeholder="Email" required>
+        <textarea id="message" placeholder="Üzenet" rows="4" required></textarea>
+        <button type="submit">Küldés</button>
+    </form>
+
+    <div id="status"></div>
+</div>
+
+<script>
+document.getElementById("contactForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const payload = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        message: document.getElementById("message").value
+    };
+
+    const status = document.getElementById("status");
+    status.textContent = "Küldés…";
+
+    try {
+        const res = await fetch("/api/contact", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (data.ok) {
+            status.textContent = "Üzenet elküldve ✅";
+            document.getElementById("contactForm").reset();
+        } else {
+            status.textContent = "Hiba: " + data.error;
+        }
+    } catch {
+        status.textContent = "Szerver hiba ❌";
+    }
+});
+</script>
+
+</body>
 </html>
