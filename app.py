@@ -14,7 +14,7 @@ def send_email(to_email: str, subject: str, html: str, text: str | None = None):
       - SENDGRID_API_KEY
       - MAIL_FROM  (must be verified in SendGrid: Single Sender or Domain Auth)
     """
-    api_key = os.environ.get("SENDGRID_API_KEY", "").strip()
+    api_key = os.environ.get("xsmtpsib-7892a5ad0525f556e652474fa12891b310a090d26e9d3646374905eb51b23a83-0gtYy7PcbKJdEPLX", "").strip()
     if not api_key:
         raise RuntimeError("Missing SENDGRID_API_KEY env var")
 
