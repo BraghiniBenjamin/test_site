@@ -5,44 +5,51 @@ from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
 # ==================================================
-# SENDGRID EMAIL KÜLDÉS (HTTPS, Render-kompatibilis)
+# BREVO (Sendinblue) TRANSACTIONAL EMAIL KÜLDÉS
 # ==================================================
 def send_email(to_email: str, subject: str, html: str, text: str | None = None):
-    api_key = os.environ.get("SENDGRID_API_KEY")
-    from_email = os.environ.get("MAIL_FROM")
+    """
+    Küldés Brevo Transactional Email API-val (HTTPS/443, Renderen megy).
+    Kötelező env változók:
+      - BREVO_API_KEY
+      - MAIL_FROM  (Brevo-ban verified sender email)
+    Opcionális:
+      - MAIL_FROM_NAME (pl. CyberCare)
+    """
+    api_key = (os.environ.get("BREVO_API_KEY") or "").strip()
+    from_email = (os.environ.get("MAIL_FROM") or "").strip()
+    from_name = (os.environ.get("MAIL_FROM_NAME") or "CyberCare").strip()
 
     if not api_key:
-        raise RuntimeError("SENDGRID_API_KEY nincs beállítva")
+        raise RuntimeError("Missing BREVO_API_KEY env var")
     if not from_email:
-        raise RuntimeError("MAIL_FROM nincs beállítva")
+        raise RuntimeError("Missing MAIL_FROM env var")
 
     payload = {
-        "personalizations": [
-            {"to": [{"email": to_email}]}
-        ],
-        "from": {"email": from_email},
+        "sender": {"name": from_name, "email": from_email},
+        "to": [{"email": to_email}],
         "subject": subject,
-        "content": [
-            {"type": "text/plain", "value": text or " "},
-            {"type": "text/html", "value": html},
-        ],
+        "htmlContent": html,
     }
 
+    # plain text fallback (nem kötelező, de jó)
+    if text:
+        payload["textContent"] = text
+
     resp = requests.post(
-        "https://api.sendgrid.com/v3/mail/send",
+        "https://api.brevo.com/v3/smtp/email",
         headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
+            "api-key": api_key,
+            "accept": "application/json",
+            "content-type": "application/json",
         },
         json=payload,
         timeout=20,
     )
 
-    # SendGrid siker = 202 Accepted
-    if resp.status_code != 202:
-        raise RuntimeError(
-            f"SendGrid hiba ({resp.status_code}): {resp.text}"
-        )
+    # Brevo siker: 201 Created (általában), de 202 is előfordulhat
+    if resp.status_code not in (200, 201, 202):
+        raise RuntimeError(f"Brevo hiba ({resp.status_code}): {resp.text}")
 
 
 # =========================
@@ -65,6 +72,10 @@ def contact():
       "email": "...",
       "message": "..."
     }
+
+    Küld:
+    1) Admin értesítés MAIL_TO-ra (fallback: MAIL_FROM)
+    2) Visszaigazolás a felhasználónak
     """
     data = request.get_json(force=True)
 
@@ -73,58 +84,47 @@ def contact():
     message = (data.get("message") or "").strip()
 
     if not name or not email or not message:
-        return jsonify({
-            "ok": False,
-            "error": "Minden mező kitöltése kötelező"
-        }), 400
+        return jsonify({"ok": False, "error": "Minden mező kitöltése kötelező"}), 400
 
-    admin_email = os.environ.get("MAIL_TO") or os.environ.get("MAIL_FROM")
+    admin_email = (os.environ.get("MAIL_TO") or os.environ.get("MAIL_FROM") or "").strip()
     if not admin_email:
-        return jsonify({
-            "ok": False,
-            "error": "Admin email nincs beállítva"
-        }), 500
+        return jsonify({"ok": False, "error": "MAIL_TO / MAIL_FROM nincs beállítva"}), 500
 
     try:
-        # 1️⃣ ADMIN ÉRTESÍTÉS
+        # 1) ADMIN ÉRTESÍTÉS
         send_email(
             to_email=admin_email,
             subject="Új kapcsolatfelvétel – CyberCare",
             text=f"Név: {name}\nEmail: {email}\n\n{message}",
             html=f"""
-            <div style="font-family:Arial,sans-serif">
+            <div style="font-family:Arial,sans-serif; line-height:1.45">
               <h2>Új kapcsolatfelvétel</h2>
               <p><strong>Név:</strong> {name}</p>
               <p><strong>Email:</strong> {email}</p>
               <p><strong>Üzenet:</strong></p>
-              <div style="padding:12px;background:#f4f4f4;border-radius:8px">
-                {message}
-              </div>
+              <div style="padding:12px; background:#f6f6f6; border-radius:8px; white-space:pre-wrap">{message}</div>
             </div>
-            """
+            """,
         )
 
-        # 2️⃣ AUTOMATIKUS VISSZAIGAZOLÁS
+        # 2) VISSZAIGAZOLÁS A FELHASZNÁLÓNAK
         send_email(
             to_email=email,
-            subject="Köszönjük megkeresését – CyberCare",
-            text="Köszönjük, hogy felvette velünk a kapcsolatot. Hamarosan válaszolunk.",
+            subject="Köszönjük a megkeresést – CyberCare",
+            text="Köszönjük, hogy felvetted velünk a kapcsolatot. Hamarosan válaszolunk.",
             html=f"""
-            <div style="font-family:Arial,sans-serif">
+            <div style="font-family:Arial,sans-serif; line-height:1.45">
               <p>Kedves {name}!</p>
-              <p>Köszönjük, hogy felvette velünk a kapcsolatot.</p>
+              <p>Köszönjük, hogy felvetted velünk a kapcsolatot.</p>
               <p>Hamarosan válaszolunk.</p>
               <br>
               <p>Üdvözlettel,<br><strong>CyberCare</strong></p>
             </div>
-            """
+            """,
         )
 
     except Exception as e:
-        return jsonify({
-            "ok": False,
-            "error": f"Email küldési hiba: {e}"
-        }), 503
+        return jsonify({"ok": False, "error": f"Email küldési hiba: {e}"}), 503
 
     return jsonify({"ok": True})
 
