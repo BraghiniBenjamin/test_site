@@ -663,21 +663,26 @@
   </div>
 
     <script>
-        function handleSubmit(event) {
+          async function handleSubmit(event) {
             event.preventDefault();
-            
-            // Get form data
+        
             const formData = new FormData(event.target);
-            const name = formData.get('name');
-            const email = formData.get('email');
-            const message = formData.get('message');
-            
-            // Show success message
-            alert(`Köszönjük ${name}! Üzenetét megkaptuk és hamarosan válaszolunk a ${email} címre.`);
-            
-            // Reset form
-            event.target.reset();
-        }
+        
+            try {
+              const resp = await fetch('/api/contact', { method: 'POST', body: formData });
+              const data = await resp.json();
+        
+              if (data && data.success) {
+                alert(data.message || "Köszönjük! Üzenetét megkaptuk.");
+                event.target.reset();
+              } else {
+                alert("Hiba: " + (data?.message || "Sikertelen küldés"));
+              }
+            } catch (err) {
+              console.error(err);
+              alert("Sajnos hiba történt. Kérjük próbálja újra később.");
+            }
+          }
         
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
