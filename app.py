@@ -133,9 +133,9 @@ def contact_alias():
 def api_contact():
     payload = _read_contact_payload()
 
-    name = payload["name"]
-    email = payload["email"]
-    message = payload["message"]
+    name = (payload.get("name") or "").strip()
+    email = (payload.get("email") or "").strip()
+    message = (payload.get("message") or "").strip()
 
     if not name or not email or not message:
         return _response_err("Minden mező kötelező: név, email, üzenet.", 400)
@@ -145,39 +145,84 @@ def api_contact():
         return _response_err("Admin email nincs beállítva (MAIL_TO vagy MAIL_FROM).", 500)
 
     try:
+        # Biztonságos (HTML-escape) változók
         s_name = _safe(name)
         s_email = _safe(email)
         s_msg = _safe(message)
-        s_company = _safe(payload["company"])
-        s_phone = _safe(payload["phone"])
-        s_service = _safe(payload["service"])
-        s_page = _safe(payload["page"])
+        s_company = _safe(payload.get("company"))
+        s_phone = _safe(payload.get("phone"))
+        s_service = _safe(payload.get("service"))
+        s_page = _safe(payload.get("page"))
 
-        # 1) ADMIN EMAIL
+        # 1) ADMIN TEXT (fallback / plain text)
         admin_text = (
             f"Új kapcsolatfelvétel\n"
             f"Név: {name}\n"
             f"Email: {email}\n"
-            f"Cég: {payload['company']}\n"
-            f"Telefon: {payload['phone']}\n"
-            f"Érdeklődési terület: {payload['service']}\n"
-            f"Forrás: {payload['page']}\n\n"
+            f"Cég: {payload.get('company')}\n"
+            f"Telefon: {payload.get('phone')}\n"
+            f"Érdeklődési terület: {payload.get('service')}\n"
+            f"Forrás: {payload.get('page')}\n\n"
             f"Üzenet:\n{message}\n"
         )
 
+        # 1) ADMIN HTML (a TE sablonod)
         admin_html = f"""
-        <h2>Új kapcsolatfelvétel – CyberCare</h2>
-        <p><strong>Név:</strong> {s_name}</p>
-        <p><strong>Email:</strong> {s_email}</p>
-        <p><strong>Cég:</strong> {s_company or "-"} </p>
-        <p><strong>Telefon:</strong> {s_phone or "-"} </p>
-        <p><strong>Érdeklődési terület:</strong> {s_service or "-"} </p>
-        <p><strong>Forrás oldal:</strong> {s_page or "-"} </p>
-        <p><strong>Üzenet:</strong></p>
-        <div style="padding:12px;background:#f4f4f4;border-radius:8px;white-space:pre-wrap">
-          {s_msg}
-        </div>
-        """
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {{ margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }}
+    .email-container {{ max-width: 600px; margin: 0 auto; background: #ffffff; }}
+    .email-header {{ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 30px; text-align: center; color: #ffffff; }}
+    .email-header h1 {{ font-size: 28px; margin: 0 0 8px 0; font-weight: 600; }}
+    .email-header p {{ font-size: 14px; margin: 0; opacity: 0.95; }}
+    .email-body {{ padding: 40px 30px; }}
+    .greeting {{ font-size: 18px; color: #1a1a1a; margin-bottom: 20px; font-weight: 500; }}
+    .content-text {{ font-size: 15px; line-height: 1.6; color: #4a4a4a; margin-bottom: 24px; }}
+    .info-card {{ background: #f8f9fa; border-left: 4px solid #667eea; padding: 20px; border-radius: 8px; margin: 24px 0; }}
+    .info-row {{ display: flex; padding: 8px 0; border-bottom: 1px solid #e9ecef; }}
+    .info-row:last-child {{ border-bottom: none; }}
+    .info-label {{ font-weight: 600; color: #667eea; min-width: 140px; font-size: 14px; }}
+    .info-value {{ color: #2d3748; font-size: 14px; }}
+    .message-box {{ background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 24px 0; border: 1px solid #e9ecef; }}
+    .message-box p {{ font-size: 14px; line-height: 1.6; color: #4a4a4a; white-space: pre-wrap; word-wrap: break-word; margin: 0; }}
+    .cta-button {{ display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 15px; margin: 24px 0; }}
+    .email-footer {{ background: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e9ecef; }}
+    .email-footer p {{ font-size: 13px; color: #6c757d; margin-bottom: 8px; }}
+    .company-name {{ color: #667eea; font-weight: 700; font-size: 16px; margin-top: 12px; }}
+  </style>
+</head>
+<body>
+  <div class="email-container">
+    <div class="email-header">
+      <h1>🔔 Új Kapcsolatfelvétel</h1>
+      <p>Beérkezett üzenet a weboldalról</p>
+    </div>
+    <div class="email-body">
+      <p class="greeting">Új megkeresés érkezett!</p>
+      <p class="content-text">Egy látogató érdeklődik a szolgáltatásaidról:</p>
+      <div class="info-card">
+        <div class="info-row"><span class="info-label">Név:</span><span class="info-value">{s_name}</span></div>
+        <div class="info-row"><span class="info-label">Email:</span><span class="info-value">{s_email}</span></div>
+        <div class="info-row"><span class="info-label">Cég:</span><span class="info-value">{s_company or "-"}</span></div>
+        <div class="info-row"><span class="info-label">Telefon:</span><span class="info-value">{s_phone or "-"}</span></div>
+        <div class="info-row"><span class="info-label">Érdeklődési terület:</span><span class="info-value">{s_service or "-"}</span></div>
+        <div class="info-row"><span class="info-label">Forrás oldal:</span><span class="info-value">{s_page or "-"}</span></div>
+      </div>
+      <p class="content-text"><strong>Üzenet:</strong></p>
+      <div class="message-box"><p>{s_msg}</p></div>
+      <a href="mailto:{s_email}" class="cta-button">Válasz írása</a>
+    </div>
+    <div class="email-footer">
+      <p>Ez egy automatikus értesítés a CyberCare weboldal kapcsolatfelvételi űrlapjából.</p>
+      <p class="company-name">CyberCare</p>
+    </div>
+  </div>
+</body>
+</html>
+"""
 
         send_email(
             to_email=admin_email,
@@ -186,16 +231,51 @@ def api_contact():
             html=admin_html,
         )
 
-        # 2) USER VISSZAIGAZOLÁS
+        # 2) USER HTML (a TE sablonod)
         user_html = f"""
-        <p>Kedves {s_name}!</p>
-        <p>Köszönjük, hogy felvette velünk a kapcsolatot. Üzenetét megkaptuk, hamarosan válaszolunk.</p>
-        <p style="margin-top:16px;">Üdvözlettel,<br><strong>CyberCare</strong></p>
-        """
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {{ margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }}
+    .email-container {{ max-width: 600px; margin: 0 auto; background: #ffffff; }}
+    .email-header {{ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 30px; text-align: center; color: #ffffff; }}
+    .email-header h1 {{ font-size: 28px; margin: 0 0 8px 0; font-weight: 600; }}
+    .email-header p {{ font-size: 14px; margin: 0; opacity: 0.95; }}
+    .email-body {{ padding: 40px 30px; }}
+    .greeting {{ font-size: 18px; color: #1a1a1a; margin-bottom: 20px; font-weight: 500; }}
+    .content-text {{ font-size: 15px; line-height: 1.6; color: #4a4a4a; margin-bottom: 24px; }}
+    .email-footer {{ background: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e9ecef; }}
+    .email-footer p {{ font-size: 13px; color: #6c757d; margin-bottom: 8px; }}
+    .company-name {{ color: #667eea; font-weight: 700; font-size: 16px; margin-top: 12px; }}
+  </style>
+</head>
+<body>
+  <div class="email-container">
+    <div class="email-header">
+      <h1>✅ Köszönjük megkeresését!</h1>
+      <p>Üzenetét sikeresen megkaptuk</p>
+    </div>
+    <div class="email-body">
+      <p class="greeting">Kedves {s_name}!</p>
+      <p class="content-text">Köszönjük, hogy felvette velünk a kapcsolatot. Üzenetét megkaptuk, és kollégáink hamarosan válaszolnak.</p>
+      <p class="content-text">Csapatunk 24-48 órán belül értesíti Önt az Ön érdeklődési területével kapcsolatban.</p>
+      <p class="content-text" style="margin-top: 32px;">Üdvözlettel,<br><strong style="color: #667eea;">A CyberCare csapata</strong></p>
+    </div>
+    <div class="email-footer">
+      <p>Ha bármilyen kérdése van, keressen minket bizalommal!</p>
+      <p class="company-name">CyberCare</p>
+    </div>
+  </div>
+</body>
+</html>
+"""
+
         send_email(
             to_email=email,
             subject="Köszönjük megkeresését – CyberCare",
-            text_msg="Köszönjük, hogy felvette velünk a kapcsolatot. Hamarosan válaszolunk.",
+            text_msg="Köszönjük, hogy felvette velünk a kapcsolatot. Üzenetét megkaptuk, hamarosan válaszolunk.",
             html=user_html,
         )
 
@@ -203,6 +283,7 @@ def api_contact():
         return _response_err(f"Email hiba: {e}", 503)
 
     return _response_ok("Köszönjük! Üzenetét megkaptuk, hamarosan válaszolunk.")
+
 
 
 @app.get("/health")
