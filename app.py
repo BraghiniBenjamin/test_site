@@ -137,12 +137,6 @@ def api_contact():
     email = payload["email"]
     message = payload["message"]
 
-    # privacy checkbox: a böngészőben required, de backendben is ellenőrizhetjük
-    # FormData esetén "privacy" érték tipikusan "on"
-    privacy_ok = bool((request.form.get("privacy") or "").strip()) if request.form else True
-    if not privacy_ok:
-        return _response_err("Az adatvédelmi szabályzat elfogadása kötelező.", 400)
-
     if not name or not email or not message:
         return _response_err("Minden mező kötelező: név, email, üzenet.", 400)
 
