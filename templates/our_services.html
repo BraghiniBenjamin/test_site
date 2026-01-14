@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="static/images/cc_logo_bw.png">
+    <title>Szolgáltatásaink - CyberCare</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cyber-green': '#00a355',
+                        'cyber-dark': '#2a2c28'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .circuit-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(90deg, rgba(0, 163, 85, 0.1) 1px, transparent 1px),
+                linear-gradient(rgba(0, 163, 85, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: circuitMove 20s linear infinite;
+        }
+        
+        @keyframes circuitMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(40px, 40px); }
+        }
+        
+        .cyber-title {
+            font-family: 'Orbitron', monospace;
+        }
+        
+        .service-card {
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 163, 85, 0.1);
+        }
+        
+        .scroll-smooth {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="scroll-smooth bg-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+                    <div class="w-10 h-10 flex items-center justify-center">
+                        <img src="static/images/cc_logo_bw.png" alt="CyberCare Logo" class="w-8 h-8">
+                    </div>
+                    <span class="text-xl font-bold text-cyber-dark">CyberCare</span>
+                </a>
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-cyber-dark hover:text-cyber-green transition-colors px-3 py-2 rounded-lg">Főoldal</a>
+                    <a href="about_us.html" class="text-cyber-dark hover:text-cyber-green transition-colors px-3 py-2 rounded-lg">Rólunk</a>
+                    <a href="our_services.html" class="bg-cyber-green text-white font-semibold px-3 py-2 rounded-lg shadow-md">Szolgáltatások</a>
+                    <a href="contact_us.html" class="text-cyber-dark hover:text-cyber-green transition-colors px-3 py-2 rounded-lg">Kapcsolat</a>
+                </div>
+                
+                <!-- Mobile Navigation Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-cyber-dark hover:text-cyber-green transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Navigation Menu -->
+            <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-100">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="index.html" class="text-cyber-dark hover:text-cyber-green transition-colors block px-3 py-2 rounded-lg">Főoldal</a>
+                    <a href="about_us.html" class="text-cyber-dark hover:text-cyber-green transition-colors block px-3 py-2 rounded-lg">Rólunk</a>
+                    <a href="our_services.html" class="bg-cyber-green text-white font-semibold block px-3 py-2 rounded-lg shadow-md">Szolgáltatások</a>
+                    <a href="contact_us.html" class="text-cyber-dark hover:text-cyber-green transition-colors block px-3 py-2 rounded-lg">Kapcsolat</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="circuit-pattern opacity-30"></div>
+        <!-- Floating Elements -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-20 left-10 w-20 h-20 bg-cyber-green/10 rounded-full animate-pulse"></div>
+            <div class="absolute top-40 right-20 w-16 h-16 bg-purple-500/10 rounded-full animate-pulse delay-1000"></div>
+            <div class="absolute bottom-32 left-1/4 w-12 h-12 bg-blue-500/10 rounded-full animate-pulse delay-2000"></div>
+            <div class="absolute bottom-20 right-1/3 w-24 h-24 bg-cyber-green/5 rounded-full animate-pulse delay-500"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h1 class="cyber-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white mb-6 sm:mb-8 leading-tight px-2">
+                <span class="block">Szolgáltatásaink</span>
+            </h1>
+            
+            <div class="w-20 sm:w-24 md:w-32 h-1 bg-gradient-to-r from-cyber-green to-green-400 mx-auto mb-6 sm:mb-8 md:mb-10 rounded-full"></div>
+            
+            <p class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-200 font-medium max-w-4xl mx-auto leading-relaxed mb-8 sm:mb-10 md:mb-12 px-4">
+                Komplex informatikai megoldások minden vállalkozás számára
+            </p>
+        </div>
+    </section>
+    <!-- Services Overview -->
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold text-cyber-dark mb-8">Miért válassza a CyberCare-t?</h2>
+            <div class="w-16 h-1 bg-cyber-green mx-auto mb-12"></div>
+            <p class="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
+                Szolgáltatásaink célja, hogy vállalkozása digitális átalakulását teljes körűen támogassuk. 
+                A logisztikai rendszerektől az AI-integrációig minden területen szakértői segítséget nyújtunk.
+            </p>
+        </div>
+    </section>
+
+    <!-- Detailed Services -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Service 1: Logistics -->
+            <div class="service-card bg-white p-4 sm:p-6 md:p-8 lg:p-12 rounded-2xl shadow-xl mb-8 sm:mb-12">
+                <div class="grid md:grid-cols-2 gap-6 md:gap-8 items-center">
+                    <div>
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-cyber-green/10 rounded-lg flex items-center justify-center mb-4 sm:mb-6">
+                            <svg class="w-8 h-8 sm:w-10 sm:h-10 text-cyber-green" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M4 4h16v2H4V4zm0 4h16v2H4V8zm0 4h16v2H4v-2zm0 4h10v2H4v-2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-cyber-dark mb-3 sm:mb-4">Logisztikai és raktározási szoftverfejlesztés</h3>
+                        <p class="text-gray-600 leading-relaxed mb-6">
+                            Hatékony, testreszabott rendszerek az ellátási lánc digitalizálására és nyomon követésére.
+                        </p>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-cyber-green mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                </svg>
+                                Készletkezelési rendszerek
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-cyber-green mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                </svg>
+                                Szállítási optimalizáció
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-cyber-green mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                </svg>
+                                Valós idejű nyomon követés
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-gradient-to-br from-cyber-green/10 to-cyber-green/5 p-8 rounded-xl">
+                        <h4 class="text-2xl font-bold text-cyber-dark mb-6">Előnyök:</h4>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="text-lg font-semibold">• 30-50% hatékonyságnövekedés</li>
+                            <li class="text-lg font-semibold">• Csökkentett raktározási költségek</li>
+                            <li class="text-lg font-semibold">• Automatizált jelentések</li>
+                            <li class="text-lg font-semibold">• Integrálható meglévő rendszerekkel</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 2: Data Visualization -->
+            <div class="service-card bg-white p-4 sm:p-6 md:p-8 lg:p-12 rounded-2xl shadow-xl mb-8 sm:mb-12">
+                <div class="grid md:grid-cols-2 gap-6 md:gap-8 items-center">
+                    <div class="order-2 md:order-1 bg-gradient-to-br from-cyber-green/10 to-cyber-green/5 p-4 sm:p-6 md:p-8 rounded-xl">
+                        <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-cyber-dark mb-4 sm:mb-6">Megoldásaink:</h4>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="text-lg font-semibold">• Interaktív dashboardok</li>
+                            <li class="text-lg font-semibold">• Prediktív analitika</li>
+                            <li class="text-lg font-semibold">• Automatikus riportok</li>
+                            <li class="text-lg font-semibold">• Mobil alkalmazások</li>
+                        </ul>
+                    </div>
+                    <div class="order-1 md:order-2">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-cyber-green/10 rounded-lg flex items-center justify-center mb-4 sm:mb-6">
+                            <svg class="w-8 h-8 sm:w-10 sm:h-10 text-cyber-green" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M3 3v18h18V3H3zm16 16H5V5h14v14zM7 7h2v2H7V7zm4 0h2v2h-2V7zm4 0h2v2h-2V7zM7 11h2v2H7v-2zm4 0h2v2h-2v-2zm4 0h2v2h-2v-2zM7 15h2v2H7v-2zm4 0h2v2h-2v-2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-cyber-dark mb-3 sm:mb-4">Adatvizualizáció és statisztikai megoldások</h3>
+                        <p class="text-gray-600 leading-relaxed mb-6">
+                            Minden adat egy helyen, érthetően és látványosan. Az üzleti döntések még sosem voltak ilyen egyszerűek.
+                        </p>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-cyber-green mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                </svg>
+                                Üzleti intelligencia rendszerek
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-cyber-green mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                </svg>
+                                KPI monitoring
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-cyber-green mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                </svg>
+                                Trend elemzések
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 3: AI Integration -->
+            <div class="service-card bg-white p-4 sm:p-6 md:p-8 lg:p-12 rounded-2xl shadow-xl mb-8 sm:mb-12">
+                <div class="grid md:grid-cols-2 gap-6 md:gap-8 items-center">
+                    <div>
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-cyber-green/10 rounded-lg flex items-center justify-center mb-4 sm:mb-6">
+                            <svg class="w-8 h-8 sm:w-10 sm:h-10 text-cyber-green" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-cyber-dark mb-3 sm:mb-4">Lokális mesterséges intelligencia integráció</h3>
+                        <p class="text-gray-600 leading-relaxed mb-6">
+                            Az AI a céged mellett dolgozik – gyorsabb, okosabb döntések emberi beavatkozás nélkül.
+                        </p>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-cyber-green mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                </svg>
+                                Dokumentum feldolgozás
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-cyber-green mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                </svg>
+                                Chatbot fejlesztés
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-cyber-green mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                </svg>
+                                Automatizált folyamatok
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-gradient-to-br from-cyber-green/10 to-cyber-green/5 p-4 sm:p-6 md:p-8 rounded-xl">
+                        <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-cyber-dark mb-4 sm:mb-6">Specialitásaink:</h4>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="text-lg font-semibold">• Helyi szervereken futó AI</li>
+                            <li class="text-lg font-semibold">• Adatbiztonság garantálva</li>
+                            <li class="text-lg font-semibold">• Testreszabott modellek</li>
+                            <li class="text-lg font-semibold">• Folyamatos tanulás és fejlődés</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 4: System Modernization -->
+            <div class="service-card bg-white p-4 sm:p-6 md:p-8 lg:p-12 rounded-2xl shadow-xl mb-8 sm:mb-12">
+                <div class="grid md:grid-cols-2 gap-6 md:gap-8 items-center">
+                    <div class="order-2 md:order-1 bg-gradient-to-br from-cyber-green/10 to-cyber-green/5 p-4 sm:p-6 md:p-8 rounded-xl">
+                        <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-cyber-dark mb-4 sm:mb-6">Modernizációs folyamat:</h4>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="text-lg font-semibold">• Rendszer audit és elemzés</li>
+                            <li class="text-lg font-semibold">• Fokozatos átállás</li>
+                            <li class="text-lg font-semibold">• Adatmigráció</li>
+                            <li class="text-lg font-semibold">• Képzés és támogatás</li>
+                        </ul>
+                    </div>
+                    <div class="order-1 md:order-2">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-cyber-green/10 rounded-lg flex items-center justify-center mb-4 sm:mb-6">
+                            <svg class="w-8 h-8 sm:w-10 sm:h-10 text-cyber-green" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-cyber-dark mb-3 sm:mb-4">Meglévő informatikai rendszerek modernizálása</h3>
+                        <p class="text-gray-600 leading-relaxed mb-6">
+                            Elavult rendszerek helyett gyors, biztonságos és bővíthető megoldásokat kínálunk.
+                        </p>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-cyber-green mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                </svg>
+                                Legacy rendszer frissítés
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-cyber-green mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                </svg>
+                                Felhő migráció
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-cyber-green mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                </svg>
+                                Biztonsági frissítések
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="py-12 sm:py-16 md:py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8 sm:mb-12 md:mb-16">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-cyber-dark mb-4 sm:mb-6 md:mb-8">Hogyan dolgozunk?</h2>
+                <div class="w-12 sm:w-16 h-1 bg-cyber-green mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+                <div class="text-center">
+                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-cyber-green rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 text-white font-bold text-lg sm:text-xl">1</div>
+                    <h3 class="text-sm sm:text-lg md:text-xl font-bold text-cyber-dark mb-1 sm:mb-2">Konzultáció</h3>
+                    <p class="text-xs sm:text-sm md:text-gray-600">Megismerjük az Ön igényeit és kihívásait</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-cyber-green rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 text-white font-bold text-lg sm:text-xl">2</div>
+                    <h3 class="text-sm sm:text-lg md:text-xl font-bold text-cyber-dark mb-1 sm:mb-2">Tervezés</h3>
+                    <p class="text-xs sm:text-sm md:text-gray-600">Részletes tervet készítünk a megoldásról</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-cyber-green rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 text-white font-bold text-lg sm:text-xl">3</div>
+                    <h3 class="text-sm sm:text-lg md:text-xl font-bold text-cyber-dark mb-1 sm:mb-2">Fejlesztés</h3>
+                    <p class="text-xs sm:text-sm md:text-gray-600">Agilis módszerekkel valósítjuk meg a rendszert</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-cyber-green rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 text-white font-bold text-lg sm:text-xl">4</div>
+                    <h3 class="text-sm sm:text-lg md:text-xl font-bold text-cyber-dark mb-1 sm:mb-2">Támogatás</h3>
+                    <p class="text-xs sm:text-sm md:text-gray-600">Folyamatos karbantartás és fejlesztés</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-12 sm:py-16 md:py-20 bg-cyber-dark">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 sm:mb-8">Alkossuk meg együtt cége legújabb alkalmazottját</h2>
+            <p class="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
+                💚 CyberCare – Informatikai gondoskodás mindenkinek
+            </p>
+            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                <a href="contact_us.html" class="bg-cyber-green text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg text-sm sm:text-base">
+                    Kapcsolatfelvétel!
+                </a>
+                <a href="about_us.html" class="border-2 border-cyber-green text-cyber-green px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-cyber-green hover:text-white transition-all duration-300 text-sm sm:text-base">
+                    Tudjon meg többet rólunk
+                </a>
+            </div>
+        </div>
+    </section>
+
+<!-- Footer -->
+<footer class="bg-cyber-dark text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Main Footer Content -->
+        <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-8 mb-12">
+            <!-- Company Info -->
+            <div class="lg:col-span-1">
+                <div class="flex items-center space-x-3 mb-6">
+                    <div class="w-12 h-12 flex items-center justify-center">
+                        <img src="static/images/cc_logo_bw.png" alt="CyberCare Logo" class="w-10 h-10">
+                    </div>
+                    <span class="text-2xl font-bold">CyberCare</span>
+                </div>
+                <p class="text-gray-300 mb-6 leading-relaxed">
+                    Informatikai gondoskodás mindenkinek. Személyre szabott szoftvermegoldások 
+                    és digitális transzformáció szakértői.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="https://www.facebook.com/profile.php?id=61574878867280" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-cyber-green hover:text-white transition-all duration-300">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.instagram.com/cybercare.hu" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-cyber-green hover:text-white transition-all duration-300">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/cyber-care-0a022936b" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-cyber-green hover:text-white transition-all duration-300">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 class="text-lg font-bold mb-6 text-cyber-green">Gyors linkek</h3>
+                <ul class="space-y-3">
+                    <li><a href="index.html" class="text-gray-300 hover:text-cyber-green transition-colors">Főoldal</a></li>
+                    <li><a href="about_us.html" class="text-gray-300 hover:text-cyber-green transition-colors">Rólunk</a></li>
+                    <li><a href="our_services.html" class="text-gray-300 hover:text-cyber-green transition-colors">Szolgáltatások</a></li>
+                    <li><a href="contact_us.html" class="text-gray-300 hover:text-cyber-green transition-colors">Kapcsolat</a></li>
+                </ul>
+            </div>
+
+            <!-- Services -->
+            <div>
+                <h3 class="text-lg font-bold mb-6 text-cyber-green">Szolgáltatások</h3>
+                <ul class="space-y-3">
+                    <li><a href="our_services.html" class="text-gray-300 hover:text-cyber-green transition-colors">Logisztikai szoftverek</a></li>
+                    <li><a href="our_services.html" class="text-gray-300 hover:text-cyber-green transition-colors">Adatvizualizáció</a></li>
+                    <li><a href="our_services.html" class="text-gray-300 hover:text-cyber-green transition-colors">AI integráció</a></li>
+                    <li><a href="our_services.html" class="text-gray-300 hover:text-cyber-green transition-colors">Rendszer modernizáció</a></li>
+                    <li><a href="our_services.html" class="text-gray-300 hover:text-cyber-green transition-colors">Konzultáció</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div>
+                <h3 class="text-lg font-bold mb-6 text-cyber-green">Kapcsolat</h3>
+                <div class="space-y-4">
+                    <div class="flex items-start space-x-3">
+                        <svg class="w-5 h-5 text-cyber-green mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                        <div>
+                            <p class="text-gray-300">2534, Tát</p>
+                            <p class="text-gray-300">Halomka liget 17</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <svg class="w-5 h-5 text-cyber-green flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                        </svg>
+                        <p class="text-gray-300">+36 70 398 9611</p>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <svg class="w-5 h-5 text-cyber-green flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                        <p class="text-gray-300">info@cybercare.hu</p>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <svg class="w-5 h-5 text-cyber-green flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                        <p class="text-gray-300">www.cybercare.hu</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Section -->
+        <div class="border-t border-gray-600 pt-8">
+            <div class="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
+                <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6 text-sm text-gray-400">
+                    <p>© 2024 CyberCare Kft. Minden jog fenntartva.</p>
+                    <div class="space-x-4">
+                        <a href="#" onclick="openModal('adatvedelemModal')" class="hover:text-cyber-green transition">Adatvédelmi tájékoztató</a>
+                        <a href="#" onclick="openModal('afszModal')" class="hover:text-cyber-green transition">Felhasználási feltételek</a>
+                        <a href="#" onclick="openModal('cookieModal')" class="hover:text-cyber-green transition">Cookie szabályzat</a>
+                      </div>                        
+                </div>
+                
+                <div class="flex items-center space-x-4 text-sm text-gray-400">
+                    <span>Készítve</span>
+                    <span class="text-cyber-green">💚</span>
+                    <span>-vel Magyarországon</span>
+                </div>
+            </div>
+            
+            <!-- Certifications/Badges -->
+            <div class="flex justify-center items-center space-x-8 mt-8 pt-6 border-t border-gray-700">
+                <div class="flex items-center space-x-2 text-gray-400">
+                  <!-- ISO -->
+                  <svg class="w-5 h-5 text-cyber-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 2l7 4v4c0 5.25-3.5 9.75-7 11-3.5-1.25-7-5.75-7-11V6l7-4z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 12l2 2 3-3" />
+                  </svg>
+                  <span class="text-xs">ISO 27001</span>
+                </div>
+              
+                <div class="flex items-center space-x-2 text-gray-400">
+                  <!-- GDPR -->
+                  <svg class="w-5 h-5 text-cyber-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m0-4a1 1 0 100 2 1 1 0 000-2zm-4 6h8a2 2 0 002-2v-5a2 2 0 00-2-2H8a2 2 0 00-2 2v5a2 2 0 002 2zM9 7a3 3 0 116 0v2H9V7z" />
+                  </svg>
+                  <span class="text-xs">GDPR Compliant</span>
+                </div>
+                <div class="flex items-center space-x-2 text-gray-400">
+                    <svg class="w-5 h-5 text-cyber-green" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    <span class="text-xs">Minősített partner</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<div id="adatvedelemModal" class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center hidden px-4">
+    <div class="bg-white text-cyber-dark max-w-2xl w-full max-h-[90vh] p-8 rounded-xl shadow-xl overflow-y-auto relative">
+      <button onclick="closeModal('adatvedelemModal')" class="absolute top-4 right-6 text-gray-400 hover:text-red-500 text-3xl font-light">&times;</button>
+      <h2 class="text-2xl font-semibold mb-6 text-center">Adatvédelmi tájékoztató</h2>
+      
+      <div class="space-y-6 text-sm text-gray-700 leading-relaxed">
+  
+        <div>
+          <h3 class="font-semibold text-cyber-green mb-1">1. Adatkezelő</h3>
+          <p>A jelen weboldal üzemeltetője a CyberCare (info@cybercare.hu).</p>
+        </div>
+  
+        <div>
+          <h3 class="font-semibold text-cyber-green mb-1">2. Kezelt adatok köre</h3>
+          <ul class="list-disc list-inside space-y-1">
+            <li>Név</li>
+            <li>Email cím</li>
+            <li>Üzenet szövege</li>
+            <li>IP-cím (technikai naplózás céljából)</li>
+          </ul>
+        </div>
+  
+        <div>
+          <h3 class="font-semibold text-cyber-green mb-1">3. Az adatkezelés célja</h3>
+          <p>Kapcsolattartás, ajánlatadás, ügyfélkommunikáció, valamint törvényes érdekvédelem.</p>
+        </div>
+  
+        <div>
+          <h3 class="font-semibold text-cyber-green mb-1">4. Jogalap</h3>
+          <p>Az érintett hozzájárulása (GDPR 6. cikk (1) a)).</p>
+        </div>
+  
+        <div>
+          <h3 class="font-semibold text-cyber-green mb-1">5. Tárolás időtartama</h3>
+          <p>Az adatokat legfeljebb 12 hónapig tároljuk, vagy a kapcsolat megszűnéséig.</p>
+        </div>
+  
+        <div>
+          <h3 class="font-semibold text-cyber-green mb-1">6. Az érintett jogai</h3>
+          <p>Ön jogosult az adataihoz hozzáférni, kérheti azok törlését, módosítását, vagy panaszt tehet a NAIH-nál (www.naih.hu).</p>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+  <div id="afszModal" class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center hidden px-4">
+    <div class="bg-white text-cyber-dark max-w-2xl w-full max-h-[90vh] p-8 rounded-xl shadow-xl overflow-y-auto relative">
+      <button onclick="closeModal('afszModal')" class="absolute top-4 right-6 text-gray-400 hover:text-red-500 text-3xl font-light">&times;</button>
+      <h2 class="text-2xl font-semibold mb-6 text-center">Általános Felhasználási Feltételek</h2>
+  
+      <div class="space-y-6 text-sm text-gray-700 leading-relaxed">
+  
+        <div>
+          <h3 class="font-semibold text-cyber-green mb-1">1. Általános információk</h3>
+          <p>A jelen dokumentum a CyberCare által üzemeltetett weboldal (www.cybercare.hu) használatának feltételeit tartalmazza.</p>
+        </div>
+  
+        <div>
+          <h3 class="font-semibold text-cyber-green mb-1">2. A szolgáltatás jellege</h3>
+          <p>A CyberCare informatikai tanácsadást, rendszerkarbantartást és egyedi fejlesztéseket nyújt partnereinek.</p>
+        </div>
+  
+        <div>
+          <h3 class="font-semibold text-cyber-green mb-1">3. Weboldal használatának feltételei</h3>
+          <p>A weboldalt bárki megtekintheti, de a szolgáltatások igénybevételéhez kapcsolatfelvétel szükséges. A látogató köteles a jogszerű és tisztességes használatra.</p>
+        </div>
+  
+        <div>
+          <h3 class="font-semibold text-cyber-green mb-1">4. Felelősség kizárása</h3>
+          <p>A Szolgáltató nem vállal felelősséget a weboldalon elhelyezett információk teljességéért vagy azok felhasználásából eredő károkért.</p>
+        </div>
+  
+        <div>
+          <h3 class="font-semibold text-cyber-green mb-1">5. Szerzői jog</h3>
+          <p>A weboldal minden eleme a CyberCare szellemi tulajdonát képezi. Tilos a tartalmak engedély nélküli másolása vagy újraközlése.</p>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+  <div id="cookieModal" class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center hidden px-4">
+    <div class="bg-white text-cyber-dark max-w-2xl w-full max-h-[90vh] p-8 rounded-xl shadow-xl overflow-y-auto relative">
+      <button onclick="closeModal('cookieModal')" class="absolute top-4 right-6 text-gray-400 hover:text-red-500 text-3xl font-light">&times;</button>
+      <h2 class="text-2xl font-semibold mb-6 text-center">Cookie szabályzat</h2>
+  
+      <div class="space-y-6 text-sm text-gray-700 leading-relaxed">
+  
+        <div>
+          <h3 class="font-semibold text-cyber-green mb-1">1. Mik azok a cookie-k?</h3>
+          <p>A cookie-k olyan kis adatfájlok, amelyeket a weboldal helyez el az Ön eszközén annak érdekében, hogy a böngészés kényelmesebb és hatékonyabb legyen.</p>
+        </div>
+  
+        <div>
+          <h3 class="font-semibold text-cyber-green mb-1">2. Milyen cookie-kat használunk?</h3>
+          <ul class="list-disc list-inside space-y-1">
+            <li>Alapvető működést biztosító cookie-k</li>
+            <li>Analitikai cookie-k (pl. látogatottság mérése)</li>
+            <li>Marketing cookie-k (csak külön hozzájárulás esetén)</li>
+          </ul>
+        </div>
+  
+        <div>
+          <h3 class="font-semibold text-cyber-green mb-1">3. Cookie-k kezelése</h3>
+          <p>Ön bármikor módosíthatja a cookie-beállításokat böngészője beállításainál, illetve törölheti azokat.</p>
+        </div>
+  
+        <div>
+          <h3 class="font-semibold text-cyber-green mb-1">4. Hozzájárulás</h3>
+          <p>A nem alapműködésű cookie-k csak az Ön kifejezett hozzájárulásával kerülnek aktiválásra.</p>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Modal megnyitása
+    function openModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+        modal.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden'); // görgetés tiltása
+        }
+    }
+    
+    // Modal bezárása
+    function closeModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+        modal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+        }
+    }
+    
+    // Bezárás ESC gombra
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+        document.querySelectorAll('[id$="Modal"]').forEach(modal => {
+            modal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        });
+        }
+    });
+    
+    // Bezárás háttérre kattintva
+    document.querySelectorAll('[id$="Modal"]').forEach(modal => {
+        modal.addEventListener('click', function (e) {
+        if (e.target === modal) {
+            modal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+        });
+    });
+    </script>
+      
+    <script>
+        function openModal(id) {
+          document.getElementById(id).classList.remove('hidden');
+        }
+        function closeModal(id) {
+          document.getElementById(id).classList.add('hidden');
+        }
+        document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal('adatvedelemModal');
+        });
+        document.getElementById('adatvedelemModal').addEventListener("click", (e) => {
+        if (e.target.id === "adatvedelemModal") closeModal('adatvedelemModal');
+        });
+    </script>      
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contactForm');
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    
+                    // Get form data
+                    const formData = new FormData(this);
+                    
+                    // Show loading state
+                    const submitButton = this.querySelector('button[type="submit"]');
+                    const originalText = submitButton.innerHTML;
+                    submitButton.innerHTML = 'Küldés...';
+                    submitButton.disabled = true;
+                    
+                    // Send form data to PHP script
+                    fetch('send_email_simple.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Success message
+                            alert(data.message);
+                            this.reset();
+                        } else {
+                            // Error message
+                            alert('Hiba: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Sajnos hiba történt. Kérjük próbálja újra később.');
+                    })
+                    .finally(() => {
+                        // Reset button state
+                        submitButton.innerHTML = originalText;
+                        submitButton.disabled = false;
+                    });
+                });
+            }
+        });
+        // Privacy modal functions
+        function openPrivacyModal() {
+            document.getElementById('privacyModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closePrivacyModal() {
+            document.getElementById('privacyModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('privacyModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePrivacyModal();
+            }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePrivacyModal();
+            }
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+                        // Mobile menu functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+                
+                // Close mobile menu when clicking on a link
+                const mobileLinks = mobileMenu.querySelectorAll('a');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+                
+                // Close mobile menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'965dde5350492553',t:'MTc1MzYzNzQ2Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+</body>
+</html>
