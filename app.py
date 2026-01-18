@@ -374,14 +374,19 @@ def health():
 #     demo2/index.html
 # ==================================================
 
-DEMO_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "demo_oldalak")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DEMO_ROOT = os.path.join(BASE_DIR, "test_site", "demo_oldalak")
 
-@app.get("/demo/<filename>")
-def demo_files(filename):
-    full_path = os.path.join(DEMO_ROOT, filename)
+@app.get("/demo_oldalak/<path:filename>")
+def demo_oldalak_files(filename):
+    # path traversal védelem
+    safe = str(pathlib.PurePosixPath(filename))
+    full_path = os.path.join(DEMO_ROOT, safe)
+
     if not os.path.isfile(full_path):
         abort(404)
-    return send_from_directory(DEMO_ROOT, filename)
+
+    return send_from_directory(DEMO_ROOT, safe)
 
 
 # ==================================================
