@@ -63,7 +63,7 @@
     <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <a href="{{ url_for('page_index') }}" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+                <a href="{{ url_for('home') }}" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
                     <div class="w-10 h-10 flex items-center justify-center">
                         <img src="{{ url_for('static', filename='images/cc_logo_bw.png') }}" alt="CyberCare Logo" class="w-8 h-8">
                     </div>
@@ -373,7 +373,7 @@
                         </ul>
 
                         <div class="mt-8">
-                            <a href="{{ url_for('web_fejlesztes') }}"
+                            <a href="{{ url_for('web_development') }}"
                                class="inline-flex items-center gap-2 bg-cyber-green text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg text-sm sm:text-base">
                                 Részletek megtekintése
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -448,10 +448,10 @@
                 💚 CyberCare – Informatikai gondoskodás mindenkinek
             </p>
             <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                <a href="{{ url_for('page_contact') }}" class="bg-cyber-green text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg text-sm sm:text-base">
+                <a href="{{ url_for('contact') }}" class="bg-cyber-green text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg text-sm sm:text-base">
                     Kapcsolatfelvétel!
                 </a>
-                <a href="{{ url_for('page_about') }}" class="border-2 border-cyber-green text-cyber-green px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-cyber-green hover:text-white transition-all duration-300 text-sm sm:text-base">
+                <a href="{{ url_for('about') }}" class="border-2 border-cyber-green text-cyber-green px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-cyber-green hover:text-white transition-all duration-300 text-sm sm:text-base">
                     Tudjon meg többet rólunk
                 </a>
             </div>
@@ -467,7 +467,7 @@
       <div class="lg:col-span-1">
         <div class="flex items-center space-x-3 mb-6">
           <div class="w-12 h-12 flex items-center justify-center">
-            <img src="static/images/cc_logo_bw.png" alt="CyberCare Logo" class="w-10 h-10">
+            <img src="{{ url_for('static', filename='images/cc_logo_bw.png') }}" alt="CyberCare Logo" class="w-10 h-10">
           </div>
           <span class="text-2xl font-bold">CyberCare</span>
         </div>
