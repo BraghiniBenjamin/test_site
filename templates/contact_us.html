@@ -517,10 +517,11 @@
                 <div>
                     <h3 class="text-lg font-bold mb-6 text-cyber-green">Gyors linkek</h3>
                     <ul class="space-y-3">
-                        <li><a href="index.html" class="text-gray-300 hover:text-cyber-green transition-colors">Főoldal</a></li>
-                        <li><a href="about_us.html" class="text-gray-300 hover:text-cyber-green transition-colors">Rólunk</a></li>
-                        <li><a href="our_services.html" class="text-gray-300 hover:text-cyber-green transition-colors">Szolgáltatások</a></li>
-                        <li><a href="contact_us.html" class="text-gray-300 hover:text-cyber-green transition-colors">Kapcsolat</a></li>
+                    <li><a href="/" class="text-gray-300 hover:text-cyber-green transition-colors">Főoldal</a></li>
+                    <li><a href="/rolunk" class="text-gray-300 hover:text-cyber-green transition-colors">Rólunk</a></li>
+                    <li><a href="/szolgaltatasaink" class="text-gray-300 hover:text-cyber-green transition-colors">Szolgáltatások</a></li>
+                    <li><a href="/kapcsolat" class="text-gray-300 hover:text-cyber-green transition-colors">Kapcsolat</a></li>
+                    <li><a href="/web-fejlesztes" class="text-gray-300 hover:text-cyber-green transition-colors font-semibold">Webfejlesztés</a></li>
                     </ul>
                 </div>
 
@@ -580,9 +581,9 @@
                     <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6 text-sm text-gray-400">
                         <p>© 2024 CyberCare Kft. Minden jog fenntartva.</p>
                         <div class="space-x-4">
-                            <a href="#" onclick="openModal('adatvedelemModal')" class="hover:text-cyber-green transition">Adatvédelmi tájékoztató</a>
-                            <a href="#" onclick="openModal('afszModal')" class="hover:text-cyber-green transition">Felhasználási feltételek</a>
-                            <a href="#" onclick="openModal('cookieModal')" class="hover:text-cyber-green transition">Cookie szabályzat</a>
+                            <a href="#" onclick="openModal('adatvedelemModal'); return false;" class="hover:text-cyber-green transition">Adatvédelmi tájékoztató</a>
+                            <a href="#" onclick="openModal('afszModal'); return false;" class="hover:text-cyber-green transition">Felhasználási feltételek</a>
+                            <a href="#" onclick="openModal('cookieModal'); return false;" class="hover:text-cyber-green transition">Cookie szabályzat</a>
                           </div>                        
                     </div>
                     
@@ -737,157 +738,149 @@
           </div>
         </div>
       </div>
-      
-    <script>
-    // Modal megnyitása
-    function openModal(id) {
-        const modal = document.getElementById(id);
-        if (modal) {
-        modal.classList.remove('hidden');
-        document.body.classList.add('overflow-hidden'); // görgetés tiltása
-        }
-    }
-    
-    // Modal bezárása
-    function closeModal(id) {
-        const modal = document.getElementById(id);
-        if (modal) {
-        modal.classList.add('hidden');
-        document.body.classList.remove('overflow-hidden');
-        }
-    }
-    
-    // Bezárás ESC gombra
-    document.addEventListener('keydown', function (event) {
-        if (event.key === 'Escape') {
-        document.querySelectorAll('[id$="Modal"]').forEach(modal => {
-            modal.classList.add('hidden');
-            document.body.classList.remove('overflow-hidden');
-        });
-        }
-    });
-    
-    // Bezárás háttérre kattintva
-    document.querySelectorAll('[id$="Modal"]').forEach(modal => {
-        modal.addEventListener('click', function (e) {
-        if (e.target === modal) {
-            modal.classList.add('hidden');
-            document.body.classList.remove('overflow-hidden');
-        }
-        });
-    });
-    </script>
-          
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const contactForm = document.getElementById('contactForm');
-            
-            if (contactForm) {
-                contactForm.addEventListener('submit', function(event) {
-                    event.preventDefault();
-                    
-                    // Get form data
-                    const formData = new FormData(this);
-                    
-                    // Show loading state
-                    const submitButton = this.querySelector('button[type="submit"]');
-                    const originalText = submitButton.innerHTML;
-                    submitButton.innerHTML = 'Küldés...';
-                    submitButton.disabled = true;
-                    
-                    // Send form data to PHP script
-                    fetch('/api/contact', { method: 'POST', body: formData })
+<!-- ======= SCRIPTS (integrált, duplikációk nélkül) ======= -->
 
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Success message
-                            alert(data.message);
-                            this.reset();
-                        } else {
-                            // Error message
-                            alert('Hiba: ' + data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('Sajnos hiba történt. Kérjük próbálja újra később.');
-                    })
-                    .finally(() => {
-                        // Reset button state
-                        submitButton.innerHTML = originalText;
-                        submitButton.disabled = false;
-                    });
-                });
-            }
-        });
-        // Privacy modal functions
-        function openPrivacyModal() {
-            document.getElementById('privacyModal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
+<script>
+  /* =========================
+     MODAL KEZELÉS (egyetlen forrás)
+     - openModal / closeModal
+     - ESC bezár
+     - háttérre kattintás bezár
+     - body scroll tiltás modal nyitáskor
+  ========================= */
+  function openModal(id) {
+    const modal = document.getElementById(id);
+    if (!modal) return;
+    modal.classList.remove('hidden');
+    document.body.classList.add('overflow-hidden');
+  }
+
+  function closeModal(id) {
+    const modal = document.getElementById(id);
+    if (!modal) return;
+    modal.classList.add('hidden');
+    document.body.classList.remove('overflow-hidden');
+  }
+
+  // ESC bezár minden "*Modal" végű modalt
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      document.querySelectorAll('[id$="Modal"]').forEach(modal => modal.classList.add('hidden'));
+      document.body.classList.remove('overflow-hidden');
+    }
+  });
+
+  // Háttérre kattintás bezárás (minden modalra)
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[id$="Modal"]').forEach(modal => {
+      modal.addEventListener('click', function (e) {
+        if (e.target === modal) {
+          modal.classList.add('hidden');
+          document.body.classList.remove('overflow-hidden');
         }
-        
-        function closePrivacyModal() {
-            document.getElementById('privacyModal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-        
-        // Close modal when clicking outside
-        document.getElementById('privacyModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closePrivacyModal();
-            }
+      });
+    });
+  });
+</script>
+
+<script>
+  /* =========================
+     CONTACT FORM (ha van ilyen az oldalon)
+  ========================= */
+  document.addEventListener('DOMContentLoaded', function () {
+    const contactForm = document.getElementById('contactForm');
+    if (!contactForm) return;
+
+    contactForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const formData = new FormData(this);
+
+      const submitButton = this.querySelector('button[type="submit"]');
+      const originalText = submitButton ? submitButton.innerHTML : null;
+
+      if (submitButton) {
+        submitButton.innerHTML = 'Küldés...';
+        submitButton.disabled = true;
+      }
+
+      fetch('/api/contact', { method: 'POST', body: formData })
+        .then(response => response.json())
+        .then(data => {
+          if (data && data.success) {
+            alert(data.message || 'Sikeres küldés!');
+            this.reset();
+          } else {
+            alert('Hiba: ' + (data && data.message ? data.message : 'Ismeretlen hiba'));
+          }
+        })
+        .catch(err => {
+          console.error('Error:', err);
+          alert('Sajnos hiba történt. Kérjük próbálja újra később.');
+        })
+        .finally(() => {
+          if (submitButton) {
+            submitButton.innerHTML = originalText;
+            submitButton.disabled = false;
+          }
         });
-        
-        // Close modal with Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closePrivacyModal();
-            }
-        });
-        
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-        
-                        // Mobile menu functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', function() {
-                    mobileMenu.classList.toggle('hidden');
-                });
-                
-                // Close mobile menu when clicking on a link
-                const mobileLinks = mobileMenu.querySelectorAll('a');
-                mobileLinks.forEach(link => {
-                    link.addEventListener('click', function() {
-                        mobileMenu.classList.add('hidden');
-                    });
-                });
-                
-                // Close mobile menu when clicking outside
-                document.addEventListener('click', function(event) {
-                    if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
-                        mobileMenu.classList.add('hidden');
-                    }
-                });
-            }
-        });
-    </script>
+    });
+  });
+</script>
+<script>
+  /* =========================
+     SMOOTH SCROLL (csak az oldalon belüli # anchorokra)
+  ========================= */
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (!href || href === '#') return;
+
+        const target = document.querySelector(href);
+        if (!target) return;
+
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  });
+</script>
+
+<script>
+  /* =========================
+     MOBILE MENU
+  ========================= */
+  document.addEventListener('DOMContentLoaded', function () {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (!mobileMenuButton || !mobileMenu) return;
+
+    mobileMenuButton.addEventListener('click', function () {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Close menu when clicking a link
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', function () {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function (event) {
+      if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+        mobileMenu.classList.add('hidden');
+      }
+    });
+  });
+</script>
+
+<!-- ======= /SCRIPTS ======= -->
+
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'965dde5350492553',t:'MTc1MzYzNzQ2Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
 
 
