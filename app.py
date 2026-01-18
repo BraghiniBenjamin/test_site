@@ -364,6 +364,37 @@ def health():
 
 
 # ==================================================
+# DEMO OLDALAK (demo_oldalak mappa kiszolgálása)
+#   mappa struktúra példa:
+#   demo_oldalak/
+#     demo1/index.html
+#     demo1/assets/...
+#     demo2/index.html
+# ==================================================
+
+DEMO_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "demo_oldalak")
+
+@app.get("/demo/<demo_slug>/")
+def demo_index(demo_slug):
+    safe_slug = pathlib.PurePosixPath(demo_slug).name  # path traversal ellen
+    demo_dir = os.path.join(DEMO_ROOT, safe_slug)
+    index_path = os.path.join(demo_dir, "index.html")
+    if not os.path.isdir(demo_dir) or not os.path.isfile(index_path):
+        abort(404)
+    return send_from_directory(demo_dir, "index.html")
+
+@app.get("/demo/<demo_slug>/<path:filename>")
+def demo_files(demo_slug, filename):
+    safe_slug = pathlib.PurePosixPath(demo_slug).name
+    safe_file = str(pathlib.PurePosixPath(filename))  # relatív marad
+    demo_dir = os.path.join(DEMO_ROOT, safe_slug)
+    file_path = os.path.join(demo_dir, safe_file)
+    if not os.path.isdir(demo_dir) or not os.path.isfile(file_path):
+        abort(404)
+    return send_from_directory(demo_dir, safe_file)
+
+
+# ==================================================
 # RUN
 # ==================================================
 if __name__ == "__main__":
