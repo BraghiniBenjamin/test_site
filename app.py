@@ -112,9 +112,14 @@ def about():
     return render_template("about_us.html")
 
 
-@app.get("/szolgaltatasok")
+@app.get("/szolgaltatasaink")
 def services():
     return render_template("our_services.html")
+
+@app.get("/szolgaltatasok")
+def services_legacy_hu():
+    return redirect(url_for("services"), code=301)
+
 
 
 @app.get("/webfejlesztes")
