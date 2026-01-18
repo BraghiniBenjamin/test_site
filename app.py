@@ -376,16 +376,12 @@ def health():
 
 DEMO_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "demo_oldalak")
 
-@app.get("/demo/<path:filename>")
+@app.get("/demo/<filename>")
 def demo_files(filename):
-    # path traversal elleni védelem
-    safe = str(pathlib.PurePosixPath(filename))
-    full_path = os.path.join(DEMO_ROOT, safe)
-
+    full_path = os.path.join(DEMO_ROOT, filename)
     if not os.path.isfile(full_path):
         abort(404)
-
-    return send_from_directory(DEMO_ROOT, safe)
+    return send_from_directory(DEMO_ROOT, filename)
 
 
 # ==================================================
