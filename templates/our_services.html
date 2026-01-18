@@ -55,6 +55,47 @@
 
         .scroll-smooth { scroll-behavior: smooth; }
     </style>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+    
+      body { font-family: 'Inter', sans-serif; }
+      .scroll-smooth { scroll-behavior: smooth; }
+    
+      .hero-bg {
+        background: linear-gradient(135deg, #000000 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+        position: relative;
+        overflow: hidden;
+      }
+    
+      .hero-bg::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 20% 80%, rgba(0, 163, 85, 0.30) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(0, 163, 85, 0.20) 0%, transparent 50%),
+          radial-gradient(circle at 40% 40%, rgba(0, 163, 85, 0.10) 0%, transparent 50%);
+        animation: pulse 4s ease-in-out infinite alternate;
+      }
+    
+      @keyframes pulse {
+        0% { opacity: .5; }
+        100% { opacity: 1; }
+      }
+    
+      .cyber-title {
+        font-family: 'Orbitron', monospace;
+        text-shadow: 0 0 20px rgba(0, 163, 85, 0.5), 0 0 40px rgba(0, 163, 85, 0.3);
+        animation: titleGlow 3s ease-in-out infinite alternate;
+      }
+    
+      @keyframes titleGlow {
+        0% { text-shadow: 0 0 20px rgba(0, 163, 85, 0.5), 0 0 40px rgba(0, 163, 85, 0.3); }
+        100% { text-shadow: 0 0 30px rgba(0, 163, 85, 0.8), 0 0 60px rgba(0, 163, 85, 0.5); }
+      }
+    </style>
+
 </head>
 
 <body class="scroll-smooth bg-white">
