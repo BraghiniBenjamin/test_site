@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" href="static/images/cc_logo_bw.png" />
+
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/cc_logo_bw.png') }}" />
   <title>CyberCare - Egyedi webfejlesztés</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -60,23 +61,24 @@
 
 <body class="scroll-smooth bg-white">
 
-  <!-- Navigation (ugyanaz a header) -->
+  <!-- Navigation -->
   <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-gray-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
-        <a href="index.html" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+
+        <a href="{{ url_for('home') }}" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
           <div class="w-10 h-10 flex items-center justify-center">
-            <img src="static/images/cc_logo_bw.png" alt="CyberCare Logo" class="w-8 h-8">
+            <img src="{{ url_for('static', filename='images/cc_logo_bw.png') }}" alt="CyberCare Logo" class="w-8 h-8">
           </div>
           <span class="text-xl font-bold text-cyber-dark">CyberCare</span>
         </a>
 
         <div class="hidden md:flex space-x-8">
-          <a href="index.html" class="text-cyber-dark hover:text-cyber-green transition-colors px-3 py-2 rounded-lg">Főoldal</a>
-          <a href="about_us.html" class="text-cyber-dark hover:text-cyber-green transition-colors px-3 py-2 rounded-lg">Rólunk</a>
-          <a href="our_services.html" class="text-cyber-dark hover:text-cyber-green transition-colors px-3 py-2 rounded-lg">Szolgáltatások</a>
-          <a href="web_development.html" class="bg-cyber-green text-white font-semibold px-3 py-2 rounded-lg shadow-md">Webfejlesztés</a>
-          <a href="contact_us.html" class="text-cyber-dark hover:text-cyber-green transition-colors px-3 py-2 rounded-lg">Kapcsolat</a>
+          <a href="{{ url_for('home') }}" class="text-cyber-dark hover:text-cyber-green transition-colors px-3 py-2 rounded-lg">Főoldal</a>
+          <a href="{{ url_for('about') }}" class="text-cyber-dark hover:text-cyber-green transition-colors px-3 py-2 rounded-lg">Rólunk</a>
+          <a href="{{ url_for('services') }}" class="text-cyber-dark hover:text-cyber-green transition-colors px-3 py-2 rounded-lg">Szolgáltatások</a>
+          <a href="{{ url_for('web_development') }}" class="bg-cyber-green text-white font-semibold px-3 py-2 rounded-lg shadow-md">Webfejlesztés</a>
+          <a href="{{ url_for('contact') }}" class="text-cyber-dark hover:text-cyber-green transition-colors px-3 py-2 rounded-lg">Kapcsolat</a>
         </div>
 
         <div class="md:hidden">
@@ -90,11 +92,11 @@
 
       <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-100">
         <div class="px-2 pt-2 pb-3 space-y-1">
-          <a href="index.html" class="text-cyber-dark hover:text-cyber-green transition-colors block px-3 py-2 rounded-lg">Főoldal</a>
-          <a href="about_us.html" class="text-cyber-dark hover:text-cyber-green transition-colors block px-3 py-2 rounded-lg">Rólunk</a>
-          <a href="our_services.html" class="text-cyber-dark hover:text-cyber-green transition-colors block px-3 py-2 rounded-lg">Szolgáltatások</a>
-          <a href="web_development.html" class="bg-cyber-green text-white font-semibold block px-3 py-2 rounded-lg shadow-md">Webfejlesztés</a>
-          <a href="contact_us.html" class="text-cyber-dark hover:text-cyber-green transition-colors block px-3 py-2 rounded-lg">Kapcsolat</a>
+          <a href="{{ url_for('home') }}" class="text-cyber-dark hover:text-cyber-green transition-colors block px-3 py-2 rounded-lg">Főoldal</a>
+          <a href="{{ url_for('about') }}" class="text-cyber-dark hover:text-cyber-green transition-colors block px-3 py-2 rounded-lg">Rólunk</a>
+          <a href="{{ url_for('services') }}" class="text-cyber-dark hover:text-cyber-green transition-colors block px-3 py-2 rounded-lg">Szolgáltatások</a>
+          <a href="{{ url_for('web_development') }}" class="bg-cyber-green text-white font-semibold block px-3 py-2 rounded-lg shadow-md">Webfejlesztés</a>
+          <a href="{{ url_for('contact') }}" class="text-cyber-dark hover:text-cyber-green transition-colors block px-3 py-2 rounded-lg">Kapcsolat</a>
         </div>
       </div>
     </div>
@@ -115,7 +117,7 @@
            class="bg-cyber-green text-white px-8 py-4 rounded-lg font-bold hover:bg-green-600 transition-all duration-300 transform hover:scale-105 shadow-2xl">
           Megoldások megnézése
         </a>
-        <a href="our_services.html"
+        <a href="{{ url_for('services') }}"
            class="border-2 border-cyber-green text-cyber-green px-8 py-4 rounded-lg font-semibold hover:bg-cyber-green hover:text-white transition-all duration-300 bg-white/5 backdrop-blur-sm">
           Vissza a szolgáltatásokhoz
         </a>
@@ -167,7 +169,7 @@
             <li>✅ Kapcsolat / CTA blokkok</li>
             <li>✅ Analitika bekötés igény szerint</li>
           </ul>
-          <a href="contact_us.html"
+          <a href="{{ url_for('contact') }}"
              class="inline-flex w-full justify-center items-center gap-2 bg-cyber-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition">
             Kérek ajánlatot
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -187,7 +189,7 @@
               <li>✅ Adatbázis + API</li>
               <li>✅ Integrációk (email, export, stb.)</li>
             </ul>
-            <a href="contact_us.html"
+            <a href="{{ url_for('contact') }}"
                class="inline-flex w-full justify-center items-center gap-2 bg-cyber-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition">
               Beszéljünk a webappról
               <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -206,7 +208,7 @@
             <li>✅ Biztonsági javítások</li>
             <li>✅ Strukturált bővítés</li>
           </ul>
-          <a href="contact_us.html"
+          <a href="{{ url_for('contact') }}"
              class="inline-flex w-full justify-center items-center gap-2 bg-cyber-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition">
             Nézzük meg együtt
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -222,7 +224,7 @@
           <p class="text-xl font-semibold text-cyber-dark mb-3">
             Szeretnél egy weboldalt/webappot, ami tényleg dolgozik helyetted?
           </p>
-          <a href="contact_us.html"
+          <a href="{{ url_for('contact') }}"
              class="inline-flex items-center gap-2 bg-cyber-green text-white px-8 py-4 rounded-lg font-bold hover:bg-green-600 transition transform hover:scale-105 shadow-lg">
             Indítsuk el a projektet
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -235,10 +237,7 @@
     </div>
   </section>
 
-  <!-- Footer: használd a meglévő footer-edet változtatás nélkül -->
-  <!-- (Itt rövidítve hagyom a helyet: másold ide az index.html footer teljes blokkot + modalokat + modal JS-t.) -->
-
-  <!-- >>> IDE MÁSOLD BE AZ INDEX.HTML-BŐL A TELJES FOOTER + MODALOK + MODAL JS RÉSZT <<< -->
+  <!-- FOOTER BLOKKOT IDE ILLESZD BE AZ INDEX.HTML-BŐL, és abban is érdemes a linkeket url_for()-ra átírni. -->
 
   <script>
     // Mobile menu
