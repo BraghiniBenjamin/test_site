@@ -375,18 +375,30 @@ def health():
 # ==================================================
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DEMO_ROOT = os.path.join(BASE_DIR, "test_site", "demo_oldalak")
+TEMPLATES_ROOT = os.path.join(BASE_DIR, "templates")
 
-@app.get("/demo_oldalak/<path:filename>")
-def demo_oldalak_files(filename):
-    # path traversal védelem
+@app.get("/demo/<name>")
+def demo_page(name):
+    safe = str(pathlib.PurePosixPath(name))
+    if "/" in safe or "\\" in safe or safe.startswith("."):
+        abort(404)
+
+    full_html = os.path.join(TEMPLATES_ROOT, f"{safe}.html")
+    if not os.path.isfile(full_html):
+        abort(404)
+
+    return render_template(f"{safe}.html")
+
+
+@app.get("/demo_assets/<path:filename>")
+def demo_assets(filename):
     safe = str(pathlib.PurePosixPath(filename))
-    full_path = os.path.join(DEMO_ROOT, safe)
-
+    full_path = os.path.join(TEMPLATES_ROOT, safe)
     if not os.path.isfile(full_path):
         abort(404)
 
-    return send_from_directory(DEMO_ROOT, safe)
+    return send_from_directory(TEMPLATES_ROOT, safe)
+
 
 
 # ==================================================
