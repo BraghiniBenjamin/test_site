@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="static/images/cc_logo_bw.png" />
+  <title>CyberCare - Egyedi webfejlesztés</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'cyber-green': '#00a355',
+            'cyber-dark': '#2a2c28'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .scroll-smooth { scroll-behavior: smooth; }
+
+    .hero-bg {
+      background: linear-gradient(135deg, #000000 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 80%, rgba(0, 163, 85, 0.30) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 163, 85, 0.20) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(0, 163, 85, 0.10) 0%, transparent 50%);
+      animation: pulse 4s ease-in-out infinite alternate;
+    }
+    @keyframes pulse { 0% {opacity:.5;} 100% {opacity:1;} }
+
+    .cyber-title {
+      font-family: 'Orbitron', monospace;
+      text-shadow: 0 0 20px rgba(0, 163, 85, 0.5), 0 0 40px rgba(0, 163, 85, 0.3);
+      animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+    @keyframes titleGlow {
+      0% { text-shadow: 0 0 20px rgba(0, 163, 85, 0.5), 0 0 40px rgba(0, 163, 85, 0.3); }
+      100% { text-shadow: 0 0 30px rgba(0, 163, 85, 0.8), 0 0 60px rgba(0, 163, 85, 0.5); }
+    }
+
+    .service-card { transition: all .3s ease; }
+    .service-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0, 163, 85, 0.1); }
+  </style>
+</head>
+
+<body class="scroll-smooth bg-white">
+
+  <!-- Navigation (ugyanaz a header) -->
+  <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="index.html" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+          <div class="w-10 h-10 flex items-center justify-center">
+            <img src="static/images/cc_logo_bw.png" alt="CyberCare Logo" class="w-8 h-8">
+          </div>
+          <span class="text-xl font-bold text-cyber-dark">CyberCare</span>
+        </a>
+
+        <div class="hidden md:flex space-x-8">
+          <a href="index.html" class="text-cyber-dark hover:text-cyber-green transition-colors px-3 py-2 rounded-lg">Főoldal</a>
+          <a href="about_us.html" class="text-cyber-dark hover:text-cyber-green transition-colors px-3 py-2 rounded-lg">Rólunk</a>
+          <a href="our_services.html" class="text-cyber-dark hover:text-cyber-green transition-colors px-3 py-2 rounded-lg">Szolgáltatások</a>
+          <a href="web_development.html" class="bg-cyber-green text-white font-semibold px-3 py-2 rounded-lg shadow-md">Webfejlesztés</a>
+          <a href="contact_us.html" class="text-cyber-dark hover:text-cyber-green transition-colors px-3 py-2 rounded-lg">Kapcsolat</a>
+        </div>
+
+        <div class="md:hidden">
+          <button id="mobile-menu-button" class="text-cyber-dark hover:text-cyber-green transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-100">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+          <a href="index.html" class="text-cyber-dark hover:text-cyber-green transition-colors block px-3 py-2 rounded-lg">Főoldal</a>
+          <a href="about_us.html" class="text-cyber-dark hover:text-cyber-green transition-colors block px-3 py-2 rounded-lg">Rólunk</a>
+          <a href="our_services.html" class="text-cyber-dark hover:text-cyber-green transition-colors block px-3 py-2 rounded-lg">Szolgáltatások</a>
+          <a href="web_development.html" class="bg-cyber-green text-white font-semibold block px-3 py-2 rounded-lg shadow-md">Webfejlesztés</a>
+          <a href="contact_us.html" class="text-cyber-dark hover:text-cyber-green transition-colors block px-3 py-2 rounded-lg">Kapcsolat</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero-bg pt-16 min-h-[60vh] flex items-center relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 py-16">
+      <h1 class="cyber-title text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
+        Egyedi <span class="text-cyber-green">webfejlesztés</span>
+      </h1>
+      <p class="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
+        Modern, gyors és bővíthető weboldalak és webappok — pontosan a te igényeidre szabva.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mt-10">
+        <a href="#packages"
+           class="bg-cyber-green text-white px-8 py-4 rounded-lg font-bold hover:bg-green-600 transition-all duration-300 transform hover:scale-105 shadow-2xl">
+          Megoldások megnézése
+        </a>
+        <a href="our_services.html"
+           class="border-2 border-cyber-green text-cyber-green px-8 py-4 rounded-lg font-semibold hover:bg-cyber-green hover:text-white transition-all duration-300 bg-white/5 backdrop-blur-sm">
+          Vissza a szolgáltatásokhoz
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Highlights -->
+      <div class="grid md:grid-cols-3 gap-8 mb-16">
+        <div class="service-card bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+          <h3 class="text-xl font-bold text-cyber-dark mb-3">Weboldalak</h3>
+          <p class="text-gray-600 leading-relaxed">
+            Céges weboldal, landing page, portfólió — reszponzív, gyors, SEO-barát felépítéssel.
+          </p>
+        </div>
+
+        <div class="service-card bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+          <h3 class="text-xl font-bold text-cyber-dark mb-3">Webappok</h3>
+          <p class="text-gray-600 leading-relaxed">
+            Ügyfélportál, belső admin felület, foglaló rendszer, dashboard — a folyamatokra tervezve.
+          </p>
+        </div>
+
+        <div class="service-card bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+          <h3 class="text-xl font-bold text-cyber-dark mb-3">Karbantartás + továbbfejlesztés</h3>
+          <p class="text-gray-600 leading-relaxed">
+            Biztonsági frissítések, új funkciók, integrációk — hogy a rendszered hosszú távon is stabil maradjon.
+          </p>
+        </div>
+      </div>
+
+      <!-- Packages -->
+      <div id="packages" class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-cyber-dark mb-4">Mit tudunk elkészíteni?</h2>
+        <div class="w-16 h-1 bg-cyber-green mx-auto"></div>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-8">
+        <div class="service-card bg-gray-50 p-8 rounded-xl border border-gray-100">
+          <h3 class="text-2xl font-bold text-cyber-dark mb-2">Landing / Céges oldal</h3>
+          <p class="text-gray-600 mb-6">Gyors indulás, profi megjelenés, konverzióra optimalizálva.</p>
+          <ul class="space-y-2 text-gray-700 mb-8">
+            <li>✅ Reszponzív design</li>
+            <li>✅ SEO alapok</li>
+            <li>✅ Kapcsolat / CTA blokkok</li>
+            <li>✅ Analitika bekötés igény szerint</li>
+          </ul>
+          <a href="contact_us.html"
+             class="inline-flex w-full justify-center items-center gap-2 bg-cyber-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition">
+            Kérek ajánlatot
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="service-card bg-white p-8 rounded-xl shadow-lg border border-cyber-green/20 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-cyber-green/10 to-transparent -translate-x-full hover:translate-x-full transition-transform duration-700"></div>
+          <div class="relative z-10">
+            <h3 class="text-2xl font-bold text-cyber-dark mb-2">Egyedi webapp</h3>
+            <p class="text-gray-600 mb-6">Komplexebb üzleti igényekre: folyamat, jogosultság, adatkezelés.</p>
+            <ul class="space-y-2 text-gray-700 mb-8">
+              <li>✅ Admin felület</li>
+              <li>✅ Jogosultság / szerepkörök</li>
+              <li>✅ Adatbázis + API</li>
+              <li>✅ Integrációk (email, export, stb.)</li>
+            </ul>
+            <a href="contact_us.html"
+               class="inline-flex w-full justify-center items-center gap-2 bg-cyber-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition">
+              Beszéljünk a webappról
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="service-card bg-gray-50 p-8 rounded-xl border border-gray-100">
+          <h3 class="text-2xl font-bold text-cyber-dark mb-2">Modernizálás / újratervezés</h3>
+          <p class="text-gray-600 mb-6">Ha van már weboldalad, de lassú, elavult vagy nehezen bővíthető.</p>
+          <ul class="space-y-2 text-gray-700 mb-8">
+            <li>✅ UX/UI frissítés</li>
+            <li>✅ Sebesség optimalizálás</li>
+            <li>✅ Biztonsági javítások</li>
+            <li>✅ Strukturált bővítés</li>
+          </ul>
+          <a href="contact_us.html"
+             class="inline-flex w-full justify-center items-center gap-2 bg-cyber-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition">
+            Nézzük meg együtt
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="text-center mt-16">
+        <div class="bg-cyber-green/5 inline-block px-8 py-6 rounded-xl">
+          <p class="text-xl font-semibold text-cyber-dark mb-3">
+            Szeretnél egy weboldalt/webappot, ami tényleg dolgozik helyetted?
+          </p>
+          <a href="contact_us.html"
+             class="inline-flex items-center gap-2 bg-cyber-green text-white px-8 py-4 rounded-lg font-bold hover:bg-green-600 transition transform hover:scale-105 shadow-lg">
+            Indítsuk el a projektet
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer: használd a meglévő footer-edet változtatás nélkül -->
+  <!-- (Itt rövidítve hagyom a helyet: másold ide az index.html footer teljes blokkot + modalokat + modal JS-t.) -->
+
+  <!-- >>> IDE MÁSOLD BE AZ INDEX.HTML-BŐL A TELJES FOOTER + MODALOK + MODAL JS RÉSZT <<< -->
+
+  <script>
+    // Mobile menu
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', function() {
+          mobileMenu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', function(event) {
+          if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+            mobileMenu.classList.add('hidden');
+          }
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
