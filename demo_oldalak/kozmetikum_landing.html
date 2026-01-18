@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="hu" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lumière - Prémium Bőrápolás</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;family=Italiana&amp;family=Cinzel:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    .font-display {
+      font-family: 'Cinzel', 'Italiana', Georgia, serif;
+    }
+    
+    .font-body {
+      font-family: 'Montserrat', 'Helvetica Neue', sans-serif;
+    }
+    
+    .hero-bg {
+      background: linear-gradient(135deg, #fff5f7 0%, #ffe8f0 50%, #fff0f5 100%);
+      position: relative;
+    }
+    
+    .glow-text {
+      text-shadow: 0 0 40px rgba(255, 182, 193, 0.3);
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #ff69b4 0%, #ff1493 50%, #db7093 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+      box-shadow: 0 10px 30px rgba(255, 20, 147, 0.3);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(255, 20, 147, 0.4);
+    }
+    
+    .btn-secondary {
+      border: 2px solid #ff69b4;
+      color: #ff1493;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-secondary:hover {
+      background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+      color: white;
+    }
+    
+    .product-card {
+      background: linear-gradient(145deg, #ffffff 0%, #fff5f7 100%);
+      border: 1px solid rgba(255, 105, 180, 0.2);
+      box-shadow: 0 20px 60px rgba(255, 105, 180, 0.15);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .product-card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 30px 80px rgba(255, 105, 180, 0.25);
+      border-color: rgba(255, 105, 180, 0.5);
+    }
+    
+    .benefit-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #ffe8f0 0%, #ffb6c1 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      transition: all 0.4s ease;
+    }
+    
+    .benefit-card:hover .benefit-icon {
+      transform: rotate(360deg) scale(1.1);
+      background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+    }
+    
+    .testimonial-card {
+      background: linear-gradient(145deg, #ffffff 0%, #fffaf0 100%);
+      border-left: 4px solid #ff69b4;
+      box-shadow: 0 10px 40px rgba(255, 105, 180, 0.1);
+    }
+    
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #ffd700;
+      border-radius: 50%;
+      animation: sparkle 2s ease-in-out infinite;
+    }
+    
+    @keyframes sparkle {
+      0%, 100% {
+        opacity: 0;
+        transform: scale(0);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes shimmer {
+      0% {
+        background-position: -200% center;
+      }
+      100% {
+        background-position: 200% center;
+      }
+    }
+    
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    .animate-fade-in-up {
+      animation: fadeInUp 1s ease forwards;
+    }
+    
+    .shimmer-bg {
+      background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0) 0%, 
+        rgba(255, 255, 255, 0.8) 50%, 
+        rgba(255, 255, 255, 0) 100%);
+      background-size: 200% 100%;
+      animation: shimmer 3s linear infinite;
+    }
+    
+    .decorative-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.3;
+      z-index: 0;
+    }
+    
+    .blob-1 {
+      width: 400px;
+      height: 400px;
+      background: linear-gradient(135deg, #ffb6c1 0%, #ff69b4 100%);
+      top: -100px;
+      right: -100px;
+    }
+    
+    .blob-2 {
+      width: 300px;
+      height: 300px;
+      background: linear-gradient(135deg, #ffd1dc 0%, #ffb6c1 100%);
+      bottom: -80px;
+      left: -80px;
+    }
+    
+    .price-tag {
+      background: linear-gradient(135deg, #ff1493 0%, #db7093 100%);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(255, 20, 147, 0.3);
+    }
+    
+    .badge {
+      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+      color: #8b4513;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+    }
+    
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #fff5f7;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #ff69b4 0%, #ff1493 100%);
+      border-radius: 4px;
+    }
+    
+    .star-rating {
+      color: #ffd700;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-body text-gray-800 overflow-auto">
+  <div class="min-h-full w-full"><!-- Navigation -->
+   <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+     <h1 id="nav-brand" class="text-3xl font-display font-semibold gradient-text tracking-wider">LUMIÈRE</h1>
+     <div class="flex gap-6 items-center"><a href="#products" class="text-sm font-medium hover:text-pink-600 transition-colors uppercase tracking-wide">Termékek</a> <a href="#benefits" class="text-sm font-medium hover:text-pink-600 transition-colors uppercase tracking-wide">Előnyök</a> <button class="btn-secondary px-6 py-2 rounded-full text-sm font-semibold uppercase tracking-wide">Vásárlás</button>
+     </div>
+    </div>
+   </nav><!-- Hero Section -->
+   <header class="hero-bg relative pt-32 pb-24 px-6 overflow-hidden">
+    <div class="decorative-blob blob-1"></div>
+    <div class="decorative-blob blob-2"></div><!-- Sparkles -->
+    <div class="sparkle" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+    <div class="sparkle" style="top: 40%; right: 15%; animation-delay: 0.5s;"></div>
+    <div class="sparkle" style="top: 60%; left: 20%; animation-delay: 1s;"></div>
+    <div class="sparkle" style="top: 30%; right: 25%; animation-delay: 1.5s;"></div>
+    <div class="max-w-6xl mx-auto text-center relative z-10">
+     <div class="animate-fade-in-up" style="animation-delay: 0.1s;">
+      <div class="inline-block mb-6"><span class="badge">✨ Természetes Összetevők</span>
+      </div>
+      <h2 id="hero-title" class="text-6xl md:text-7xl lg:text-8xl font-display font-semibold mb-6 glow-text leading-tight">Ragyogj <span class="gradient-text">minden nap</span></h2>
+      <p id="hero-subtitle" class="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto font-light leading-relaxed">Prémium bőrápolás természetes összetevőkkel, ami meghozza a benned rejlő természetes szépséget</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"><button id="cta-main-button" class="btn-primary px-10 py-4 rounded-full text-white text-lg font-semibold uppercase tracking-wide"> Fedezd fel a kollekciót </button> <button class="btn-secondary px-10 py-4 rounded-full text-lg font-semibold uppercase tracking-wide"> Tudj meg többet </button>
+      </div>
+      <div class="flex justify-center gap-12 text-sm text-gray-600">
+       <div>
+        <div class="text-3xl font-bold gradient-text mb-1">
+         100%
+        </div>
+        <div class="uppercase tracking-wider">
+         Természetes
+        </div>
+       </div>
+       <div>
+        <div class="text-3xl font-bold gradient-text mb-1">
+         50K+
+        </div>
+        <div class="uppercase tracking-wider">
+         Elégedett Vásárló
+        </div>
+       </div>
+       <div>
+        <div class="text-3xl font-bold gradient-text mb-1">
+         4.9★
+        </div>
+        <div class="uppercase tracking-wider">
+         Értékelés
+        </div>
+       </div>
+      </div>
+     </div><!-- Decorative Product Image Placeholder -->
+     <div class="mt-16 animate-float">
+      <div class="w-64 h-64 mx-auto bg-gradient-to-br from-pink-100 to-purple-100 rounded-full shadow-2xl flex items-center justify-center">
+       <svg class="w-32 h-32 text-pink-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+       </svg>
+      </div>
+     </div>
+    </div>
+   </header><!-- Products Section -->
+   <section id="products" class="py-24 px-6 bg-white">
+    <div class="max-w-7xl mx-auto">
+     <div class="text-center mb-16">
+      <h3 id="products-title" class="text-5xl md:text-6xl font-display font-semibold mb-4 gradient-text">A Kollekció</h3>
+      <p class="text-gray-600 text-lg max-w-2xl mx-auto">Három lépés a tökéletes bőrhöz</p>
+     </div>
+     <div class="grid md:grid-cols-3 gap-10"><!-- Product 1 -->
+      <div class="product-card rounded-3xl p-8 text-center">
+       <div class="mb-6 relative">
+        <div class="shimmer-bg absolute inset-0 rounded-2xl"></div>
+        <div class="w-48 h-48 mx-auto bg-gradient-to-br from-pink-200 to-purple-200 rounded-2xl shadow-lg flex items-center justify-center relative z-10">
+         <svg class="w-20 h-20 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 18c-4.41-1.08-7-5.37-7-9.5V8.3l7-3.11 7 3.11v2.2c0 4.13-2.59 8.42-7 9.5z" />
+         </svg>
+        </div>
+       </div><span class="badge mb-4">Bestseller</span>
+       <h4 class="text-2xl font-display font-semibold mb-3 text-gray-800">Luxury Serum</h4>
+       <p class="text-gray-600 mb-4 leading-relaxed text-sm">Intenzív hidratálás és bőrmegújítás hialuronsavval és C-vitaminnal</p>
+       <div class="star-rating mb-3 text-lg">
+        ★★★★★
+       </div>
+       <div class="price-tag text-xl mb-6">
+        15.990 Ft
+       </div><button class="w-full btn-primary py-3 rounded-full text-white font-semibold uppercase tracking-wide"> Kosárba </button>
+      </div><!-- Product 2 -->
+      <div class="product-card rounded-3xl p-8 text-center">
+       <div class="mb-6 relative">
+        <div class="w-48 h-48 mx-auto bg-gradient-to-br from-rose-200 to-pink-200 rounded-2xl shadow-lg flex items-center justify-center">
+         <svg class="w-20 h-20 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11z" />
+         </svg>
+        </div>
+       </div>
+       <h4 class="text-2xl font-display font-semibold mb-3 text-gray-800">Day Cream</h4>
+       <p class="text-gray-600 mb-4 leading-relaxed text-sm">Könnyű textúra SPF 30 védelemmel, tökéletes alapozó sminkalap</p>
+       <div class="star-rating mb-3 text-lg">
+        ★★★★★
+       </div>
+       <div class="price-tag text-xl mb-6">
+        12.490 Ft
+       </div><button class="w-full btn-primary py-3 rounded-full text-white font-semibold uppercase tracking-wide"> Kosárba </button>
+      </div><!-- Product 3 -->
+      <div class="product-card rounded-3xl p-8 text-center">
+       <div class="mb-6 relative">
+        <div class="w-48 h-48 mx-auto bg-gradient-to-br from-purple-200 to-indigo-200 rounded-2xl shadow-lg flex items-center justify-center">
+         <svg class="w-20 h-20 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
+         </svg>
+        </div>
+       </div><span class="badge mb-4">Új</span>
+       <h4 class="text-2xl font-display font-semibold mb-3 text-gray-800">Night Cream</h4>
+       <p class="text-gray-600 mb-4 leading-relaxed text-sm">Éjszakai regeneráció retinollal és peptidekkel a fiatalos bőrért</p>
+       <div class="star-rating mb-3 text-lg">
+        ★★★★★
+       </div>
+       <div class="price-tag text-xl mb-6">
+        13.990 Ft
+       </div><button class="w-full btn-primary py-3 rounded-full text-white font-semibold uppercase tracking-wide"> Kosárba </button>
+      </div>
+     </div>
+    </div>
+   </section><!-- Benefits Section -->
+   <section id="benefits" class="py-24 px-6 bg-gradient-to-br from-pink-50 to-purple-50">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-16">
+      <h3 id="benefits-title" class="text-5xl md:text-6xl font-display font-semibold mb-4 gradient-text">Miért a Lumière?</h3>
+      <p class="text-gray-600 text-lg">Amit különlegessé tesz minket</p>
+     </div>
+     <div class="grid md:grid-cols-4 gap-8">
+      <div class="benefit-card text-center">
+       <div class="benefit-icon">
+        <svg class="w-10 h-10 text-pink-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+       </div>
+       <h4 class="font-semibold text-lg mb-2">100% Természetes</h4>
+       <p class="text-gray-600 text-sm">Csak a legjobb természetes összetevők</p>
+      </div>
+      <div class="benefit-card text-center">
+       <div class="benefit-icon">
+        <svg class="w-10 h-10 text-pink-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+       </div>
+       <h4 class="font-semibold text-lg mb-2">Dermatológiailag</h4>
+       <p class="text-gray-600 text-sm">Minden bőrtípusra alkalmas</p>
+      </div>
+      <div class="benefit-card text-center">
+       <div class="benefit-icon">
+        <svg class="w-10 h-10 text-pink-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+        </svg>
+       </div>
+       <h4 class="font-semibold text-lg mb-2">Cruelty Free</h4>
+       <p class="text-gray-600 text-sm">Soha nem tesztelt állatokon</p>
+      </div>
+      <div class="benefit-card text-center">
+       <div class="benefit-icon">
+        <svg class="w-10 h-10 text-pink-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+       </div>
+       <h4 class="font-semibold text-lg mb-2">Pénzvisszafizetés</h4>
+       <p class="text-gray-600 text-sm">30 napos garancia</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Testimonials Section -->
+   <section class="py-24 px-6 bg-white">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-16">
+      <h3 id="testimonials-title" class="text-5xl md:text-6xl font-display font-semibold mb-4 gradient-text">Mit mondanak rólunk</h3>
+      <p class="text-gray-600 text-lg">Valódi vélemények valódi nőktől</p>
+     </div>
+     <div class="grid md:grid-cols-3 gap-8">
+      <div class="testimonial-card p-8 rounded-2xl">
+       <div class="star-rating mb-4 text-xl">
+        ★★★★★
+       </div>
+       <p class="text-gray-700 italic mb-6 leading-relaxed">"Életem legjobb bőrápolási döntése! A bőröm annyira ragyogó lett, hogy mindenki megkérdezi mi a titkom."</p>
+       <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-gradient-to-br from-pink-300 to-purple-300 rounded-full flex items-center justify-center text-white font-bold">
+         É.A
+        </div>
+        <div>
+         <div class="font-semibold">
+          Éva Anna
+         </div>
+         <div class="text-sm text-gray-500">
+          Budapest
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="testimonial-card p-8 rounded-2xl">
+       <div class="star-rating mb-4 text-xl">
+        ★★★★★
+       </div>
+       <p class="text-gray-700 italic mb-6 leading-relaxed">"Végre egy termék ami tényleg tartja amit ígér! A finom ráncaim láthatóan csökkentek 2 hét alatt."</p>
+       <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-gradient-to-br from-pink-300 to-purple-300 rounded-full flex items-center justify-center text-white font-bold">
+         K.M
+        </div>
+        <div>
+         <div class="font-semibold">
+          Kovács Mária
+         </div>
+         <div class="text-sm text-gray-500">
+          Debrecen
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="testimonial-card p-8 rounded-2xl">
+       <div class="star-rating mb-4 text-xl">
+        ★★★★★
+       </div>
+       <p class="text-gray-700 italic mb-6 leading-relaxed">"Érzékeny bőröm van, de ez a szérum egyáltalán nem irritálta. Imádom a természetes összetevőket!"</p>
+       <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-gradient-to-br from-pink-300 to-purple-300 rounded-full flex items-center justify-center text-white font-bold">
+         N.Zs
+        </div>
+        <div>
+         <div class="font-semibold">
+          Nagy Zsófia
+         </div>
+         <div class="text-sm text-gray-500">
+          Szeged
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- CTA Section -->
+   <section class="py-24 px-6 bg-gradient-to-br from-pink-500 via-pink-400 to-purple-500 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-20">
+     <div class="absolute top-10 left-10 w-32 h-32 bg-white rounded-full blur-3xl"></div>
+     <div class="absolute bottom-20 right-20 w-40 h-40 bg-white rounded-full blur-3xl"></div>
+    </div>
+    <div class="max-w-4xl mx-auto text-center relative z-10"><span class="badge mb-6 inline-block">⚡ Limitált Ajánlat</span>
+     <h3 id="footer-cta-title" class="text-5xl md:text-6xl font-display font-semibold text-white mb-6 leading-tight">Kezdd el a bőrápolási utazásod</h3>
+     <p class="text-xl text-white/90 mb-10 max-w-2xl mx-auto">Rendelj most és kapj 20% kedvezményt első vásárlásodból + ingyenes szállítást!</p>
+     <div class="flex flex-col sm:flex-row gap-4 justify-center"><button class="bg-white text-pink-600 px-12 py-4 rounded-full text-lg font-bold uppercase tracking-wide hover:scale-105 transition-transform shadow-2xl"> Vásárlás most </button> <button class="border-2 border-white text-white px-12 py-4 rounded-full text-lg font-bold uppercase tracking-wide hover:bg-white hover:text-pink-600 transition-all"> Ajándék szett </button>
+     </div>
+     <p class="text-white/80 text-sm mt-6">🎁 Minden rendeléshez luxus minta csomag ajándékba</p>
+    </div>
+   </section><!-- Footer -->
+   <footer class="bg-gray-900 text-white py-16 px-6">
+    <div class="max-w-6xl mx-auto">
+     <div class="grid md:grid-cols-4 gap-10 mb-12">
+      <div>
+       <h4 class="text-3xl font-display font-semibold gradient-text mb-4">LUMIÈRE</h4>
+       <p class="text-gray-400 text-sm leading-relaxed">Prémium természetes bőrápolás minden nőnek</p>
+      </div>
+      <div>
+       <h5 class="font-semibold text-lg mb-4">Termékek</h5>
+       <ul class="space-y-2 text-sm text-gray-400">
+        <li><a href="#" class="hover:text-pink-400 transition-colors">Arcápolás</a></li>
+        <li><a href="#" class="hover:text-pink-400 transition-colors">Testápolás</a></li>
+        <li><a href="#" class="hover:text-pink-400 transition-colors">Szett ajánlatok</a></li>
+        <li><a href="#" class="hover:text-pink-400 transition-colors">Újdonságok</a></li>
+       </ul>
+      </div>
+      <div>
+       <h5 class="font-semibold text-lg mb-4">Információk</h5>
+       <ul class="space-y-2 text-sm text-gray-400">
+        <li><a href="#" class="hover:text-pink-400 transition-colors">Rólunk</a></li>
+        <li><a href="#" class="hover:text-pink-400 transition-colors">Szállítás</a></li>
+        <li><a href="#" class="hover:text-pink-400 transition-colors">Visszaküldés</a></li>
+        <li><a href="#" class="hover:text-pink-400 transition-colors">GYIK</a></li>
+       </ul>
+      </div>
+      <div>
+       <h5 class="font-semibold text-lg mb-4">Kapcsolat</h5>
+       <p id="contact-email" class="text-sm text-gray-400 mb-3">hello@lumiere.hu</p>
+       <p class="text-sm text-gray-400 mb-4">+36 70 123 4567</p>
+       <div class="flex gap-3"><a href="#" class="w-10 h-10 bg-pink-600 hover:bg-pink-500 rounded-full flex items-center justify-center transition-colors">
+         <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+         </svg></a> <a href="#" class="w-10 h-10 bg-pink-600 hover:bg-pink-500 rounded-full flex items-center justify-center transition-colors">
+         <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+         </svg></a> <a href="#" class="w-10 h-10 bg-pink-600 hover:bg-pink-500 rounded-full flex items-center justify-center transition-colors">
+         <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z" />
+         </svg></a>
+       </div>
+      </div>
+     </div>
+     <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-500">
+      <p>© 2024 Lumière Cosmetics. Minden jog fenntartva. | Készítve 💕-tel</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    const defaultConfig = {
+      brand_name: 'LUMIÈRE',
+      hero_title: 'Ragyogj minden nap',
+      hero_subtitle: 'Prémium bőrápolás természetes összetevőkkel, ami meghozza a benned rejlő természetes szépséget',
+      cta_main: 'Fedezd fel a kollekciót',
+      products_title: 'A Kollekció',
+      benefits_title: 'Miért a Lumière?',
+      testimonials_title: 'Mit mondanak rólunk',
+      footer_cta: 'Kezdd el a bőrápolási utazásod',
+      contact_email: 'hello@lumiere.hu',
+      background_color: '#fff5f7',
+      card_color: '#ffffff',
+      text_color: '#1f2937',
+      accent_color: '#ff69b4',
+      secondary_color: '#ff1493',
+      font_family: 'Montserrat',
+      font_size: 16
+    };
+
+    async function onConfigChange(config) {
+      const navBrand = document.getElementById('nav-brand');
+      const heroTitle = document.getElementById('hero-title');
+      const heroSubtitle = document.getElementById('hero-subtitle');
+      const ctaMainButton = document.getElementById('cta-main-button');
+      const productsTitle = document.getElementById('products-title');
+      const benefitsTitle = document.getElementById('benefits-title');
+      const testimonialsTitle = document.getElementById('testimonials-title');
+      const footerCtaTitle = document.getElementById('footer-cta-title');
+      const contactEmail = document.getElementById('contact-email');
+
+      if (navBrand) navBrand.textContent = config.brand_name || defaultConfig.brand_name;
+      if (heroTitle) {
+        const titleText = config.hero_title || defaultConfig.hero_title;
+        const words = titleText.split(' ');
+        if (words.length >= 2) {
+          const lastTwoWords = words.slice(-2).join(' ');
+          const firstWords = words.slice(0, -2).join(' ');
+          heroTitle.innerHTML = `${firstWords} <span class="gradient-text">${lastTwoWords}</span>`;
+        } else {
+          heroTitle.innerHTML = `<span class="gradient-text">${titleText}</span>`;
+        }
+      }
+      if (heroSubtitle) heroSubtitle.textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
+      if (ctaMainButton) ctaMainButton.textContent = config.cta_main || defaultConfig.cta_main;
+      if (productsTitle) productsTitle.textContent = config.products_title || defaultConfig.products_title;
+      if (benefitsTitle) benefitsTitle.textContent = config.benefits_title || defaultConfig.benefits_title;
+      if (testimonialsTitle) testimonialsTitle.textContent = config.testimonials_title || defaultConfig.testimonials_title;
+      if (footerCtaTitle) footerCtaTitle.textContent = config.footer_cta || defaultConfig.footer_cta;
+      if (contactEmail) contactEmail.textContent = config.contact_email || defaultConfig.contact_email;
+
+      const bgColor = config.background_color || defaultConfig.background_color;
+      const cardColor = config.card_color || defaultConfig.card_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+      const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+
+      document.querySelectorAll('.hero-bg').forEach(el => {
+        el.style.background = `linear-gradient(135deg, ${bgColor} 0%, ${cardColor} 50%, ${bgColor} 100%)`;
+      });
+
+      document.querySelectorAll('.product-card').forEach(card => {
+        card.style.background = `linear-gradient(145deg, ${cardColor} 0%, ${bgColor} 100%)`;
+        card.style.borderColor = `${accentColor}33`;
+      });
+
+      document.querySelectorAll('.btn-primary').forEach(btn => {
+        btn.style.background = `linear-gradient(135deg, ${accentColor} 0%, ${secondaryColor} 100%)`;
+      });
+
+      document.querySelectorAll('.gradient-text').forEach(el => {
+        el.style.background = `linear-gradient(135deg, ${accentColor} 0%, ${secondaryColor} 50%, ${accentColor} 100%)`;
+        el.style.webkitBackgroundClip = 'text';
+        el.style.webkitTextFillColor = 'transparent';
+        el.style.backgroundClip = 'text';
+      });
+
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = 'Helvetica Neue, sans-serif';
+      const fontStack = `${customFont}, ${baseFontStack}`;
+      
+      document.body.style.fontFamily = fontStack;
+
+      const baseSize = config.font_size || defaultConfig.font_size;
+      document.body.style.fontSize = `${baseSize}px`;
+      document.querySelectorAll('h2').forEach(el => {
+        el.style.fontSize = `${baseSize * 4}px`;
+      });
+      document.querySelectorAll('h3').forEach(el => {
+        el.style.fontSize = `${baseSize * 3}px`;
+      });
+      document.querySelectorAll('h4').forEach(el => {
+        el.style.fontSize = `${baseSize * 1.5}px`;
+      });
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => config.card_color || defaultConfig.card_color,
+            set: (value) => {
+              config.card_color = value;
+              window.elementSdk.setConfig({ card_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              config.accent_color = value;
+              window.elementSdk.setConfig({ accent_color: value });
+            }
+          },
+          {
+            get: () => config.secondary_color || defaultConfig.secondary_color,
+            set: (value) => {
+              config.secondary_color = value;
+              window.elementSdk.setConfig({ secondary_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => {
+            config.font_family = value;
+            window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => {
+            config.font_size = value;
+            window.elementSdk.setConfig({ font_size: value });
+          }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['brand_name', config.brand_name || defaultConfig.brand_name],
+        ['hero_title', config.hero_title || defaultConfig.hero_title],
+        ['hero_subtitle', config.hero_subtitle || defaultConfig.hero_subtitle],
+        ['cta_main', config.cta_main || defaultConfig.cta_main],
+        ['products_title', config.products_title || defaultConfig.products_title],
+        ['benefits_title', config.benefits_title || defaultConfig.benefits_title],
+        ['testimonials_title', config.testimonials_title || defaultConfig.testimonials_title],
+        ['footer_cta', config.footer_cta || defaultConfig.footer_cta],
+        ['contact_email', config.contact_email || defaultConfig.contact_email]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bfe9eb2853c6853',t:'MTc2ODc0NDg0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
