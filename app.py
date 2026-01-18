@@ -125,6 +125,9 @@ def services_alias():
 def contact_alias():
     return render_template("contact_us.html")
 
+@app.route("/web-fejlesztes")
+def web_fejlesztes():
+    return render_template("web_development.html")
 
 # ==================================================
 # API
