@@ -91,43 +91,68 @@ def _response_err(message: str, status: int = 400):
 # ==================================================
 # ROUTES (PAGES)
 # ==================================================
+
 @app.get("/")
-def root():
+def home():
     return render_template("index.html")
 
-# Nav linkek miatt (index.html / about_us.html / stb.)
+@app.get("/rolunk")
+def about():
+    return render_template("about_us.html")
+
+@app.get("/szolgaltatasok")
+def services():
+    return render_template("our_services.html")
+
+@app.get("/webfejlesztes")
+def web_development():
+    return render_template("web_development.html")
+
+@app.get("/kapcsolat")
+def contact():
+    return render_template("contact_us.html")
+
+
+# ==================================================
+# LEGACY / COMPAT (régi .html linkek -> új útvonal)
+# ==================================================
 @app.get("/index.html")
-def page_index():
-    return render_template("index.html")
+def legacy_index():
+    return redirect(url_for("home"), code=301)
 
 @app.get("/about_us.html")
-def page_about():
-    return render_template("about_us.html")
+def legacy_about():
+    return redirect(url_for("about"), code=301)
 
 @app.get("/our_services.html")
-def page_services():
-    return render_template("our_services.html")
+def legacy_services():
+    return redirect(url_for("services"), code=301)
+
+@app.get("/web_development.html")
+def legacy_webdev():
+    return redirect(url_for("web_development"), code=301)
 
 @app.get("/contact_us.html")
-def page_contact():
-    return render_template("contact_us.html")
+def legacy_contact():
+    return redirect(url_for("contact"), code=301)
 
-# opcionális “szebb” útvonalak
+# opcionális régi aliasok, ha már kint vannak valahol:
 @app.get("/about")
-def about_alias():
-    return render_template("about_us.html")
+def legacy_about_alias():
+    return redirect(url_for("about"), code=301)
 
 @app.get("/services")
-def services_alias():
-    return render_template("our_services.html")
+def legacy_services_alias():
+    return redirect(url_for("services"), code=301)
 
 @app.get("/contact")
-def contact_alias():
-    return render_template("contact_us.html")
+def legacy_contact_alias():
+    return redirect(url_for("contact"), code=301)
 
-@app.route("/web-fejlesztes")
-def web_fejlesztes():
-    return render_template("web_development.html")
+# ha már használtad ezt:
+@app.get("/web-fejlesztes")
+def legacy_webfejlesztes():
+    return redirect(url_for("web_development"), code=301)
 
 # ==================================================
 # API
