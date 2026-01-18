@@ -120,6 +120,9 @@ def services():
 def services_legacy_hu():
     return redirect(url_for("services"), code=301)
 
+@app.get("/page_index")
+def page_index():
+    return redirect(url_for("home"), code=301)
 
 
 @app.get("/webfejlesztes")
