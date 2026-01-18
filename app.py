@@ -2,6 +2,8 @@ import os
 import html as html_escape
 import requests
 from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask import send_from_directory, abort
+import pathlib
 
 app = Flask(__name__)
 
@@ -374,24 +376,16 @@ def health():
 
 DEMO_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "demo_oldalak")
 
-@app.get("/demo/<demo_slug>/")
-def demo_index(demo_slug):
-    safe_slug = pathlib.PurePosixPath(demo_slug).name  # path traversal ellen
-    demo_dir = os.path.join(DEMO_ROOT, safe_slug)
-    index_path = os.path.join(demo_dir, "index.html")
-    if not os.path.isdir(demo_dir) or not os.path.isfile(index_path):
-        abort(404)
-    return send_from_directory(demo_dir, "index.html")
+@app.get("/demo/<path:filename>")
+def demo_files(filename):
+    # path traversal elleni védelem
+    safe = str(pathlib.PurePosixPath(filename))
+    full_path = os.path.join(DEMO_ROOT, safe)
 
-@app.get("/demo/<demo_slug>/<path:filename>")
-def demo_files(demo_slug, filename):
-    safe_slug = pathlib.PurePosixPath(demo_slug).name
-    safe_file = str(pathlib.PurePosixPath(filename))  # relatív marad
-    demo_dir = os.path.join(DEMO_ROOT, safe_slug)
-    file_path = os.path.join(demo_dir, safe_file)
-    if not os.path.isdir(demo_dir) or not os.path.isfile(file_path):
+    if not os.path.isfile(full_path):
         abort(404)
-    return send_from_directory(demo_dir, safe_file)
+
+    return send_from_directory(DEMO_ROOT, safe)
 
 
 # ==================================================
