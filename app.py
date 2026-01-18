@@ -1,7 +1,7 @@
 import os
 import html as html_escape
 import requests
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 
 app = Flask(__name__)
 
@@ -48,6 +48,7 @@ def send_email(to_email: str, subject: str, html: str, text_msg: str | None = No
 def _safe(s: str) -> str:
     return html_escape.escape((s or "").strip())
 
+
 def _read_contact_payload():
     """
     Frontend kompatibilitás:
@@ -80,9 +81,11 @@ def _read_contact_payload():
         "page": page,
     }
 
+
 def _response_ok(message: str):
     # a frontended data.success-t figyel
     return jsonify({"ok": True, "success": True, "message": message})
+
 
 def _response_err(message: str, status: int = 400):
     return jsonify({"ok": False, "success": False, "message": message, "error": message}), status
@@ -92,21 +95,32 @@ def _response_err(message: str, status: int = 400):
 # ROUTES (PAGES)
 # ==================================================
 
+# A template-ben használt url_for('root') miatt:
 @app.get("/")
+def root():
+    return render_template("index.html")
+
+
+# A template-ben használt url_for('home') miatt:
+@app.get("/home")
 def home():
     return render_template("index.html")
+
 
 @app.get("/rolunk")
 def about():
     return render_template("about_us.html")
 
+
 @app.get("/szolgaltatasok")
 def services():
     return render_template("our_services.html")
 
+
 @app.get("/webfejlesztes")
 def web_development():
     return render_template("web_development.html")
+
 
 @app.get("/kapcsolat")
 def contact():
@@ -114,45 +128,68 @@ def contact():
 
 
 # ==================================================
+# EXTRA ALIASOK (ha többféle URL-ed is kint van már)
+# ==================================================
+
+# footerben /szolgaltatasaink is előfordulhat
+@app.get("/szolgaltatasaink")
+def services_hu_alias():
+    return redirect(url_for("services"), code=301)
+
+
+# /web-fejlesztes (slugos) -> webfejlesztes oldal
+@app.get("/web-fejlesztes")
+def web_fejlesztes():
+    return redirect(url_for("web_development"), code=301)
+
+
+# ==================================================
+# TEMPLATE-ALIAS ENDPOINTOK (a HTML-ben használt url_for(...) miatt)
+# ==================================================
+
+# index.html-ben: url_for('about_alias') stb.
+@app.get("/about")
+def about_alias():
+    return redirect(url_for("about"), code=301)
+
+
+@app.get("/services")
+def services_alias():
+    return redirect(url_for("services"), code=301)
+
+
+@app.get("/contact")
+def contact_alias():
+    return redirect(url_for("contact"), code=301)
+
+
+# ==================================================
 # LEGACY / COMPAT (régi .html linkek -> új útvonal)
 # ==================================================
 @app.get("/index.html")
 def legacy_index():
-    return redirect(url_for("home"), code=301)
+    return redirect(url_for("root"), code=301)
+
 
 @app.get("/about_us.html")
 def legacy_about():
     return redirect(url_for("about"), code=301)
 
+
 @app.get("/our_services.html")
 def legacy_services():
     return redirect(url_for("services"), code=301)
+
 
 @app.get("/web_development.html")
 def legacy_webdev():
     return redirect(url_for("web_development"), code=301)
 
+
 @app.get("/contact_us.html")
 def legacy_contact():
     return redirect(url_for("contact"), code=301)
 
-# opcionális régi aliasok, ha már kint vannak valahol:
-@app.get("/about")
-def legacy_about_alias():
-    return redirect(url_for("about"), code=301)
-
-@app.get("/services")
-def legacy_services_alias():
-    return redirect(url_for("services"), code=301)
-
-@app.get("/contact")
-def legacy_contact_alias():
-    return redirect(url_for("contact"), code=301)
-
-# ha már használtad ezt:
-@app.get("/web-fejlesztes")
-def legacy_webfejlesztes():
-    return redirect(url_for("web_development"), code=301)
 
 # ==================================================
 # API
@@ -311,7 +348,6 @@ def api_contact():
         return _response_err(f"Email hiba: {e}", 503)
 
     return _response_ok("Köszönjük! Üzenetét megkaptuk, hamarosan válaszolunk.")
-
 
 
 @app.get("/health")
