@@ -485,6 +485,27 @@ def demo_assets(filename):
 
     return send_from_directory(TEMPLATES_ROOT, safe)
 
+@app.get("/ai-chatbot")
+def ai_chatbot_page():
+    return render_template("ai_chatbot.html")
+    
+@app.get("/api/kb/all")
+def api_kb_all():
+    rows = KBEntry.query.order_by(KBEntry.id.asc()).all()
+    return jsonify({
+        "ok": True,
+        "items": [
+            {
+                "id": r.id,
+                "title": r.title,
+                "tags": r.tags or "",
+                "content": r.content or ""
+            }
+            for r in rows
+        ]
+    })
+
+
 
 # ==================================================
 # RUN
