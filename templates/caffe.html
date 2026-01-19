@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="hu" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aroma Kávéház</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Lora:wght@400;500&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    .font-display {
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+    .font-body {
+      font-family: 'Lora', Georgia, serif;
+    }
+    .steam {
+      animation: steam 3s ease-in-out infinite;
+    }
+    @keyframes steam {
+      0%, 100% { opacity: 0.4; transform: translateY(0) scaleX(1); }
+      50% { opacity: 0.8; transform: translateY(-8px) scaleX(1.1); }
+    }
+    .float {
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+    }
+    .menu-card:hover {
+      transform: translateY(-4px);
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-body">
+  <div id="app-wrapper" class="w-full h-full overflow-auto"><!-- Navigation -->
+   <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" style="background: rgba(44, 31, 22, 0.95); backdrop-filter: blur(10px);">
+    <div class="max-w-6xl mx-auto px-6 py-4">
+     <div class="flex items-center justify-between"><a href="#hero" id="nav-logo" class="font-display text-2xl font-bold" style="color: #E8DDD4;">Aroma Kávéház</a>
+      <div class="hidden md:flex items-center gap-8"><a href="#menu" class="text-sm tracking-wide hover:opacity-80 transition-opacity" style="color: #E8DDD4;">Kínálat</a> <a href="#about" class="text-sm tracking-wide hover:opacity-80 transition-opacity" style="color: #E8DDD4;">Rólunk</a> <a href="#gallery" class="text-sm tracking-wide hover:opacity-80 transition-opacity" style="color: #E8DDD4;">Galéria</a> <a href="#contact" class="px-5 py-2 rounded-full text-sm font-medium transition-all hover:scale-105" style="background: #C4956A; color: #2C1F16;">Asztalfoglalás</a>
+      </div><button id="mobile-menu-btn" class="md:hidden p-2" style="color: #E8DDD4;">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+       </svg></button>
+     </div>
+    </div><!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+     <div class="flex flex-col gap-4"><a href="#menu" class="text-sm" style="color: #E8DDD4;">Kínálat</a> <a href="#about" class="text-sm" style="color: #E8DDD4;">Rólunk</a> <a href="#gallery" class="text-sm" style="color: #E8DDD4;">Galéria</a> <a href="#contact" class="px-5 py-2 rounded-full text-sm font-medium text-center" style="background: #C4956A; color: #2C1F16;">Asztalfoglalás</a>
+     </div>
+    </div>
+   </nav><!-- Hero Section -->
+   <section id="hero" class="relative min-h-screen flex items-center justify-center grain" style="background: linear-gradient(135deg, #2C1F16 0%, #3D2B1F 50%, #4A3728 100%);"><!-- Decorative Elements -->
+    <div class="absolute inset-0 overflow-hidden">
+     <div class="absolute top-20 left-10 w-64 h-64 rounded-full opacity-10" style="background: #C4956A; filter: blur(80px);"></div>
+     <div class="absolute bottom-20 right-10 w-80 h-80 rounded-full opacity-10" style="background: #8B6914; filter: blur(100px);"></div>
+    </div><!-- Coffee Image -->
+    <div class="absolute right-10 top-1/2 -translate-y-1/2 hidden lg:block float">
+     <div class="w-80 h-96 rounded-3xl overflow-hidden shadow-2xl" style="box-shadow: 0 25px 60px rgba(0,0,0,0.4);"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&amp;h=750&amp;fit=crop" alt="Kávé csésze gőzölgő kávéval" loading="lazy" class="w-full h-full object-cover" onerror="this.src=''; this.alt='Kép betöltése sikertelen'; this.style.display='none';">
+     </div>
+    </div>
+    <div class="relative z-10 max-w-4xl mx-auto px-6 text-center lg:text-left lg:ml-20">
+     <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6" style="background: rgba(196, 149, 106, 0.2); border: 1px solid rgba(196, 149, 106, 0.3);"><span style="color: #C4956A;">☕</span> <span class="text-sm" style="color: #C4956A;">Prémium arabica kávék</span>
+     </div>
+     <h1 id="hero-title" class="font-display text-5xl md:text-7xl font-bold leading-tight mb-6" style="color: #E8DDD4;">Ahol a kávé<br><span style="color: #C4956A;">művészetté</span> válik</h1>
+     <p id="hero-subtitle" class="text-lg md:text-xl mb-10 max-w-xl opacity-80" style="color: #E8DDD4;">Fedezd fel a tökéletes kávéélményt Budapest szívében. Válogatott pörkölések, otthonos hangulat és szenvedélyes barista csapat vár.</p>
+     <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"><a href="#menu" class="px-8 py-4 rounded-full font-medium text-lg transition-all hover:scale-105 hover:shadow-lg" style="background: #C4956A; color: #2C1F16;"> Fedezd fel a kínálatot </a> <a href="#about" class="px-8 py-4 rounded-full font-medium text-lg transition-all hover:scale-105" style="border: 2px solid #C4956A; color: #C4956A;"> Történetünk </a>
+     </div><!-- Stats -->
+     <div class="flex flex-wrap justify-center lg:justify-start gap-8 mt-16">
+      <div class="text-center">
+       <div class="font-display text-4xl font-bold" style="color: #C4956A;">
+        12+
+       </div>
+       <div class="text-sm opacity-60" style="color: #E8DDD4;">
+        Év tapasztalat
+       </div>
+      </div>
+      <div class="text-center">
+       <div class="font-display text-4xl font-bold" style="color: #C4956A;">
+        30+
+       </div>
+       <div class="text-sm opacity-60" style="color: #E8DDD4;">
+        Kávéfajta
+       </div>
+      </div>
+      <div class="text-center">
+       <div class="font-display text-4xl font-bold" style="color: #C4956A;">
+        15k+
+       </div>
+       <div class="text-sm opacity-60" style="color: #E8DDD4;">
+        Boldog vendég
+       </div>
+      </div>
+     </div>
+    </div><!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2">
+     <div class="flex flex-col items-center gap-2 animate-bounce"><span class="text-xs tracking-widest" style="color: #C4956A;">GÖRGESS</span>
+      <svg class="w-5 h-5" fill="none" stroke="#C4956A" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
+     </div>
+    </div>
+   </section><!-- Menu Section -->
+   <section id="menu" class="py-24" style="background: #E8DDD4;">
+    <div class="max-w-6xl mx-auto px-6">
+     <div class="text-center mb-16"><span class="inline-block px-4 py-1 rounded-full text-sm mb-4" style="background: rgba(196, 149, 106, 0.2); color: #6B4423;">Kínálatunk</span>
+      <h2 class="font-display text-4xl md:text-5xl font-bold mb-4" style="color: #2C1F16;">Válogatott kávéink</h2>
+      <p class="text-lg max-w-2xl mx-auto" style="color: #5C4033;">Minden csészénk mögött gondosan válogatott babok és precíz pörkölési eljárás áll.</p>
+     </div><!-- Menu Categories -->
+     <div class="flex flex-wrap justify-center gap-4 mb-12"><button class="menu-tab px-6 py-2 rounded-full font-medium transition-all" style="background: #2C1F16; color: #E8DDD4;" data-category="espresso">Espresso</button> <button class="menu-tab px-6 py-2 rounded-full font-medium transition-all" style="background: transparent; color: #2C1F16; border: 1px solid #2C1F16;" data-category="specialty">Különlegességek</button> <button class="menu-tab px-6 py-2 rounded-full font-medium transition-all" style="background: transparent; color: #2C1F16; border: 1px solid #2C1F16;" data-category="cold">Hideg italok</button> <button class="menu-tab px-6 py-2 rounded-full font-medium transition-all" style="background: transparent; color: #2C1F16; border: 1px solid #2C1F16;" data-category="food">Finomságok</button>
+     </div><!-- Menu Items Grid -->
+     <div id="menu-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Items populated by JS -->
+     </div>
+    </div>
+   </section><!-- About Section -->
+   <section id="about" class="py-24 grain" style="background: linear-gradient(180deg, #3D2B1F 0%, #2C1F16 100%);">
+    <div class="max-w-6xl mx-auto px-6">
+     <div class="grid lg:grid-cols-2 gap-16 items-center"><!-- Image Side -->
+      <div class="relative">
+       <div class="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl"><img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=500&amp;h=625&amp;fit=crop" alt="Kávézó belseje pulttal" loading="lazy" class="w-full h-full object-cover" onerror="this.src=''; this.alt='Kép betöltése sikertelen'; this.style.display='none';">
+       </div><!-- Floating Badge -->
+       <div class="absolute -bottom-6 -right-6 w-32 h-32 rounded-full flex items-center justify-center shadow-2xl" style="background: #C4956A;">
+        <div class="text-center">
+         <div class="font-display text-3xl font-bold" style="color: #2C1F16;">
+          2012
+         </div>
+         <div class="text-xs" style="color: #2C1F16;">
+          óta
+         </div>
+        </div>
+       </div>
+      </div><!-- Content Side -->
+      <div><span class="inline-block px-4 py-1 rounded-full text-sm mb-4" style="background: rgba(196, 149, 106, 0.2); color: #C4956A;">Történetünk</span>
+       <h2 class="font-display text-4xl md:text-5xl font-bold mb-6" style="color: #E8DDD4;">A szenvedélyünk a<br>
+        tökéletes csésze</h2>
+       <p id="about-text" class="text-lg mb-8 leading-relaxed" style="color: #E8DDD4; opacity: 0.8;">Az Aroma Kávéház története 2012-ben kezdődött, amikor egy fiatal barista úgy döntött, hogy megvalósítja álmát. Azóta is ugyanazzal a szenvedéllyel készítjük minden csészénket, mintha az első lenne.</p><!-- Features -->
+       <div class="grid sm:grid-cols-2 gap-6 mb-10">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(196, 149, 106, 0.2);"><span class="text-xl">🌱</span>
+         </div>
+         <div>
+          <h4 class="font-display font-semibold mb-1" style="color: #E8DDD4;">Fenntartható forrás</h4>
+          <p class="text-sm" style="color: #E8DDD4; opacity: 0.6;">Direct trade kapcsolatok a termelőkkel</p>
+         </div>
+        </div>
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(196, 149, 106, 0.2);"><span class="text-xl">🏆</span>
+         </div>
+         <div>
+          <h4 class="font-display font-semibold mb-1" style="color: #E8DDD4;">Díjnyertes pörkölés</h4>
+          <p class="text-sm" style="color: #E8DDD4; opacity: 0.6;">Hungarian Coffee Awards 2023</p>
+         </div>
+        </div>
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(196, 149, 106, 0.2);"><span class="text-xl">☕</span>
+         </div>
+         <div>
+          <h4 class="font-display font-semibold mb-1" style="color: #E8DDD4;">Friss pörkölés</h4>
+          <p class="text-sm" style="color: #E8DDD4; opacity: 0.6;">Hetente frissen pörkölt babok</p>
+         </div>
+        </div>
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(196, 149, 106, 0.2);"><span class="text-xl">❤️</span>
+         </div>
+         <div>
+          <h4 class="font-display font-semibold mb-1" style="color: #E8DDD4;">Családi vállalkozás</h4>
+          <p class="text-sm" style="color: #E8DDD4; opacity: 0.6;">Személyes odafigyelés minden vendégre</p>
+         </div>
+        </div>
+       </div><a href="#contact" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-medium transition-all hover:scale-105" style="background: #C4956A; color: #2C1F16;"> Látogass el hozz����nk 
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg></a>
+      </div>
+     </div>
+    </div>
+   </section><!-- Gallery Section -->
+   <section id="gallery" class="py-24" style="background: #E8DDD4;">
+    <div class="max-w-6xl mx-auto px-6">
+     <div class="text-center mb-16"><span class="inline-block px-4 py-1 rounded-full text-sm mb-4" style="background: rgba(196, 149, 106, 0.2); color: #6B4423;">Galéria</span>
+      <h2 class="font-display text-4xl md:text-5xl font-bold mb-4" style="color: #2C1F16;">Pillanatok a kávézóból</h2>
+     </div>
+     <div class="grid grid-cols-2 md:grid-cols-4 gap-4"><!-- Gallery Item 1 - Cappuccino -->
+      <div class="aspect-square rounded-2xl overflow-hidden group cursor-pointer" style="background: #5C4033;"><img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&amp;h=400&amp;fit=crop" alt="Cappuccino latte art" loading="lazy" class="w-full h-full object-cover transition-transform group-hover:scale-110" onerror="this.src=''; this.alt='Kép betöltése sikertelen'; this.style.display='none';">
+      </div><!-- Gallery Item 2 - Kávészemek (nagyobb) -->
+      <div class="aspect-square rounded-2xl overflow-hidden group cursor-pointer md:row-span-2" style="background: #4A3728;"><img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=400&amp;h=800&amp;fit=crop" alt="Kávészemek" loading="lazy" class="w-full h-full object-cover transition-transform group-hover:scale-110" onerror="this.src=''; this.alt='Kép betöltése sikertelen'; this.style.display='none';">
+      </div><!-- Gallery Item 3 - Espresso készítés -->
+      <div class="aspect-square rounded-2xl overflow-hidden group cursor-pointer" style="background: #6B4423;"><img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=400&amp;h=400&amp;fit=crop" alt="Espresso készítés" loading="lazy" class="w-full h-full object-cover transition-transform group-hover:scale-110" onerror="this.src=''; this.alt='Kép betöltése sikertelen'; this.style.display='none';">
+      </div><!-- Gallery Item 4 - Croissant -->
+      <div class="aspect-square rounded-2xl overflow-hidden group cursor-pointer" style="background: #8B6914;"><img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400&amp;h=400&amp;fit=crop" alt="Friss croissant" loading="lazy" class="w-full h-full object-cover transition-transform group-hover:scale-110" onerror="this.src=''; this.alt='Kép betöltése sikertelen'; this.style.display='none';">
+      </div><!-- Gallery Item 5 - Latte -->
+      <div class="aspect-square rounded-2xl overflow-hidden group cursor-pointer" style="background: #3D2B1F;"><img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&amp;h=400&amp;fit=crop" alt="Latte macchiato" loading="lazy" class="w-full h-full object-cover transition-transform group-hover:scale-110" onerror="this.src=''; this.alt='Kép betöltése sikertelen'; this.style.display='none';">
+      </div><!-- Gallery Item 6 - Kávézó belső (széles) -->
+      <div class="aspect-square rounded-2xl overflow-hidden group cursor-pointer col-span-2" style="background: #5C4033;"><img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&amp;h=400&amp;fit=crop" alt="Kávézó belseje" loading="lazy" class="w-full h-full object-cover transition-transform group-hover:scale-110" onerror="this.src=''; this.alt='Kép betöltése sikertelen'; this.style.display='none';">
+      </div><!-- Gallery Item 7 - Cold brew -->
+      <div class="aspect-square rounded-2xl overflow-hidden group cursor-pointer" style="background: #C4956A;"><img src="https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=400&amp;h=400&amp;fit=crop" alt="Cold brew kávé" loading="lazy" class="w-full h-full object-cover transition-transform group-hover:scale-110" onerror="this.src=''; this.alt='Kép betöltése sikertelen'; this.style.display='none';">
+      </div>
+     </div>
+    </div>
+   </section><!-- Testimonials -->
+   <section class="py-24" style="background: #2C1F16;">
+    <div class="max-w-4xl mx-auto px-6">
+     <div class="text-center mb-16"><span class="inline-block px-4 py-1 rounded-full text-sm mb-4" style="background: rgba(196, 149, 106, 0.2); color: #C4956A;">Vélemények</span>
+      <h2 class="font-display text-4xl md:text-5xl font-bold" style="color: #E8DDD4;">Vendégeink mondták</h2>
+     </div>
+     <div class="relative">
+      <div id="testimonial-container" class="overflow-hidden">
+       <div id="testimonial-slider" class="flex transition-transform duration-500"><!-- Testimonials added by JS -->
+       </div>
+      </div>
+      <div class="flex justify-center gap-3 mt-8"><button id="prev-btn" class="w-12 h-12 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background: rgba(196, 149, 106, 0.2);">
+        <svg class="w-5 h-5" fill="none" stroke="#C4956A" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg></button> <button id="next-btn" class="w-12 h-12 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background: rgba(196, 149, 106, 0.2);">
+        <svg class="w-5 h-5" fill="none" stroke="#C4956A" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg></button>
+      </div>
+     </div>
+    </div>
+   </section><!-- Contact Section -->
+   <section id="contact" class="py-24" style="background: #E8DDD4;">
+    <div class="max-w-6xl mx-auto px-6">
+     <div class="grid lg:grid-cols-2 gap-16"><!-- Contact Info -->
+      <div><span class="inline-block px-4 py-1 rounded-full text-sm mb-4" style="background: rgba(196, 149, 106, 0.2); color: #6B4423;">Kapcsolat</span>
+       <h2 class="font-display text-4xl md:text-5xl font-bold mb-6" style="color: #2C1F16;">Látogass el hozzánk!</h2>
+       <p class="text-lg mb-10" style="color: #5C4033;">Várunk szeretettel Budapest szívében, ahol a legjobb kávé és a legmelegebb vendégszeretet vár.</p>
+       <div class="space-y-6">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="background: #2C1F16;"><span class="text-xl">📍</span>
+         </div>
+         <div>
+          <h4 class="font-display font-semibold mb-1" style="color: #2C1F16;">Cím</h4>
+          <p id="contact-address" style="color: #5C4033;">1052 Budapest, Kávé utca 12.</p>
+         </div>
+        </div>
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="background: #2C1F16;"><span class="text-xl">📞</span>
+         </div>
+         <div>
+          <h4 class="font-display font-semibold mb-1" style="color: #2C1F16;">Telefon</h4>
+          <p id="contact-phone" style="color: #5C4033;">+36 1 234 5678</p>
+         </div>
+        </div>
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="background: #2C1F16;"><span class="text-xl">����</span>
+         </div>
+         <div>
+          <h4 class="font-display font-semibold mb-1" style="color: #2C1F16;">Nyitvatartás</h4>
+          <p style="color: #5C4033;">H-P: 7:00 - 20:00<br>
+           Szo-V: 8:00 - 21:00</p>
+         </div>
+        </div>
+       </div><!-- Social Links -->
+       <div class="flex gap-4 mt-10"><a href="#" class="w-12 h-12 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background: #2C1F16;">
+         <svg class="w-5 h-5" fill="#E8DDD4" viewbox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+         </svg></a> <a href="#" class="w-12 h-12 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background: #2C1F16;">
+         <svg class="w-5 h-5" fill="#E8DDD4" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+         </svg></a> <a href="#" class="w-12 h-12 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background: #2C1F16;">
+         <svg class="w-5 h-5" fill="#E8DDD4" viewbox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z" />
+         </svg></a>
+       </div>
+      </div><!-- Reservation Form -->
+      <div class="rounded-3xl p-8 md:p-10" style="background: #2C1F16;">
+       <h3 class="font-display text-2xl font-bold mb-6" style="color: #E8DDD4;">Asztalfoglalás</h3>
+       <form id="reservation-form" class="space-y-5">
+        <div><label for="name" class="block text-sm mb-2" style="color: #C4956A;">Név</label> <input type="text" id="name" class="w-full px-4 py-3 rounded-xl outline-none transition-all focus:ring-2" style="background: #3D2B1F; color: #E8DDD4; border: 1px solid #5C4033;" placeholder="Teljes név" required>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-5">
+         <div><label for="email" class="block text-sm mb-2" style="color: #C4956A;">Email</label> <input type="email" id="email" class="w-full px-4 py-3 rounded-xl outline-none transition-all focus:ring-2" style="background: #3D2B1F; color: #E8DDD4; border: 1px solid #5C4033;" placeholder="pelda@email.com" required>
+         </div>
+         <div><label for="phone-input" class="block text-sm mb-2" style="color: #C4956A;">Telefon</label> <input type="tel" id="phone-input" class="w-full px-4 py-3 rounded-xl outline-none transition-all focus:ring-2" style="background: #3D2B1F; color: #E8DDD4; border: 1px solid #5C4033;" placeholder="+36 20 123 4567" required>
+         </div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-5">
+         <div><label for="date" class="block text-sm mb-2" style="color: #C4956A;">Dátum</label> <input type="date" id="date" class="w-full px-4 py-3 rounded-xl outline-none transition-all focus:ring-2" style="background: #3D2B1F; color: #E8DDD4; border: 1px solid #5C4033;" required>
+         </div>
+         <div><label for="time" class="block text-sm mb-2" style="color: #C4956A;">Időpont</label> <select id="time" class="w-full px-4 py-3 rounded-xl outline-none transition-all focus:ring-2" style="background: #3D2B1F; color: #E8DDD4; border: 1px solid #5C4033;" required> <option value="">Válassz időpontot</option> <option value="07:00">07:00</option> <option value="08:00">08:00</option> <option value="09:00">09:00</option> <option value="10:00">10:00</option> <option value="11:00">11:00</option> <option value="12:00">12:00</option> <option value="13:00">13:00</option> <option value="14:00">14:00</option> <option value="15:00">15:00</option> <option value="16:00">16:00</option> <option value="17:00">17:00</option> <option value="18:00">18:00</option> <option value="19:00">19:00</option> </select>
+         </div>
+        </div>
+        <div><label for="guests" class="block text-sm mb-2" style="color: #C4956A;">Vendégek száma</label> <select id="guests" class="w-full px-4 py-3 rounded-xl outline-none transition-all focus:ring-2" style="background: #3D2B1F; color: #E8DDD4; border: 1px solid #5C4033;" required> <option value="">Válassz</option> <option value="1">1 fő</option> <option value="2">2 fő</option> <option value="3">3 fő</option> <option value="4">4 fő</option> <option value="5">5 fő</option> <option value="6+">6+ fő</option> </select>
+        </div>
+        <div><label for="message" class="block text-sm mb-2" style="color: #C4956A;">Megjegyzés (opcionális)</label> <textarea id="message" rows="3" class="w-full px-4 py-3 rounded-xl outline-none transition-all focus:ring-2 resize-none" style="background: #3D2B1F; color: #E8DDD4; border: 1px solid #5C4033;" placeholder="Különleges kérések..."></textarea>
+        </div><button type="submit" class="w-full py-4 rounded-xl font-medium text-lg transition-all hover:scale-[1.02] hover:shadow-lg" style="background: #C4956A; color: #2C1F16;"> Foglalás elküldése </button>
+       </form>
+       <div id="form-success" class="hidden text-center py-8">
+        <div class="text-5xl mb-4">
+         ✅
+        </div>
+        <h4 class="font-display text-xl font-bold mb-2" style="color: #E8DDD4;">Köszönjük a foglalást!</h4>
+        <p style="color: #C4956A;">Hamarosan felvesszük veled a kapcsolatot.</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer class="py-12" style="background: #2C1F16; border-top: 1px solid #3D2B1F;">
+    <div class="max-w-6xl mx-auto px-6">
+     <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="text-center md:text-left"><a href="#hero" id="footer-logo" class="font-display text-2xl font-bold" style="color: #E8DDD4;">Aroma Kávéház</a>
+       <p class="text-sm mt-2" style="color: #5C4033;">© 2024 Minden jog fenntartva.</p>
+      </div>
+      <div class="flex gap-8"><a href="#menu" class="text-sm hover:opacity-80 transition-opacity" style="color: #C4956A;">Kín��lat</a> <a href="#about" class="text-sm hover:opacity-80 transition-opacity" style="color: #C4956A;">Rólunk</a> <a href="#contact" class="text-sm hover:opacity-80 transition-opacity" style="color: #C4956A;">Kapcsolat</a>
+      </div>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      cafe_name: 'Aroma Kávéház',
+      hero_title: 'Ahol a kávé művészetté válik',
+      hero_subtitle: 'Fedezd fel a tökéletes kávéélményt Budapest szívében. Válogatott pörkölések, otthonos hangulat és szenvedélyes barista csapat vár.',
+      about_text: 'Az Aroma Kávéház története 2012-ben kezdődött, amikor egy fiatal barista úgy döntött, hogy megvalósítja álmát. Azóta is ugyanazzal a szenvedéllyel készítjük minden csészénket, mintha az első lenne.',
+      address: '1052 Budapest, Kávé utca 12.',
+      phone: '+36 1 234 5678',
+      background_color: '#2C1F16',
+      surface_color: '#E8DDD4',
+      text_color: '#E8DDD4',
+      accent_color: '#C4956A',
+      secondary_color: '#5C4033'
+    };
+
+    let config = { ...defaultConfig };
+
+    // Menu data
+    const menuData = {
+      espresso: [
+        { name: 'Espresso', price: '490 Ft', desc: 'Intenzív, aromás shot', icon: '☕' },
+        { name: 'Doppio', price: '690 Ft', desc: 'Dupla espresso', icon: '☕' },
+        { name: 'Americano', price: '590 Ft', desc: 'Espresso forró v��zzel', icon: '☕' },
+        { name: 'Lungo', price: '550 Ft', desc: 'Hosszú espresso', icon: '☕' },
+        { name: 'Ristretto', price: '490 Ft', desc: 'Extra tömény shot', icon: '☕' },
+        { name: 'Macchiato', price: '550 Ft', desc: 'Espresso tejhabbal', icon: '☕' }
+      ],
+      specialty: [
+        { name: 'Cappuccino', price: '790 Ft', desc: 'Tökéletes tejhab arány', icon: '🥛' },
+        { name: 'Flat White', price: '890 Ft', desc: 'Bársonyos mikrotejhab', icon: '����' },
+        { name: 'Latte', price: '850 Ft', desc: 'Krémes, lágy ízvilág', icon: '🥛' },
+        { name: 'Mocha', price: '990 Ft', desc: 'Csokis kávéélmény', icon: '🍫' },
+        { name: 'Caramel Latte', price: '990 Ft', desc: 'Karamellás édesség', icon: '🍯' },
+        { name: 'Vanilla Latte', price: '990 Ft', desc: 'Vaníliás finomság', icon: '✨' }
+      ],
+      cold: [
+        { name: 'Iced Latte', price: '950 Ft', desc: 'Jeges kávé tejjel', icon: '🧊' },
+        { name: 'Cold Brew', price: '890 Ft', desc: '24 órás hideg főzet', icon: '🧊' },
+        { name: 'Frappé', price: '990 Ft', desc: 'Jeges kávéturmix', icon: '🥤' },
+        { name: 'Iced Americano', price: '690 Ft', desc: 'Frissítő jeges', icon: '🧊' },
+        { name: 'Affogato', price: '890 Ft', desc: 'Fagylalt espressóval', icon: '🍨' },
+        { name: 'Smoothie', price: '1190 Ft', desc: 'Gyümölcsös frissítő', icon: '🍓' }
+      ],
+      food: [
+        { name: 'Croissant', price: '590 Ft', desc: 'Vajas, ropogós', icon: '🥐' },
+        { name: 'Avokádós toast', price: '1490 Ft', desc: 'Tojással és magokkal', icon: '🥑' },
+        { name: 'Sajttorta', price: '890 Ft', desc: 'Házi készítésű', icon: '🍰' },
+        { name: 'Brownie', price: '690 Ft', desc: 'Csokis mennyország', icon: '🍫' },
+        { name: 'Granola bowl', price: '1290 Ft', desc: 'Joghurttal, gyümölccsel', icon: '🥣' },
+        { name: 'Szendvics', price: '1190 Ft', desc: 'Friss alapanyagokból', icon: '🥪' }
+      ]
+    };
+
+    // Testimonials data
+    const testimonials = [
+      { text: 'A legjobb kávézó a városban! A flat white-juk egyszerűen tökéletes, és a személyzet mindig barátságos.', author: 'Kovács Anna', role: 'Törzsvásárló' },
+      { text: 'Imádom a hangulatot és a minőségi kávét. Minden reggelem itt kezdődik már 3 éve.', author: 'Nagy Péter', role: 'Kávé rajongó' },
+      { text: 'A croissant és a cappuccino kombinációja fenomenális. Tiszta párizsi érzés!', author: 'Szab�� Eszter', role: 'Food blogger' }
+    ];
+
+    let currentTestimonial = 0;
+    let currentCategory = 'espresso';
+
+    // Render menu items
+    function renderMenu(category) {
+      const grid = document.getElementById('menu-grid');
+      const items = menuData[category];
+      
+      grid.innerHTML = items.map(item => `
+        <div class="menu-card rounded-2xl p-6 transition-all duration-300 cursor-pointer" style="background: white; box-shadow: 0 4px 20px rgba(44, 31, 22, 0.08);">
+          <div class="flex items-start justify-between mb-4">
+            <span class="text-4xl">${item.icon}</span>
+            <span class="font-display font-bold text-lg" style="color: #C4956A;">${item.price}</span>
+          </div>
+          <h3 class="font-display text-xl font-semibold mb-2" style="color: #2C1F16;">${item.name}</h3>
+          <p class="text-sm" style="color: #5C4033;">${item.desc}</p>
+        </div>
+      `).join('');
+    }
+
+    // Render testimonials
+    function renderTestimonials() {
+      const slider = document.getElementById('testimonial-slider');
+      slider.innerHTML = testimonials.map(t => `
+        <div class="w-full flex-shrink-0 px-4">
+          <div class="text-center">
+            <div class="text-6xl mb-6" style="color: #C4956A;">"</div>
+            <p class="text-xl md:text-2xl mb-8 leading-relaxed" style="color: #E8DDD4;">${t.text}</p>
+            <div class="font-display font-semibold" style="color: #C4956A;">${t.author}</div>
+            <div class="text-sm" style="color: #E8DDD4; opacity: 0.6;">${t.role}</div>
+          </div>
+        </div>
+      `).join('');
+      updateTestimonialPosition();
+    }
+
+    function updateTestimonialPosition() {
+      const slider = document.getElementById('testimonial-slider');
+      slider.style.transform = `translateX(-${currentTestimonial * 100}%)`;
+    }
+
+    // Menu tab switching
+    document.querySelectorAll('.menu-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const category = tab.dataset.category;
+        currentCategory = category;
+        
+        document.querySelectorAll('.menu-tab').forEach(t => {
+          if (t.dataset.category === category) {
+            t.style.background = '#2C1F16';
+            t.style.color = '#E8DDD4';
+            t.style.border = 'none';
+          } else {
+            t.style.background = 'transparent';
+            t.style.color = '#2C1F16';
+            t.style.border = '1px solid #2C1F16';
+          }
+        });
+        
+        renderMenu(category);
+      });
+    });
+
+    // Testimonial navigation
+    document.getElementById('prev-btn').addEventListener('click', () => {
+      currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+      updateTestimonialPosition();
+    });
+
+    document.getElementById('next-btn').addEventListener('click', () => {
+      currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+      updateTestimonialPosition();
+    });
+
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    });
+
+    // Form submission
+    document.getElementById('reservation-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById('reservation-form').classList.add('hidden');
+      document.getElementById('form-success').classList.remove('hidden');
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+          // Close mobile menu if open
+          document.getElementById('mobile-menu').classList.add('hidden');
+        }
+      });
+    });
+
+    // Set minimum date for reservation
+    const dateInput = document.getElementById('date');
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.setAttribute('min', today);
+
+    // Config change handler
+    async function onConfigChange(newConfig) {
+      config = { ...defaultConfig, ...newConfig };
+      
+      // Update text content
+      document.getElementById('nav-logo').textContent = config.cafe_name;
+      document.getElementById('footer-logo').textContent = config.cafe_name;
+      
+      const heroTitle = document.getElementById('hero-title');
+      const titleParts = config.hero_title.split(' ');
+      if (titleParts.length > 2) {
+        const lastWord = titleParts.pop();
+        heroTitle.innerHTML = `${titleParts.join(' ')}<br><span style="color: #C4956A;">${lastWord}</span>`;
+      } else {
+        heroTitle.innerHTML = config.hero_title;
+      }
+      
+      document.getElementById('hero-subtitle').textContent = config.hero_subtitle;
+      document.getElementById('about-text').textContent = config.about_text;
+      document.getElementById('contact-address').textContent = config.address;
+      document.getElementById('contact-phone').textContent = config.phone;
+    }
+
+    // Map to capabilities
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => window.elementSdk.setConfig({ background_color: value })
+          },
+          {
+            get: () => config.surface_color || defaultConfig.surface_color,
+            set: (value) => window.elementSdk.setConfig({ surface_color: value })
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => window.elementSdk.setConfig({ text_color: value })
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => window.elementSdk.setConfig({ accent_color: value })
+          },
+          {
+            get: () => config.secondary_color || defaultConfig.secondary_color,
+            set: (value) => window.elementSdk.setConfig({ secondary_color: value })
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || 'Playfair Display',
+          set: (value) => window.elementSdk.setConfig({ font_family: value })
+        },
+        fontSizeable: {
+          get: () => config.font_size || 16,
+          set: (value) => window.elementSdk.setConfig({ font_size: value })
+        }
+      };
+    }
+
+    // Map to edit panel values
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['cafe_name', config.cafe_name || defaultConfig.cafe_name],
+        ['hero_title', config.hero_title || defaultConfig.hero_title],
+        ['hero_subtitle', config.hero_subtitle || defaultConfig.hero_subtitle],
+        ['about_text', config.about_text || defaultConfig.about_text],
+        ['address', config.address || defaultConfig.address],
+        ['phone', config.phone || defaultConfig.phone]
+      ]);
+    }
+
+    // Initialize
+    renderMenu('espresso');
+    renderTestimonials();
+
+    // Auto-rotate testimonials
+    setInterval(() => {
+      currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+      updateTestimonialPosition();
+    }, 5000);
+
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c04564ec5846853',t:'MTc2ODgwNDc4OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
