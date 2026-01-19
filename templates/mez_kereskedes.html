@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="hu" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aranyméz Manufaktúra</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Nunito:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    .font-heading {
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .font-body {
+      font-family: 'Nunito', sans-serif;
+    }
+    .honey-gradient {
+      background: linear-gradient(135deg, #F5E6D3 0%, #FCEABB 50%, #F8D477 100%);
+    }
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(184, 134, 47, 0.2);
+    }
+    .btn-primary {
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 20px rgba(184, 134, 47, 0.3);
+    }
+    .fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .honeycomb-pattern {
+      background-image: url("data:image/svg+xml,%3Csvg width='56' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zm0-64L4 16v32l24 14 24-14V16L28 2z' fill='%23B8862F' fill-opacity='0.05'/%3E%3C/svg%3E");
+    }
+    .image-placeholder {
+      background: linear-gradient(135deg, #F8D477 0%, #B8862F 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 500;
+    }
+    html, body {
+      height: 100%;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="h-full font-body bg-amber-50 text-stone-800 overflow-auto">
+  <div id="app" class="w-full min-h-full honeycomb-pattern"><!-- Navigation -->
+   <nav class="bg-white/90 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center h-16 sm:h-20">
+      <div class="flex items-center gap-3">
+       <svg class="w-10 h-10 sm:w-12 sm:h-12 text-amber-500" viewbox="0 0 64 64" fill="currentColor"><path d="M32 4C18.7 4 8 14.7 8 28c0 8.4 4.3 15.8 10.8 20.2L32 60l13.2-11.8C51.7 43.8 56 36.4 56 28 56 14.7 45.3 4 32 4zm0 8c2.2 0 4 1.8 4 4s-1.8 4-4 4-4-1.8-4-4 1.8-4 4-4zm-8 12c0-4.4 3.6-8 8-8s8 3.6 8 8c0 2.5-1.2 4.8-3 6.3v9.7h-2v-8h-6v8h-2v-9.7c-1.8-1.5-3-3.8-3-6.3z" /> <ellipse cx="32" cy="42" rx="8" ry="4" opacity="0.3" />
+       </svg><span id="brand-name" class="font-heading text-xl sm:text-2xl font-semibold text-stone-800">Aranyméz Manufaktúra</span>
+      </div>
+      <div class="hidden md:flex items-center gap-8"><a href="#rolunk" class="text-stone-600 hover:text-amber-600 transition-colors font-medium">Rólunk</a> <a href="#termekek" class="text-stone-600 hover:text-amber-600 transition-colors font-medium">Termékeink</a> <a href="#rendeles" class="text-stone-600 hover:text-amber-600 transition-colors font-medium">Rendelés</a> <a href="#kapcsolat" class="text-stone-600 hover:text-amber-600 transition-colors font-medium">Kapcsolat</a>
+      </div><button id="mobile-menu-btn" class="md:hidden p-2 text-stone-600">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+       </svg></button>
+     </div><!-- Mobile menu -->
+     <div id="mobile-menu" class="hidden md:hidden pb-4">
+      <div class="flex flex-col gap-2"><a href="#rolunk" class="px-4 py-2 text-stone-600 hover:bg-amber-50 rounded-lg">Rólunk</a> <a href="#termekek" class="px-4 py-2 text-stone-600 hover:bg-amber-50 rounded-lg">Termékeink</a> <a href="#rendeles" class="px-4 py-2 text-stone-600 hover:bg-amber-50 rounded-lg">Rendelés</a> <a href="#kapcsolat" class="px-4 py-2 text-stone-600 hover:bg-amber-50 rounded-lg">Kapcsolat</a>
+      </div>
+     </div>
+    </div>
+   </nav><!-- Hero Section -->
+   <section class="honey-gradient py-16 sm:py-24 lg:py-32 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+     <svg class="w-full h-full" viewbox="0 0 100 100" preserveaspectratio="none"><circle cx="80" cy="20" r="40" fill="#B8862F" /> <circle cx="10" cy="80" r="30" fill="#B8862F" />
+     </svg>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+     <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="text-center lg:text-left fade-in">
+       <h1 id="hero-title" class="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-stone-800 leading-tight mb-6">Természetes méz a <span class="text-amber-600">magyar rétekről</span></h1>
+       <p id="hero-subtitle" class="text-lg sm:text-xl text-stone-600 mb-8 max-w-xl mx-auto lg:mx-0">Családi hagyományok, gondos méhészkedés és a természet ajándéka minden cseppben. Fedezd fel prémium mézkollekciónkat!</p>
+       <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"><a href="#termekek" class="btn-primary bg-amber-500 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg inline-flex items-center justify-center gap-2"> <span>Termékeink</span>
+         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+         </svg></a> <a href="#rolunk" class="border-2 border-amber-600 text-amber-700 px-8 py-4 rounded-full font-semibold text-lg hover:bg-amber-600 hover:text-white transition-all inline-flex items-center justify-center"> Tudj meg többet </a>
+       </div>
+      </div>
+      <div class="relative"><!-- HERO IMAGE PLACEHOLDER -->
+       <div class="image-placeholder rounded-3xl shadow-2xl aspect-square max-w-md mx-auto overflow-hidden"><img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=600&amp;h=600&amp;fit=crop" alt="Friss méz üvegben" loading="lazy" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'flex flex-col items-center justify-center h-full p-8 text-center\'><svg class=\'w-24 h-24 mb-4 opacity-80\' fill=\'currentColor\' viewBox=\'0 0 64 64\'><path d=\'M32 8c-13.3 0-24 10.7-24 24s10.7 24 24 24 24-10.7 24-24S45.3 8 32 8zm0 44c-11 0-20-9-20-20s9-20 20-20 20 9 20 20-9 20-20 20zm-4-28v16l12-8z\'/></svg><span class=\'text-lg font-medium\'>hero-image.jpg</span></div>'">
+       </div>
+       <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl">
+        <div class="flex items-center gap-3">
+         <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+          <svg class="w-6 h-6 text-amber-600" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+         </div>
+         <div>
+          <p class="font-semibold text-stone-800">4.9/5 értékelés</p>
+          <p class="text-sm text-stone-500">500+ elégedett vásárló</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Features -->
+   <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="text-center p-6">
+       <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+       </div>
+       <h3 class="font-heading text-xl font-semibold mb-2">100% Természetes</h3>
+       <p class="text-stone-500">Adalékanyag és tartósítószer mentes, tiszta méz</p>
+      </div>
+      <div class="text-center p-6">
+       <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064" />
+        </svg>
+       </div>
+       <h3 class="font-heading text-xl font-semibold mb-2">Magyar Eredet</h3>
+       <p class="text-stone-500">Hazai rétekről és erdőkből származó méz</p>
+      </div>
+      <div class="text-center p-6">
+       <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+        </svg>
+       </div>
+       <h3 class="font-heading text-xl font-semibold mb-2">Kézműves Minőség</h3>
+       <p class="text-stone-500">Kis tételben, gondosan készített termékek</p>
+      </div>
+      <div class="text-center p-6">
+       <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+        </svg>
+       </div>
+       <h3 class="font-heading text-xl font-semibold mb-2">Gyors Szállítás</h3>
+       <p class="text-stone-500">1-3 munkanapon belüli kézbesítés</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- About Section -->
+   <section id="rolunk" class="py-20 bg-stone-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div class="relative"><!-- ABOUT IMAGE PLACEHOLDER -->
+       <div class="image-placeholder rounded-3xl shadow-xl aspect-[4/3] overflow-hidden"><img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=800&amp;h=600&amp;fit=crop" alt="Méhész munka közben" loading="lazy" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'flex flex-col items-center justify-center h-full p-8 text-center\'><svg class=\'w-20 h-20 mb-4 opacity-80\' fill=\'currentColor\' viewBox=\'0 0 64 64\'><path d=\'M32 8c-13.3 0-24 10.7-24 24s10.7 24 24 24 24-10.7 24-24S45.3 8 32 8zm0 44c-11 0-20-9-20-20s9-20 20-20 20 9 20 20-9 20-20 20zm-4-28v16l12-8z\'/></svg><span class=\'text-lg font-medium\'>mehesz-image.jpg</span></div>'">
+       </div>
+       <div class="absolute -bottom-8 -right-8 bg-amber-500 text-white p-6 rounded-2xl shadow-xl">
+        <p class="font-heading text-4xl font-bold">25+</p>
+        <p class="text-amber-100">év tapasztalat</p>
+       </div>
+      </div>
+      <div><span class="text-amber-600 font-semibold tracking-wider uppercase text-sm">Rólunk</span>
+       <h2 class="font-heading text-3xl sm:text-4xl font-bold text-stone-800 mt-2 mb-6">Családi Méhészet, Generációk Óta</h2>
+       <p id="about-text" class="text-stone-600 text-lg leading-relaxed mb-6">Az Aranyméz Manufaktúra története 1998-ban kezdődött, amikor nagyapám a Bükk-hegység lábánál elhelyezte az első kaptárakat. Azóta családunk három generációja őrzi és fejleszti a méhészkedés művészetét, megőrizve a hagyományos módszereket, miközben a modern minőségbiztosítási elveket is alkalmazzuk.</p>
+       <p class="text-stone-600 text-lg leading-relaxed mb-8">Ma több mint 200 méhcsaládunk gondozásával foglalkozunk, biztosítva, hogy minden üveg méz a lehető legtisztább és legfinomabb legyen. Büszkék vagyunk arra, hogy termékeink közvetlenül a kaptárból kerülnek az Ön asztalára.</p>
+       <div class="flex flex-wrap gap-8">
+        <div>
+         <p class="font-heading text-3xl font-bold text-amber-600">200+</p>
+         <p class="text-stone-500">Méhcsalád</p>
+        </div>
+        <div>
+         <p class="font-heading text-3xl font-bold text-amber-600">15+</p>
+         <p class="text-stone-500">Mézfajta</p>
+        </div>
+        <div>
+         <p class="font-heading text-3xl font-bold text-amber-600">5000+</p>
+         <p class="text-stone-500">Elégedett vásárló</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Products Section -->
+   <section id="termekek" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-16"><span class="text-amber-600 font-semibold tracking-wider uppercase text-sm">Kínálatunk</span>
+      <h2 class="font-heading text-3xl sm:text-4xl font-bold text-stone-800 mt-2 mb-4">Prémium Mézkollekciónk</h2>
+      <p class="text-stone-500 text-lg max-w-2xl mx-auto">Válogatott, természetes mézek a magyar tájakról - minden ízlésnek és alkalomra</p>
+     </div>
+     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"><!-- Product 1 -->
+      <div class="card-hover bg-white rounded-3xl shadow-lg overflow-hidden border border-stone-100">
+       <div class="image-placeholder aspect-square overflow-hidden"><img src="https://images.unsplash.com/photo-1471943311424-646960669fbc?w=500&amp;h=500&amp;fit=crop" alt="Akácméz" loading="lazy" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'flex flex-col items-center justify-center h-full\'><span class=\'text-6xl mb-2\'>🍯</span><span class=\'font-medium\'>akacmez.jpg</span></div>'">
+       </div>
+       <div class="p-6">
+        <div class="flex justify-between items-start mb-2">
+         <h3 class="font-heading text-xl font-semibold">Akácméz</h3><span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-sm font-medium">Népszerű</span>
+        </div>
+        <p class="text-stone-500 mb-4">Világos, áttetsző méz enyhe, virágos ízzel. Lassan kristályosodik, ideális édesítéshez.</p>
+        <div class="flex justify-between items-center">
+         <p class="font-heading text-2xl font-bold text-amber-600">2.490 Ft<span class="text-sm text-stone-400 font-normal">/500g</span></p><button onclick="selectProduct('Akácméz 500g', 2490)" class="bg-amber-500 text-white px-4 py-2 rounded-full hover:bg-amber-600 transition-colors"> Rendelés </button>
+        </div>
+       </div>
+      </div><!-- Product 2 -->
+      <div class="card-hover bg-white rounded-3xl shadow-lg overflow-hidden border border-stone-100">
+       <div class="image-placeholder aspect-square overflow-hidden"><img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500&amp;h=500&amp;fit=crop" alt="Hársméz" loading="lazy" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'flex flex-col items-center justify-center h-full\'><span class=\'text-6xl mb-2\'>🌳</span><span class=\'font-medium\'>harsmez.jpg</span></div>'">
+       </div>
+       <div class="p-6">
+        <div class="flex justify-between items-start mb-2">
+         <h3 class="font-heading text-xl font-semibold">Hársméz</h3><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">Gyógyhatású</span>
+        </div>
+        <p class="text-stone-500 mb-4">Aromás, mentás-citromos ízvilág. Kiváló megfázás és torokfájás esetén.</p>
+        <div class="flex justify-between items-center">
+         <p class="font-heading text-2xl font-bold text-amber-600">2.890 Ft<span class="text-sm text-stone-400 font-normal">/500g</span></p><button onclick="selectProduct('Hársméz 500g', 2890)" class="bg-amber-500 text-white px-4 py-2 rounded-full hover:bg-amber-600 transition-colors"> Rendelés </button>
+        </div>
+       </div>
+      </div><!-- Product 3 -->
+      <div class="card-hover bg-white rounded-3xl shadow-lg overflow-hidden border border-stone-100">
+       <div class="image-placeholder aspect-square overflow-hidden"><img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=500&amp;h=500&amp;fit=crop" alt="Virágméz" loading="lazy" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'flex flex-col items-center justify-center h-full\'><span class=\'text-6xl mb-2\'>🌸</span><span class=\'font-medium\'>viragmez.jpg</span></div>'">
+       </div>
+       <div class="p-6">
+        <div class="flex justify-between items-start mb-2">
+         <h3 class="font-heading text-xl font-semibold">Virágméz</h3><span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">Klasszikus</span>
+        </div>
+        <p class="text-stone-500 mb-4">Vegyes virágokból nyert, teljes ízű méz. A mindennapi használatra tökéletes választás.</p>
+        <div class="flex justify-between items-center">
+         <p class="font-heading text-2xl font-bold text-amber-600">1.990 Ft<span class="text-sm text-stone-400 font-normal">/500g</span></p><button onclick="selectProduct('Virágméz 500g', 1990)" class="bg-amber-500 text-white px-4 py-2 rounded-full hover:bg-amber-600 transition-colors"> Rendelés </button>
+        </div>
+       </div>
+      </div><!-- Product 4 -->
+      <div class="card-hover bg-white rounded-3xl shadow-lg overflow-hidden border border-stone-100">
+       <div class="image-placeholder aspect-square overflow-hidden"><img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500&amp;h=500&amp;fit=crop&amp;q=80" alt="Erdei méz" loading="lazy" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'flex flex-col items-center justify-center h-full\'><span class=\'text-6xl mb-2\'>🌲</span><span class=\'font-medium\'>erdei-mez.jpg</span></div>'">
+       </div>
+       <div class="p-6">
+        <div class="flex justify-between items-start mb-2">
+         <h3 class="font-heading text-xl font-semibold">Erdei Méz</h3><span class="bg-stone-100 text-stone-700 px-3 py-1 rounded-full text-sm font-medium">Különleges</span>
+        </div>
+        <p class="text-stone-500 mb-4">Sötét, intenzív ízű méz magas ásványianyag-tartalommal. Ínyenceknek ajánljuk.</p>
+        <div class="flex justify-between items-center">
+         <p class="font-heading text-2xl font-bold text-amber-600">3.490 Ft<span class="text-sm text-stone-400 font-normal">/500g</span></p><button onclick="selectProduct('Erdei méz 500g', 3490)" class="bg-amber-500 text-white px-4 py-2 rounded-full hover:bg-amber-600 transition-colors"> Rendelés </button>
+        </div>
+       </div>
+      </div><!-- Product 5 -->
+      <div class="card-hover bg-white rounded-3xl shadow-lg overflow-hidden border border-stone-100">
+       <div class="image-placeholder aspect-square overflow-hidden"><img src="https://images.unsplash.com/photo-1471943311424-646960669fbc?w=500&amp;h=500&amp;fit=crop&amp;sat=-100" alt="Repceméz" loading="lazy" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'flex flex-col items-center justify-center h-full\'><span class=\'text-6xl mb-2\'>💛</span><span class=\'font-medium\'>repcemez.jpg</span></div>'">
+       </div>
+       <div class="p-6">
+        <div class="flex justify-between items-start mb-2">
+         <h3 class="font-heading text-xl font-semibold">Repceméz</h3><span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-medium">Krémes</span>
+        </div>
+        <p class="text-stone-500 mb-4">Világos, gyorsan kristályosodó, krémes állagú méz. Kenyérre kenve a legjobb.</p>
+        <div class="flex justify-between items-center">
+         <p class="font-heading text-2xl font-bold text-amber-600">1.790 Ft<span class="text-sm text-stone-400 font-normal">/500g</span></p><button onclick="selectProduct('Repceméz 500g', 1790)" class="bg-amber-500 text-white px-4 py-2 rounded-full hover:bg-amber-600 transition-colors"> Rendelés </button>
+        </div>
+       </div>
+      </div><!-- Product 6 -->
+      <div class="card-hover bg-white rounded-3xl shadow-lg overflow-hidden border border-stone-100">
+       <div class="image-placeholder aspect-square overflow-hidden"><img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=500&amp;h=500&amp;fit=crop&amp;hue=30" alt="Méhpempő" loading="lazy" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'flex flex-col items-center justify-center h-full\'><span class=\'text-6xl mb-2\'>👑</span><span class=\'font-medium\'>mehpempo.jpg</span></div>'">
+       </div>
+       <div class="p-6">
+        <div class="flex justify-between items-start mb-2">
+         <h3 class="font-heading text-xl font-semibold">Méhpempő</h3><span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-sm font-medium">Prémium</span>
+        </div>
+        <p class="text-stone-500 mb-4">A méhek királyi eledele, koncentrált tápanyagokkal. Immunerősítő szuperélelmiszer.</p>
+        <div class="flex justify-between items-center">
+         <p class="font-heading text-2xl font-bold text-amber-600">4.990 Ft<span class="text-sm text-stone-400 font-normal">/50g</span></p><button onclick="selectProduct('Méhpempő 50g', 4990)" class="bg-amber-500 text-white px-4 py-2 rounded-full hover:bg-amber-600 transition-colors"> Rendelés </button>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Health Benefits -->
+   <section class="py-20 honey-gradient">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-16"><span class="text-amber-700 font-semibold tracking-wider uppercase text-sm">Egészség</span>
+      <h2 class="font-heading text-3xl sm:text-4xl font-bold text-stone-800 mt-2 mb-4">A Méz Jótékony Hatásai</h2>
+      <p class="text-stone-600 text-lg max-w-2xl mx-auto">A természetes méz évezredek óta ismert gyógyhatásairól és tápértékéről</p>
+     </div>
+     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-lg">
+       <div class="w-14 h-14 bg-red-100 rounded-2xl flex items-center justify-center mb-4">
+        <svg class="w-7 h-7 text-red-500" fill="currentColor" viewbox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+        </svg>
+       </div>
+       <h3 class="font-heading text-xl font-semibold mb-3">Szív- és érrendszer</h3>
+       <p class="text-stone-600">A méz antioxidánsai segítenek csökkenteni a vérnyomást és javítják a koleszterinszintet.</p>
+      </div>
+      <div class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-lg">
+       <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mb-4">
+        <svg class="w-7 h-7 text-blue-500" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+        </svg>
+       </div>
+       <h3 class="font-heading text-xl font-semibold mb-3">Immunrendszer</h3>
+       <p class="text-stone-600">Természetes antibakteriális tulajdonságai erősítik az immunrendszert és segítenek a betegségek megelőzésében.</p>
+      </div>
+      <div class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-lg">
+       <div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center mb-4">
+        <svg class="w-7 h-7 text-green-500" fill="currentColor" viewbox="0 0 24 24"><path d="M17.66 8L12 2.35 6.34 8C4.78 9.56 4 11.64 4 13.64s.78 4.11 2.34 5.67 3.61 2.35 5.66 2.35 4.1-.79 5.66-2.35S20 15.64 20 13.64 19.22 9.56 17.66 8zM6 14c.01-2 .62-3.27 1.76-4.4L12 5.27l4.24 4.38C17.38 10.77 17.99 12 18 14H6z" />
+        </svg>
+       </div>
+       <h3 class="font-heading text-xl font-semibold mb-3">Emésztés</h3>
+       <p class="text-stone-600">Prebiotikus hatása támogatja az egészséges bélflórát és segíti az emésztési folyamatokat.</p>
+      </div>
+      <div class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-lg">
+       <div class="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center mb-4">
+        <svg class="w-7 h-7 text-purple-500" fill="currentColor" viewbox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z" />
+        </svg>
+       </div>
+       <h3 class="font-heading text-xl font-semibold mb-3">Alvásminőség</h3>
+       <p class="text-stone-600">Lefekvés előtt fogyasztva elősegíti a pihentető alvást és a regenerációt.</p>
+      </div>
+      <div class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-lg">
+       <div class="w-14 h-14 bg-orange-100 rounded-2xl flex items-center justify-center mb-4">
+        <svg class="w-7 h-7 text-orange-500" fill="currentColor" viewbox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z" />
+        </svg>
+       </div>
+       <h3 class="font-heading text-xl font-semibold mb-3">Energia</h3>
+       <p class="text-stone-600">Természetes szénhidrátforrás, amely tartós energiát biztosít sportolóknak és aktív embereknek.</p>
+      </div>
+      <div class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-lg">
+       <div class="w-14 h-14 bg-pink-100 rounded-2xl flex items-center justify-center mb-4">
+        <svg class="w-7 h-7 text-pink-500" fill="currentColor" viewbox="0 0 24 24"><path d="M12 12.75c1.63 0 3.07.39 4.24.9 1.08.48 1.76 1.56 1.76 2.73V18H6v-1.61c0-1.18.68-2.26 1.76-2.73 1.17-.52 2.61-.91 4.24-.91zM4 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm1.13 1.1c-.37-.06-.74-.1-1.13-.1-.99 0-1.93.21-2.78.58C.48 14.9 0 15.62 0 16.43V18h4.5v-1.61c0-.83.23-1.61.63-2.29zM20 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm4 3.43c0-.81-.48-1.53-1.22-1.85-.85-.37-1.79-.58-2.78-.58-.39 0-.76.04-1.13.1.4.68.63 1.46.63 2.29V18H24v-1.57zM12 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z" />
+        </svg>
+       </div>
+       <h3 class="font-heading text-xl font-semibold mb-3">Bőrápolás</h3>
+       <p class="text-stone-600">Hidratálja és táplálja a bőrt, segít a sebgyógyulásban és csökkenti a gyulladásokat.</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Order Form -->
+   <section id="rendeles" class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-12"><span class="text-amber-600 font-semibold tracking-wider uppercase text-sm">Rendelés</span>
+      <h2 class="font-heading text-3xl sm:text-4xl font-bold text-stone-800 mt-2 mb-4">Rendeljen Most!</h2>
+      <p class="text-stone-500 text-lg max-w-2xl mx-auto">Töltse ki az alábbi űrlapot és mi hamarosan felvesszük Önnel a kapcsolatot</p>
+     </div>
+     <div class="bg-stone-50 rounded-3xl p-8 sm:p-12 shadow-xl">
+      <form id="order-form" class="space-y-6">
+       <div class="grid sm:grid-cols-2 gap-6">
+        <div><label for="name" class="block text-sm font-medium text-stone-700 mb-2">Teljes név *</label> <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all outline-none" placeholder="Kovács János">
+        </div>
+        <div><label for="email" class="block text-sm font-medium text-stone-700 mb-2">Email cím *</label> <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all outline-none" placeholder="pelda@email.hu">
+        </div>
+       </div>
+       <div class="grid sm:grid-cols-2 gap-6">
+        <div><label for="phone" class="block text-sm font-medium text-stone-700 mb-2">Telefonszám *</label> <input type="tel" id="phone" name="phone" required class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all outline-none" placeholder="+36 30 123 4567">
+        </div>
+        <div><label for="product" class="block text-sm font-medium text-stone-700 mb-2">Termék kiválasztása *</label> <select id="product" name="product" required class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all outline-none bg-white"> <option value="">Válasszon terméket...</option> <option value="Akácméz 500g">Akácméz 500g - 2.490 Ft</option> <option value="Hársméz 500g">Hársméz 500g - 2.890 Ft</option> <option value="Virágméz 500g">Virágméz 500g - 1.990 Ft</option> <option value="Erdei méz 500g">Erdei méz 500g - 3.490 Ft</option> <option value="Repceméz 500g">Repceméz 500g - 1.790 Ft</option> <option value="Méhpempő 50g">Méhpempő 50g - 4.990 Ft</option> </select>
+        </div>
+       </div>
+       <div><label for="quantity" class="block text-sm font-medium text-stone-700 mb-2">Mennyiség *</label> <input type="number" id="quantity" name="quantity" min="1" max="100" value="1" required class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all outline-none">
+       </div>
+       <div><label for="message" class="block text-sm font-medium text-stone-700 mb-2">Megjegyzés (opcionális)</label> <textarea id="message" name="message" rows="4" class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all outline-none resize-none" placeholder="Szállítási cím, egyéb kérések..."></textarea>
+       </div><button type="submit" id="submit-btn" class="w-full btn-primary bg-amber-500 text-white py-4 rounded-xl font-semibold text-lg shadow-lg flex items-center justify-center gap-2"> <span>Rendelés elküldése</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg></button>
+      </form><!-- Success Message -->
+      <div id="success-message" class="hidden text-center py-8">
+       <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+       </div>
+       <h3 class="font-heading text-2xl font-bold text-stone-800 mb-2">Köszönjük rendelését!</h3>
+       <p class="text-stone-600 mb-6">Hamarosan felvesszük Önnel a kapcsolatot a megadott elérhetőségen.</p><button onclick="resetForm()" class="text-amber-600 font-semibold hover:text-amber-700"> Új rendelés leadása → </button>
+      </div>
+     </div><!-- Orders List -->
+     <div id="orders-section" class="mt-12 hidden">
+      <h3 class="font-heading text-2xl font-bold text-stone-800 mb-6">Korábbi rendelések</h3>
+      <div id="orders-list" class="space-y-4"></div>
+     </div>
+    </div>
+   </section><!-- Contact Section -->
+   <section id="kapcsolat" class="py-20 bg-stone-800 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid lg:grid-cols-2 gap-16">
+      <div><span class="text-amber-400 font-semibold tracking-wider uppercase text-sm">Kapcsolat</span>
+       <h2 class="font-heading text-3xl sm:text-4xl font-bold mt-2 mb-6">Vegye Fel Velünk a Kapcsolatot!</h2>
+       <p class="text-stone-300 text-lg mb-8">Kérdése van? Szívesen segítünk! Keressen minket bármilyen csatornán.</p>
+       <div class="space-y-6">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+          <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+         </div>
+         <div>
+          <h4 class="font-semibold text-lg mb-1">Cím</h4>
+          <p id="contact-address" class="text-stone-300">3300 Eger, Méhészet utca 12.</p>
+         </div>
+        </div>
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+          <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+          </svg>
+         </div>
+         <div>
+          <h4 class="font-semibold text-lg mb-1">Telefon</h4>
+          <p id="contact-phone" class="text-stone-300">+36 30 123 4567</p>
+         </div>
+        </div>
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+          <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+         </div>
+         <div>
+          <h4 class="font-semibold text-lg mb-1">Email</h4>
+          <p id="contact-email" class="text-stone-300">info@aranymez.hu</p>
+         </div>
+        </div>
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+          <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+         </div>
+         <div>
+          <h4 class="font-semibold text-lg mb-1">Nyitvatartás</h4>
+          <p class="text-stone-300">H-P: 8:00 - 17:00<br>
+           Szo: 9:00 - 13:00</p>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="relative"><!-- MAP/CONTACT IMAGE PLACEHOLDER -->
+       <div class="image-placeholder rounded-3xl aspect-square overflow-hidden"><img src="https://images.unsplash.com/photo-1564429238535-1d9d72e0cf18?w=600&amp;h=600&amp;fit=crop" alt="Méhészet képe" loading="lazy" class="w-full h-full object-cover opacity-80" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'flex flex-col items-center justify-center h-full p-8 text-center\'><svg class=\'w-20 h-20 mb-4 opacity-80\' fill=\'currentColor\' viewBox=\'0 0 64 64\'><path d=\'M32 8c-13.3 0-24 10.7-24 24s10.7 24 24 24 24-10.7 24-24S45.3 8 32 8zm0 44c-11 0-20-9-20-20s9-20 20-20 20 9 20 20-9 20-20 20z\'/><path d=\'M32 18c-7.7 0-14 6.3-14 14s6.3 14 14 14 14-6.3 14-14-6.3-14-14-14zm0 24c-5.5 0-10-4.5-10-10s4.5-10 10-10 10 4.5 10 10-4.5 10-10 10z\'/></svg><span class=\'text-lg font-medium\'>meheszet-foto.jpg</span></div>'">
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer class="bg-stone-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <div>
+       <div class="flex items-center gap-3 mb-4">
+        <svg class="w-10 h-10 text-amber-500" viewbox="0 0 64 64" fill="currentColor"><path d="M32 4C18.7 4 8 14.7 8 28c0 8.4 4.3 15.8 10.8 20.2L32 60l13.2-11.8C51.7 43.8 56 36.4 56 28 56 14.7 45.3 4 32 4zm0 8c2.2 0 4 1.8 4 4s-1.8 4-4 4-4-1.8-4-4 1.8-4 4-4zm-8 12c0-4.4 3.6-8 8-8s8 3.6 8 8c0 2.5-1.2 4.8-3 6.3v9.7h-2v-8h-6v8h-2v-9.7c-1.8-1.5-3-3.8-3-6.3z" />
+        </svg><span class="font-heading text-xl font-semibold">Aranyméz</span>
+       </div>
+       <p class="text-stone-400">Természetes méz a magyar rétekről, három generáció tapasztalatával.</p>
+      </div>
+      <div>
+       <h4 class="font-semibold mb-4">Gyors linkek</h4>
+       <ul class="space-y-2 text-stone-400">
+        <li><a href="#rolunk" class="hover:text-amber-400 transition-colors">Rólunk</a></li>
+        <li><a href="#termekek" class="hover:text-amber-400 transition-colors">Termékeink</a></li>
+        <li><a href="#rendeles" class="hover:text-amber-400 transition-colors">Rendelés</a></li>
+        <li><a href="#kapcsolat" class="hover:text-amber-400 transition-colors">Kapcsolat</a></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-semibold mb-4">Termékeink</h4>
+       <ul class="space-y-2 text-stone-400">
+        <li><a href="#termekek" class="hover:text-amber-400 transition-colors">Akácméz</a></li>
+        <li><a href="#termekek" class="hover:text-amber-400 transition-colors">Hársméz</a></li>
+        <li><a href="#termekek" class="hover:text-amber-400 transition-colors">Virágméz</a></li>
+        <li><a href="#termekek" class="hover:text-amber-400 transition-colors">Erdei méz</a></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-semibold mb-4">Kövessen minket</h4>
+       <div class="flex gap-4"><a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center hover:bg-amber-500 transition-colors">
+         <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+         </svg></a> <a href="#" class="w-10 h-10 bg-stone-800 rounded-full flex items-center justify-center hover:bg-amber-500 transition-colors">
+         <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+         </svg></a>
+       </div>
+      </div>
+     </div>
+     <div class="border-t border-stone-800 pt-8 text-center text-stone-400">
+      <p>© 2024 Aranyméz Manufaktúra. Minden jog fenntartva.</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      brand_name: 'Aranyméz Manufaktúra',
+      hero_title: 'Természetes méz a <span class="text-amber-600">magyar rétekről</span>',
+      hero_subtitle: 'Családi hagyományok, gondos méhészkedés és a természet ajándéka minden cseppben. Fedezd fel prémium mézkollekciónkat!',
+      about_text: 'Az Aranyméz Manufaktúra története 1998-ban kezdődött, amikor nagyapám a Bükk-hegység lábánál elhelyezte az első kaptárakat. Azóta családunk három generációja őrzi és fejleszti a méhészkedés művészetét, megőrizve a hagyományos módszereket, miközben a modern minőségbiztosítási elveket is alkalmazzuk.',
+      address: '3300 Eger, Méhészet utca 12.',
+      phone: '+36 30 123 4567',
+      email: 'info@aranymez.hu',
+      background_color: '#FFFBEB',
+      surface_color: '#FFFFFF',
+      text_color: '#292524',
+      primary_action_color: '#F59E0B',
+      secondary_action_color: '#B45309'
+    };
+
+    let config = { ...defaultConfig };
+    let orders = [];
+    let currentRecordCount = 0;
+
+    // Data SDK Handler
+    const dataHandler = {
+      onDataChanged(data) {
+        orders = data;
+        currentRecordCount = data.length;
+        renderOrders();
+      }
+    };
+
+    // Initialize SDKs
+    async function initApp() {
+      // Initialize Element SDK
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: async (newConfig) => {
+            config = { ...defaultConfig, ...newConfig };
+            updateUI();
+          },
+          mapToCapabilities: (cfg) => ({
+            recolorables: [
+              {
+                get: () => cfg.background_color || defaultConfig.background_color,
+                set: (v) => { cfg.background_color = v; window.elementSdk.setConfig({ background_color: v }); }
+              },
+              {
+                get: () => cfg.surface_color || defaultConfig.surface_color,
+                set: (v) => { cfg.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); }
+              },
+              {
+                get: () => cfg.text_color || defaultConfig.text_color,
+                set: (v) => { cfg.text_color = v; window.elementSdk.setConfig({ text_color: v }); }
+              },
+              {
+                get: () => cfg.primary_action_color || defaultConfig.primary_action_color,
+                set: (v) => { cfg.primary_action_color = v; window.elementSdk.setConfig({ primary_action_color: v }); }
+              },
+              {
+                get: () => cfg.secondary_action_color || defaultConfig.secondary_action_color,
+                set: (v) => { cfg.secondary_action_color = v; window.elementSdk.setConfig({ secondary_action_color: v }); }
+              }
+            ],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (cfg) => new Map([
+            ['brand_name', cfg.brand_name || defaultConfig.brand_name],
+            ['hero_title', cfg.hero_title || defaultConfig.hero_title],
+            ['hero_subtitle', cfg.hero_subtitle || defaultConfig.hero_subtitle],
+            ['about_text', cfg.about_text || defaultConfig.about_text],
+            ['address', cfg.address || defaultConfig.address],
+            ['phone', cfg.phone || defaultConfig.phone],
+            ['email', cfg.email || defaultConfig.email]
+          ])
+        });
+      }
+
+      // Initialize Data SDK
+      if (window.dataSdk) {
+        const result = await window.dataSdk.init(dataHandler);
+        if (!result.isOk) {
+          console.error('Failed to initialize Data SDK');
+        }
+      }
+    }
+
+    // Update UI based on config
+    function updateUI() {
+      document.getElementById('brand-name').textContent = config.brand_name || defaultConfig.brand_name;
+      document.getElementById('hero-title').innerHTML = config.hero_title || defaultConfig.hero_title;
+      document.getElementById('hero-subtitle').textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
+      document.getElementById('about-text').textContent = config.about_text || defaultConfig.about_text;
+      document.getElementById('contact-address').textContent = config.address || defaultConfig.address;
+      document.getElementById('contact-phone').textContent = config.phone || defaultConfig.phone;
+      document.getElementById('contact-email').textContent = config.email || defaultConfig.email;
+
+      // Update colors
+      const bgColor = config.background_color || defaultConfig.background_color;
+      const surfaceColor = config.surface_color || defaultConfig.surface_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const primaryColor = config.primary_action_color || defaultConfig.primary_action_color;
+      
+      document.body.style.backgroundColor = bgColor;
+      document.querySelectorAll('.bg-white').forEach(el => el.style.backgroundColor = surfaceColor);
+      document.querySelectorAll('.bg-amber-500').forEach(el => el.style.backgroundColor = primaryColor);
+      document.querySelectorAll('h1, h2, h3, h4').forEach(el => el.style.color = textColor);
+    }
+
+    // Render orders list
+    function renderOrders() {
+      const ordersSection = document.getElementById('orders-section');
+      const ordersList = document.getElementById('orders-list');
+      
+      if (orders.length === 0) {
+        ordersSection.classList.add('hidden');
+        return;
+      }
+      
+      ordersSection.classList.remove('hidden');
+      
+      // Sort by date, newest first
+      const sortedOrders = [...orders].sort((a, b) => 
+        new Date(b.createdAt) - new Date(a.createdAt)
+      );
+      
+      ordersList.innerHTML = sortedOrders.map(order => `
+        <div class="bg-white rounded-xl p-6 shadow-md border border-stone-100" data-order-id="${order.__backendId}">
+          <div class="flex flex-wrap justify-between items-start gap-4">
+            <div>
+              <h4 class="font-semibold text-stone-800">${order.name}</h4>
+              <p class="text-stone-500 text-sm">${order.email} • ${order.phone}</p>
+            </div>
+            <div class="text-right">
+              <p class="font-semibold text-amber-600">${order.product}</p>
+              <p class="text-stone-500 text-sm">Mennyiség: ${order.quantity}</p>
+            </div>
+          </div>
+          ${order.message ? `<p class="mt-3 text-stone-600 text-sm bg-stone-50 p-3 rounded-lg">${order.message}</p>` : ''}
+          <div class="mt-4 flex justify-between items-center">
+            <p class="text-xs text-stone-400">${new Date(order.createdAt).toLocaleString('hu-HU')}</p>
+            <button onclick="deleteOrder('${order.__backendId}')" class="text-red-500 hover:text-red-600 text-sm font-medium">
+              Törlés
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Delete order
+    async function deleteOrder(backendId) {
+      const order = orders.find(o => o.__backendId === backendId);
+      if (!order) return;
+      
+      const orderEl = document.querySelector(`[data-order-id="${backendId}"]`);
+      const deleteBtn = orderEl.querySelector('button');
+      deleteBtn.textContent = 'Törlés...';
+      deleteBtn.disabled = true;
+      
+      if (window.dataSdk) {
+        const result = await window.dataSdk.delete(order);
+        if (!result.isOk) {
+          deleteBtn.textContent = 'Hiba!';
+          setTimeout(() => {
+            deleteBtn.textContent = 'Törlés';
+            deleteBtn.disabled = false;
+          }, 2000);
+        }
+      }
+    }
+
+    // Select product from card
+    function selectProduct(productName, price) {
+      document.getElementById('product').value = productName;
+      document.getElementById('rendeles').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Form submission
+    document.getElementById('order-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      if (currentRecordCount >= 999) {
+        const form = document.getElementById('order-form');
+        const warningEl = document.createElement('div');
+        warningEl.className = 'bg-red-100 text-red-700 p-4 rounded-xl text-center';
+        warningEl.textContent = 'A rendelési limit elérve (999). Kérjük, vegye fel velünk a kapcsolatot telefonon!';
+        form.insertBefore(warningEl, form.firstChild);
+        return;
+      }
+      
+      const submitBtn = document.getElementById('submit-btn');
+      submitBtn.innerHTML = '<svg class="animate-spin w-5 h-5 mr-2" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Feldolgozás...';
+      submitBtn.disabled = true;
+      
+      const orderData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        product: document.getElementById('product').value,
+        quantity: parseInt(document.getElementById('quantity').value),
+        message: document.getElementById('message').value,
+        createdAt: new Date().toISOString()
+      };
+      
+      if (window.dataSdk) {
+        const result = await window.dataSdk.create(orderData);
+        if (result.isOk) {
+          document.getElementById('order-form').classList.add('hidden');
+          document.getElementById('success-message').classList.remove('hidden');
+        } else {
+          submitBtn.innerHTML = '<span>Hiba történt!</span>';
+          setTimeout(() => {
+            submitBtn.innerHTML = '<span>Rendelés elküldése</span><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>';
+            submitBtn.disabled = false;
+          }, 2000);
+        }
+      } else {
+        document.getElementById('order-form').classList.add('hidden');
+        document.getElementById('success-message').classList.remove('hidden');
+      }
+    });
+
+    // Reset form
+    function resetForm() {
+      document.getElementById('order-form').reset();
+      document.getElementById('order-form').classList.remove('hidden');
+      document.getElementById('success-message').classList.add('hidden');
+      const submitBtn = document.getElementById('submit-btn');
+      submitBtn.innerHTML = '<span>Rendelés elküldése</span><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>';
+      submitBtn.disabled = false;
+    }
+
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('mobile-menu').classList.add('hidden');
+      });
+    });
+
+    // Initialize app
+    initApp();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c03ea81f0276853',t:'MTc2ODgwMDM3NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
