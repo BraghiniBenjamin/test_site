@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/cc_logo_bw.png') }}" />
+  <title>CyberCare – AI Chatbot (Tudásbázis)</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'cyber-green': '#00a355',
+            'cyber-dark': '#2a2c28'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .cyber-title { font-family: 'Orbitron', monospace; }
+    .soft-shadow { box-shadow: 0 20px 40px rgba(0, 163, 85, 0.08); }
+    .card-hover { transition: all .25s ease; }
+    .card-hover:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(0, 163, 85, 0.12); }
+    .chat-scroll { scrollbar-width: thin; scrollbar-color: rgba(0,163,85,.5) transparent; }
+  </style>
+</head>
+
+<body class="bg-gray-50">
+
+  <!-- NAV (ugyanaz a stílus) -->
+  <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="{{ url_for('home') }}" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+          <div class="w-10 h-10 flex items-center justify-center">
+            <img src="{{ url_for('static', filename='images/cc_logo_bw.png') }}" alt="CyberCare Logo" class="w-8 h-8">
+          </div>
+          <span class="text-xl font-bold text-cyber-dark">CyberCare</span>
+        </a>
+
+        <div class="hidden md:flex space-x-8">
+          <a href="{{ url_for('home') }}" class="text-cyber-dark hover:text-cyber-green transition-colors px-3 py-2 rounded-lg">Főoldal</a>
+          <a href="{{ url_for('about') }}" class="text-cyber-dark hover:text-cyber-green transition-colors px-3 py-2 rounded-lg">Rólunk</a>
+          <a href="{{ url_for('services') }}" class="text-cyber-dark hover:text-cyber-green transition-colors px-3 py-2 rounded-lg">Szolgáltatások</a>
+          <a href="{{ url_for('web_development') }}" class="text-cyber-dark hover:text-cyber-green transition-colors px-3 py-2 rounded-lg">Webfejlesztés</a>
+          <a href="{{ url_for('contact') }}" class="text-cyber-dark hover:text-cyber-green transition-colors px-3 py-2 rounded-lg">Kapcsolat</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <section class="pt-24 pb-10 bg-white border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+        <div>
+          <h1 class="cyber-title text-3xl sm:text-4xl font-bold text-cyber-dark">
+            AI Chatbot <span class="text-cyber-green">+ Tudásbázis</span>
+          </h1>
+          <p class="text-gray-600 mt-3 max-w-2xl">
+            Itt látod a teljes “dummy” tudásbázist, és jobb oldalt kérdezhetsz az AI-tól.
+            A chatbot a tudásbázis alapján válaszol.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div id="globalStatus"
+               class="hidden items-center gap-2 px-4 py-2 rounded-lg bg-cyber-green/10 text-cyber-dark border border-cyber-green/20">
+            <div class="w-4 h-4 border-2 border-cyber-green border-t-transparent rounded-full animate-spin"></div>
+            <span class="text-sm font-semibold">AI dolgozik…</span>
+          </div>
+
+          <button id="reloadKbBtn"
+                  class="px-4 py-2 rounded-lg bg-cyber-green text-white font-semibold hover:bg-green-600 transition soft-shadow">
+            Tudásbázis frissítése
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <section class="py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-3 gap-8">
+
+        <!-- LEFT: KB LIST -->
+        <div class="lg:col-span-2">
+          <div class="bg-white rounded-2xl border border-gray-100 soft-shadow p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <h2 class="text-xl font-bold text-cyber-dark">Teljes tudásbázis</h2>
+                <p class="text-gray-500 text-sm mt-1">Kereshetsz cím / tag / tartalom alapján.</p>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <input id="kbSearch"
+                       type="text"
+                       placeholder="Keresés a tudásbázisban…"
+                       class="w-full sm:w-80 px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyber-green/40">
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <div id="kbMeta" class="text-sm text-gray-500 mb-4"></div>
+
+              <div id="kbGrid" class="grid sm:grid-cols-2 gap-4">
+                <!-- KB cards injected -->
+              </div>
+
+              <div id="kbEmpty" class="hidden text-center py-10 text-gray-500">
+                Nincs találat a tudásbázisban.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: CHAT -->
+        <div class="lg:col-span-1">
+          <div class="bg-white rounded-2xl border border-gray-100 soft-shadow overflow-hidden flex flex-col h-[70vh]">
+            <div class="p-5 border-b border-gray-100">
+              <h2 class="text-xl font-bold text-cyber-dark">Chat</h2>
+              <p class="text-gray-500 text-sm mt-1">Kérdezz a szolgáltatásokról, válaszidőről, AI-ról.</p>
+            </div>
+
+            <div id="chatMessages" class="flex-1 p-5 space-y-4 overflow-y-auto chat-scroll bg-gray-50">
+              <div class="flex items-start gap-3">
+                <div class="w-9 h-9 rounded-full bg-cyber-green text-white flex items-center justify-center font-bold">AI</div>
+                <div class="bg-white border border-gray-200 rounded-2xl px-4 py-3 max-w-[85%]">
+                  <p class="text-sm text-gray-700">
+                    Szia! Írj egy kérdést, és a tudásbázis alapján válaszolok. 🙂
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-4 border-t border-gray-100 bg-white">
+              <div class="flex gap-2">
+                <input id="chatInput"
+                       type="text"
+                       placeholder="Írd ide a kérdésed…"
+                       class="flex-1 px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyber-green/40">
+                <button id="sendBtn"
+                        class="px-5 py-3 rounded-xl bg-cyber-green text-white font-bold hover:bg-green-600 transition">
+                  Küldés
+                </button>
+              </div>
+
+              <div id="chatHint" class="text-xs text-gray-500 mt-2">
+                Tipp: “Mennyi időn belül válaszoltok?” vagy “Mit csináltok webfejlesztésben?”
+              </div>
+            </div>
+          </div>
+
+          <!-- sources -->
+          <div class="mt-4 bg-white rounded-2xl border border-gray-100 soft-shadow p-5">
+            <h3 class="text-sm font-bold text-cyber-dark">Legutóbbi források</h3>
+            <div id="sourcesBox" class="mt-3 text-sm text-gray-600">
+              Még nincs.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // -----------------------------
+    // KB state
+    // -----------------------------
+    let KB = [];
+    let KBFiltered = [];
+
+    const kbGrid = document.getElementById("kbGrid");
+    const kbSearch = document.getElementById("kbSearch");
+    const kbMeta = document.getElementById("kbMeta");
+    const kbEmpty = document.getElementById("kbEmpty");
+    const reloadKbBtn = document.getElementById("reloadKbBtn");
+
+    // -----------------------------
+    // Chat state
+    // -----------------------------
+    const chatMessages = document.getElementById("chatMessages");
+    const chatInput = document.getElementById("chatInput");
+    const sendBtn = document.getElementById("sendBtn");
+    const globalStatus = document.getElementById("globalStatus");
+    const sourcesBox = document.getElementById("sourcesBox");
+
+    function setBusy(isBusy) {
+      if (isBusy) {
+        globalStatus.classList.remove("hidden");
+        globalStatus.classList.add("flex");
+      } else {
+        globalStatus.classList.add("hidden");
+        globalStatus.classList.remove("flex");
+      }
+
+      sendBtn.disabled = isBusy;
+      chatInput.disabled = isBusy;
+      reloadKbBtn.disabled = isBusy;
+
+      sendBtn.classList.toggle("opacity-60", isBusy);
+      reloadKbBtn.classList.toggle("opacity-60", isBusy);
+    }
+
+    function escapeHtml(str) {
+      return (str || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    // -----------------------------
+    // KB rendering
+    // -----------------------------
+    function renderKb(items) {
+      kbGrid.innerHTML = "";
+      kbEmpty.classList.add("hidden");
+
+      kbMeta.textContent = `Rekordok: ${items.length} / ${KB.length}`;
+
+      if (!items.length) {
+        kbEmpty.classList.remove("hidden");
+        return;
+      }
+
+      for (const it of items) {
+        const tags = (it.tags || "").split(",").map(t => t.trim()).filter(Boolean);
+        const tagHtml = tags.slice(0, 6).map(t =>
+          `<span class="text-xs px-2 py-1 rounded-full bg-cyber-green/10 text-cyber-dark border border-cyber-green/20">${escapeHtml(t)}</span>`
+        ).join("");
+
+        const el = document.createElement("div");
+        el.className = "card-hover bg-white rounded-xl border border-gray-100 p-5";
+        el.innerHTML = `
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-bold text-cyber-dark">${escapeHtml(it.title)}</h4>
+              <p class="text-xs text-gray-400 mt-1">ID: ${it.id}</p>
+            </div>
+            <button class="text-sm font-semibold text-cyber-green hover:underline"
+                    data-ask="${escapeHtml(it.title)}">
+              Kérdezz rá
+            </button>
+          </div>
+
+          <div class="flex flex-wrap gap-2 mt-3">${tagHtml || '<span class="text-xs text-gray-400">Nincs tag</span>'}</div>
+
+          <div class="mt-4 text-sm text-gray-600 leading-relaxed line-clamp-4">
+            ${escapeHtml(it.content)}
+          </div>
+
+          <button class="mt-4 text-sm font-semibold text-cyber-green hover:underline"
+                  data-toggle="${it.id}">
+            Mutasd a teljes szöveget
+          </button>
+
+          <div class="hidden mt-3 text-sm text-gray-700 whitespace-pre-wrap" id="full_${it.id}">
+            ${escapeHtml(it.content)}
+          </div>
+        `;
+
+        kbGrid.appendChild(el);
+      }
+
+      // attach handlers
+      kbGrid.querySelectorAll("[data-toggle]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-toggle");
+          const box = document.getElementById("full_" + id);
+          const isHidden = box.classList.contains("hidden");
+          box.classList.toggle("hidden", !isHidden);
+          btn.textContent = isHidden ? "Elrejtés" : "Mutasd a teljes szöveget";
+        });
+      });
+
+      kbGrid.querySelectorAll("[data-ask]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const topic = btn.getAttribute("data-ask");
+          chatInput.value = `Kérlek mondd el részletesen: ${topic}`;
+          chatInput.focus();
+        });
+      });
+    }
+
+    function applyKbFilter() {
+      const q = (kbSearch.value || "").trim().toLowerCase();
+      if (!q) {
+        KBFiltered = [...KB];
+      } else {
+        KBFiltered = KB.filter(it => {
+          const hay = `${it.title} ${it.tags} ${it.content}`.toLowerCase();
+          return hay.includes(q);
+        });
+      }
+      renderKb(KBFiltered);
+    }
+
+    async function loadKb() {
+      setBusy(true);
+      try {
+        const res = await fetch("/api/kb/all", { headers: { "accept": "application/json" } });
+        const data = await res.json();
+        if (!data.ok) throw new Error(data.error || "KB betöltési hiba");
+
+        KB = data.items || [];
+        KBFiltered = [...KB];
+        applyKbFilter();
+      } catch (e) {
+        kbMeta.textContent = "Hiba a tudásbázis betöltésekor.";
+        kbGrid.innerHTML = `<div class="text-red-600 text-sm">${escapeHtml(String(e))}</div>`;
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    kbSearch.addEventListener("input", applyKbFilter);
+    reloadKbBtn.addEventListener("click", loadKb);
+
+    // -----------------------------
+    // Chat UI helpers
+    // -----------------------------
+    function addBubble(role, text) {
+      const isUser = role === "user";
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "flex items-start gap-3 " + (isUser ? "justify-end" : "");
+
+      const avatar = document.createElement("div");
+      avatar.className = "w-9 h-9 rounded-full flex items-center justify-center font-bold flex-shrink-0 " +
+        (isUser ? "bg-cyber-dark text-white order-2" : "bg-cyber-green text-white");
+      avatar.textContent = isUser ? "Te" : "AI";
+
+      const bubble = document.createElement("div");
+      bubble.className = "rounded-2xl px-4 py-3 max-w-[85%] " +
+        (isUser
+          ? "bg-cyber-dark text-white order-1"
+          : "bg-white border border-gray-200 text-gray-700");
+      bubble.innerHTML = `<div class="text-sm whitespace-pre-wrap">${escapeHtml(text)}</div>`;
+
+      if (isUser) {
+        wrapper.appendChild(bubble);
+        wrapper.appendChild(avatar);
+      } else {
+        wrapper.appendChild(avatar);
+        wrapper.appendChild(bubble);
+      }
+
+      chatMessages.appendChild(wrapper);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      return wrapper;
+    }
+
+    function addTyping() {
+      const wrapper = document.createElement("div");
+      wrapper.className = "flex items-start gap-3";
+
+      wrapper.innerHTML = `
+        <div class="w-9 h-9 rounded-full bg-cyber-green text-white flex items-center justify-center font-bold">AI</div>
+        <div class="bg-white border border-gray-200 rounded-2xl px-4 py-3 max-w-[85%]">
+          <div class="flex items-center gap-2 text-sm text-gray-600">
+            <div class="w-4 h-4 border-2 border-cyber-green border-t-transparent rounded-full animate-spin"></div>
+            <span>Gondolkodom…</span>
+          </div>
+        </div>
+      `;
+      chatMessages.appendChild(wrapper);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      return wrapper;
+    }
+
+    function renderSources(sources) {
+      if (!sources || !sources.length) {
+        sourcesBox.textContent = "Nem érkezett forrás.";
+        return;
+      }
+      sourcesBox.innerHTML = `
+        <ul class="list-disc list-inside space-y-1">
+          ${sources.map(s => `<li><span class="font-semibold text-cyber-dark">#${s.id}</span> – ${escapeHtml(s.title)}</li>`).join("")}
+        </ul>
+      `;
+    }
+
+    async function sendMessage() {
+      const msg = (chatInput.value || "").trim();
+      if (!msg) return;
+
+      addBubble("user", msg);
+      chatInput.value = "";
+
+      const typingEl = addTyping();
+      setBusy(true);
+
+      try {
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "accept": "application/json" },
+          body: JSON.stringify({ message: msg })
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.ok) {
+          throw new Error(data.error || data.message || "Chat hiba");
+        }
+
+        typingEl.remove();
+        addBubble("assistant", data.answer || "Nincs válasz.");
+        renderSources(data.sources || []);
+      } catch (e) {
+        typingEl.remove();
+        addBubble("assistant", "Hiba történt a válasz generálásakor. Kérlek próbáld újra.\n\n" + String(e));
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    sendBtn.addEventListener("click", sendMessage);
+    chatInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") sendMessage();
+    });
+
+    // init
+    loadKb();
+  </script>
+</body>
+</html>
