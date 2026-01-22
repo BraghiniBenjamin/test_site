@@ -54,11 +54,11 @@ def _engine():
 
 
 def _code_hash(code: str) -> str:
-    salt = (os.environ.get("PREVIEW_CODE_SALT") or "").strip()
-    if not salt:
-        raise RuntimeError("Missing PREVIEW_CODE_SALT environment variable")
+    # ha nincs PREVIEW_CODE_SALT, akkor fallback (kevésbé biztonságos)
+    salt = (os.environ.get("PREVIEW_CODE_SALT") or "fallback-salt-change-me").strip()
     raw = f"{code}:{salt}".encode("utf-8")
     return hashlib.sha256(raw).hexdigest()
+
 
 
 # Light rate-limit in-memory (Render egy példányon belül működik)
