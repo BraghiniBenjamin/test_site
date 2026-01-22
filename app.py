@@ -1,11 +1,87 @@
 import os
 import html as html_escape
 import requests
-from flask import Flask, render_template, request, jsonify, redirect, url_for
-from flask import send_from_directory, abort
 import pathlib
+import hashlib
+import time
+from datetime import datetime, timezone
+
+from flask import (
+    Flask,
+    render_template,
+    request,
+    jsonify,
+    redirect,
+    url_for,
+    send_from_directory,
+    abort,
+    session,
+)
+
+from sqlalchemy import create_engine, text
 
 app = Flask(__name__)
+
+# ==================================================
+# CONFIG / SECURITY
+# ==================================================
+app.secret_key = (os.environ.get("FLASK_SECRET_KEY") or "dev-secret-change-me").strip()
+
+# ==================================================
+# DATABASE (Render: ENV DATABASE_URL)
+# ==================================================
+def _db_url() -> str:
+    """
+    Render/Heroku kompat: néha 'postgres://', azt SQLAlchemy 'postgresql+psycopg://' formában szereti.
+    A te esetedben 'postgresql://' is OK.
+    """
+    url = (os.environ.get("DATABASE_URL") or "").strip()
+    if url.startswith("postgres://"):
+        url = "postgresql+psycopg://" + url[len("postgres://") :]
+    return url
+
+
+def _engine():
+    url = _db_url()
+    if not url:
+        raise RuntimeError("Missing DATABASE_URL environment variable")
+    return create_engine(
+        url,
+        pool_pre_ping=True,
+        pool_size=5,
+        max_overflow=10,
+    )
+
+
+def _code_hash(code: str) -> str:
+    salt = (os.environ.get("PREVIEW_CODE_SALT") or "").strip()
+    if not salt:
+        raise RuntimeError("Missing PREVIEW_CODE_SALT environment variable")
+    raw = f"{code}:{salt}".encode("utf-8")
+    return hashlib.sha256(raw).hexdigest()
+
+
+# Light rate-limit in-memory (Render egy példányon belül működik)
+_PREVIEW_FAILS = {}  # ip -> (count, first_ts)
+
+
+def _rate_limit_check(ip: str, max_tries=10, window_sec=600) -> bool:
+    now = time.time()
+    count, first_ts = _PREVIEW_FAILS.get(ip, (0, now))
+    if now - first_ts > window_sec:
+        _PREVIEW_FAILS[ip] = (0, now)
+        return True
+    return count < max_tries
+
+
+def _rate_limit_hit(ip: str):
+    now = time.time()
+    count, first_ts = _PREVIEW_FAILS.get(ip, (0, now))
+    if now - first_ts > 600:
+        _PREVIEW_FAILS[ip] = (1, now)
+    else:
+        _PREVIEW_FAILS[ip] = (count + 1, first_ts)
+
 
 # ==================================================
 # BREVO TRANSACTIONAL EMAIL
@@ -85,7 +161,6 @@ def _read_contact_payload():
 
 
 def _response_ok(message: str):
-    # a frontended data.success-t figyel
     return jsonify({"ok": True, "success": True, "message": message})
 
 
@@ -97,13 +172,11 @@ def _response_err(message: str, status: int = 400):
 # ROUTES (PAGES)
 # ==================================================
 
-# A template-ben használt url_for('root') miatt:
 @app.get("/")
 def root():
     return render_template("index.html")
 
 
-# A template-ben használt url_for('home') miatt:
 @app.get("/home")
 def home():
     return render_template("index.html")
@@ -118,9 +191,11 @@ def about():
 def services():
     return render_template("our_services.html")
 
+
 @app.get("/szolgaltatasok")
 def services_legacy_hu():
     return redirect(url_for("services"), code=301)
+
 
 @app.get("/page_index")
 def page_index():
@@ -138,26 +213,9 @@ def contact():
 
 
 # ==================================================
-# EXTRA ALIASOK (ha többféle URL-ed is kint van már)
+# EXTRA ALIASOK / TEMPLATE-ALIAS
 # ==================================================
 
-# footerben /szolgaltatasaink is előfordulhat
-@app.get("/szolgaltatasaink")
-def services_hu_alias():
-    return redirect(url_for("services"), code=301)
-
-
-# /web-fejlesztes (slugos) -> webfejlesztes oldal
-@app.get("/web-fejlesztes")
-def web_fejlesztes():
-    return redirect(url_for("web_development"), code=301)
-
-
-# ==================================================
-# TEMPLATE-ALIAS ENDPOINTOK (a HTML-ben használt url_for(...) miatt)
-# ==================================================
-
-# index.html-ben: url_for('about_alias') stb.
 @app.get("/about")
 def about_alias():
     return redirect(url_for("about"), code=301)
@@ -202,7 +260,7 @@ def legacy_contact():
 
 
 # ==================================================
-# API
+# API - CONTACT
 # ==================================================
 @app.post("/api/contact")
 def api_contact():
@@ -229,7 +287,6 @@ def api_contact():
         s_service = _safe(payload.get("service"))
         s_page = _safe(payload.get("page"))
 
-        # 1) ADMIN TEXT (fallback / plain text)
         admin_text = (
             f"Új kapcsolatfelvétel\n"
             f"Név: {name}\n"
@@ -241,7 +298,6 @@ def api_contact():
             f"Üzenet:\n{message}\n"
         )
 
-        # 1) ADMIN HTML (a TE sablonod)
         admin_html = f"""
 <!DOCTYPE html>
 <html lang="hu">
@@ -306,7 +362,6 @@ def api_contact():
             html=admin_html,
         )
 
-        # 2) USER HTML (a TE sablonod)
         user_html = f"""
 <!DOCTYPE html>
 <html lang="hu">
@@ -360,6 +415,119 @@ def api_contact():
     return _response_ok("Köszönjük! Üzenetét megkaptuk, hamarosan válaszolunk.")
 
 
+# ==================================================
+# PREVIEW / FEJLESZTÉS ALATT (NEW BACKEND)
+# ==================================================
+@app.route("/fejlesztes-alatt", methods=["GET", "POST"])
+def fejlesztes_alatt():
+    """
+    GET: egyszerű kód bekérő oldal (később cseréljük a te design template-edre)
+    POST: kód ellenőrzés DB-ből -> redirect a megfelelő preview oldalra
+    """
+    ip = request.headers.get("X-Forwarded-For", request.remote_addr) or "unknown"
+
+    if request.method == "GET":
+        # Frontendet majd küldöd – addig minimál
+        return """
+        <!doctype html><html lang="hu"><head><meta charset="utf-8"><title>Fejlesztés alatt</title></head>
+        <body style="font-family:Segoe UI, sans-serif;max-width:520px;margin:40px auto;">
+          <h2>Fejlesztés alatt lévő oldal megtekintése</h2>
+          <form method="post">
+            <label>Kód</label><br>
+            <input name="code" type="password" style="width:100%;padding:10px;margin:10px 0;">
+            <button type="submit" style="padding:10px 14px;">Megnyitás</button>
+          </form>
+        </body></html>
+        """
+
+    # POST
+    if not _rate_limit_check(ip):
+        return _response_err("Túl sok próbálkozás. Próbáld később.", 429)
+
+    code = (request.form.get("code") or "").strip()
+    if not code:
+        _rate_limit_hit(ip)
+        return _response_err("A kód megadása kötelező.", 400)
+
+    try:
+        ch = _code_hash(code)
+
+        eng = _engine()
+        with eng.connect() as conn:
+            row = conn.execute(
+                text("""
+                    SELECT c.page_key, c.expires_at, p.template_name
+                    FROM preview_codes c
+                    JOIN preview_pages p ON p.page_key = c.page_key
+                    WHERE c.code_hash = :h
+                      AND c.is_active = TRUE
+                      AND p.is_active = TRUE
+                    LIMIT 1
+                """),
+                {"h": ch},
+            ).mappings().first()
+
+        if not row:
+            _rate_limit_hit(ip)
+            return _response_err("Hibás kód.", 401)
+
+        expires_at = row.get("expires_at")
+        if expires_at:
+            # Postgres driver általában datetime-et ad
+            expires_dt = expires_at
+            if isinstance(expires_dt, str):
+                expires_dt = datetime.fromisoformat(expires_dt.replace("Z", "+00:00"))
+
+            if expires_dt.tzinfo is None:
+                expires_dt = expires_dt.replace(tzinfo=timezone.utc)
+
+            if datetime.now(timezone.utc) > expires_dt:
+                _rate_limit_hit(ip)
+                return _response_err("A kód lejárt.", 401)
+
+        session["preview_page_key"] = row["page_key"]
+        return redirect(url_for("fejlesztes_alatt_page", page_key=row["page_key"]), code=302)
+
+    except Exception as e:
+        return _response_err(f"Preview hiba: {e}", 503)
+
+
+@app.get("/fejlesztes-alatt/<page_key>")
+def fejlesztes_alatt_page(page_key):
+    """
+    Csak akkor engedjük, ha a session-ben megvan az engedély.
+    A template_name DB-ből jön (pl. 'dev/uj_landing_v2.html').
+    """
+    allowed = session.get("preview_page_key")
+    if not allowed or allowed != page_key:
+        return abort(403)
+
+    try:
+        eng = _engine()
+        with eng.connect() as conn:
+            row = conn.execute(
+                text("""
+                    SELECT template_name
+                    FROM preview_pages
+                    WHERE page_key = :k AND is_active = TRUE
+                    LIMIT 1
+                """),
+                {"k": page_key},
+            ).mappings().first()
+
+        if not row:
+            return abort(404)
+
+        template_name = row["template_name"]
+        return render_template(template_name)
+
+    except Exception:
+        return abort(503)
+
+
+# ==================================================
+# HEALTH
+# ==================================================
 @app.get("/health")
 def health():
     return jsonify({"status": "ok"})
@@ -367,15 +535,10 @@ def health():
 
 # ==================================================
 # DEMO OLDALAK (demo_oldalak mappa kiszolgálása)
-#   mappa struktúra példa:
-#   demo_oldalak/
-#     demo1/index.html
-#     demo1/assets/...
-#     demo2/index.html
 # ==================================================
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATES_ROOT = os.path.join(BASE_DIR, "templates")
+
 
 @app.get("/demo/<name>")
 def demo_page(name):
@@ -399,6 +562,20 @@ def demo_assets(filename):
 
     return send_from_directory(TEMPLATES_ROOT, safe)
 
+
+# ==================================================
+# OPTIONAL: DB CONNECTION TEST (hasznos Renderen)
+#   (ha nem kell, törölheted)
+# ==================================================
+@app.get("/db-test")
+def db_test():
+    try:
+        eng = _engine()
+        with eng.connect() as conn:
+            r = conn.execute(text("SELECT 1")).scalar()
+        return jsonify({"db": "ok", "result": r})
+    except Exception as e:
+        return jsonify({"db": "error", "error": str(e)}), 500
 
 
 # ==================================================
