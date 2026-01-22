@@ -84,6 +84,85 @@ def _rate_limit_hit(ip: str):
 
 
 # ==================================================
+# DB INIT + SEED (AUTOMATIKUS)
+# ==================================================
+def _ensure_preview_tables_and_seed():
+    """
+    - Létrehozza a preview táblákat, ha nem léteznek
+    - Felveszi / frissíti a George_Logistic_Team oldalt
+    - Felveszi a hozzá tartozó kódot (hash-elve), ha nincs bent
+    """
+    eng = _engine()
+
+    create_pages = """
+    CREATE TABLE IF NOT EXISTS preview_pages (
+      page_key       TEXT PRIMARY KEY,
+      template_name  TEXT NOT NULL,
+      is_active      BOOLEAN NOT NULL DEFAULT TRUE,
+      created_at     TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+    """
+
+    create_codes = """
+    CREATE TABLE IF NOT EXISTS preview_codes (
+      id         BIGSERIAL PRIMARY KEY,
+      code_hash  TEXT NOT NULL UNIQUE,
+      page_key   TEXT NOT NULL REFERENCES preview_pages(page_key) ON DELETE CASCADE,
+      is_active  BOOLEAN NOT NULL DEFAULT TRUE,
+      expires_at TIMESTAMPTZ NULL,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_preview_codes_page_key ON preview_codes(page_key);
+    """
+
+    # Seed adatok
+    page_key = "George_Logistic_Team"
+    template_name = "George_Logistic_Team.html"
+    raw_code = "UL7dISvX4zdaLiJ5mvgKvmxn"
+    code_hash = _code_hash(raw_code)
+
+    with eng.begin() as conn:
+        # Táblák
+        conn.execute(text(create_pages))
+        # (create_codes több statement, ezért így:
+        for stmt in create_codes.split(";"):
+            s = stmt.strip()
+            if s:
+                conn.execute(text(s))
+
+        # Page upsert
+        conn.execute(
+            text("""
+            INSERT INTO preview_pages (page_key, template_name, is_active)
+            VALUES (:k, :t, TRUE)
+            ON CONFLICT (page_key) DO UPDATE
+            SET template_name = EXCLUDED.template_name,
+                is_active = TRUE
+            """),
+            {"k": page_key, "t": template_name},
+        )
+
+        # Code insert (ha nincs)
+        conn.execute(
+            text("""
+            INSERT INTO preview_codes (code_hash, page_key, is_active, expires_at)
+            VALUES (:h, :k, TRUE, NULL)
+            ON CONFLICT (code_hash) DO NOTHING
+            """),
+            {"h": code_hash, "k": page_key},
+        )
+
+
+# Induláskor egyszer fusson le
+try:
+    _ensure_preview_tables_and_seed()
+except Exception as e:
+    # Ne álljon meg az app indulás, de lásd a logban
+    print(f"[WARN] Preview DB init/seed failed: {e}")
+
+
+# ==================================================
 # BREVO TRANSACTIONAL EMAIL
 # ==================================================
 def send_email(to_email: str, subject: str, html: str, text_msg: str | None = None):
@@ -128,11 +207,6 @@ def _safe(s: str) -> str:
 
 
 def _read_contact_payload():
-    """
-    Frontend kompatibilitás:
-    - JSON: {name,email,message,...}
-    - FormData: name=...&email=... stb.
-    """
     if request.is_json:
         data = request.get_json(silent=True) or {}
     else:
@@ -146,7 +220,6 @@ def _read_contact_payload():
     phone = (data.get("phone") or "").strip()
     service = (data.get("service") or "").strip()
 
-    # hasznos adminnak: honnan jött
     page = (data.get("page") or "").strip() or (request.headers.get("Referer") or "")
 
     return {
@@ -171,7 +244,6 @@ def _response_err(message: str, status: int = 400):
 # ==================================================
 # ROUTES (PAGES)
 # ==================================================
-
 @app.get("/")
 def root():
     return render_template("index.html")
@@ -191,9 +263,11 @@ def about():
 def services():
     return render_template("our_services.html")
 
+
 @app.get("/web-fejlesztes")
 def web_fejlesztes():
     return redirect(url_for("web_development"), code=301)
+
 
 @app.get("/szolgaltatasok")
 def services_legacy_hu():
@@ -218,7 +292,6 @@ def contact():
 # ==================================================
 # EXTRA ALIASOK / TEMPLATE-ALIAS
 # ==================================================
-
 @app.get("/about")
 def about_alias():
     return redirect(url_for("about"), code=301)
@@ -281,7 +354,6 @@ def api_contact():
         return _response_err("Admin email nincs beállítva (MAIL_TO vagy MAIL_FROM).", 500)
 
     try:
-        # Biztonságos (HTML-escape) változók
         s_name = _safe(name)
         s_email = _safe(email)
         s_msg = _safe(message)
@@ -301,62 +373,15 @@ def api_contact():
             f"Üzenet:\n{message}\n"
         )
 
-        admin_html = f"""
-<!DOCTYPE html>
-<html lang="hu">
-<head>
-  <meta charset="UTF-8">
-  <style>
-    body {{ margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }}
-    .email-container {{ max-width: 600px; margin: 0 auto; background: #ffffff; }}
-    .email-header {{ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 30px; text-align: center; color: #ffffff; }}
-    .email-header h1 {{ font-size: 28px; margin: 0 0 8px 0; font-weight: 600; }}
-    .email-header p {{ font-size: 14px; margin: 0; opacity: 0.95; }}
-    .email-body {{ padding: 40px 30px; }}
-    .greeting {{ font-size: 18px; color: #1a1a1a; margin-bottom: 20px; font-weight: 500; }}
-    .content-text {{ font-size: 15px; line-height: 1.6; color: #4a4a4a; margin-bottom: 24px; }}
-    .info-card {{ background: #f8f9fa; border-left: 4px solid #667eea; padding: 20px; border-radius: 8px; margin: 24px 0; }}
-    .info-row {{ display: flex; padding: 8px 0; border-bottom: 1px solid #e9ecef; }}
-    .info-row:last-child {{ border-bottom: none; }}
-    .info-label {{ font-weight: 600; color: #667eea; min-width: 140px; font-size: 14px; }}
-    .info-value {{ color: #2d3748; font-size: 14px; }}
-    .message-box {{ background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 24px 0; border: 1px solid #e9ecef; }}
-    .message-box p {{ font-size: 14px; line-height: 1.6; color: #4a4a4a; white-space: pre-wrap; word-wrap: break-word; margin: 0; }}
-    .cta-button {{ display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 15px; margin: 24px 0; }}
-    .email-footer {{ background: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e9ecef; }}
-    .email-footer p {{ font-size: 13px; color: #6c757d; margin-bottom: 8px; }}
-    .company-name {{ color: #667eea; font-weight: 700; font-size: 16px; margin-top: 12px; }}
-  </style>
-</head>
+        admin_html = f"""<!DOCTYPE html>
+<html lang="hu"><head><meta charset="UTF-8"></head>
 <body>
-  <div class="email-container">
-    <div class="email-header">
-      <h1>🔔 Új Kapcsolatfelvétel</h1>
-      <p>Beérkezett üzenet a weboldalról</p>
-    </div>
-    <div class="email-body">
-      <p class="greeting">Új megkeresés érkezett!</p>
-      <p class="content-text">Egy látogató érdeklődik a szolgáltatásaidról:</p>
-      <div class="info-card">
-        <div class="info-row"><span class="info-label">Név:</span><span class="info-value">{s_name}</span></div>
-        <div class="info-row"><span class="info-label">Email:</span><span class="info-value">{s_email}</span></div>
-        <div class="info-row"><span class="info-label">Cég:</span><span class="info-value">{s_company or "-"}</span></div>
-        <div class="info-row"><span class="info-label">Telefon:</span><span class="info-value">{s_phone or "-"}</span></div>
-        <div class="info-row"><span class="info-label">Érdeklődési terület:</span><span class="info-value">{s_service or "-"}</span></div>
-        <div class="info-row"><span class="info-label">Forrás oldal:</span><span class="info-value">{s_page or "-"}</span></div>
-      </div>
-      <p class="content-text"><strong>Üzenet:</strong></p>
-      <div class="message-box"><p>{s_msg}</p></div>
-      <a href="mailto:{s_email}" class="cta-button">Válasz írása</a>
-    </div>
-    <div class="email-footer">
-      <p>Ez egy automatikus értesítés a CyberCare weboldal kapcsolatfelvételi űrlapjából.</p>
-      <p class="company-name">CyberCare</p>
-    </div>
-  </div>
-</body>
-</html>
-"""
+  <h2>Új kapcsolatfelvétel</h2>
+  <p><b>Név:</b> {s_name}<br><b>Email:</b> {s_email}<br><b>Cég:</b> {s_company or "-"}<br>
+  <b>Telefon:</b> {s_phone or "-"}<br><b>Érdeklődési terület:</b> {s_service or "-"}<br><b>Forrás:</b> {s_page or "-"}<br></p>
+  <pre style="white-space:pre-wrap">{s_msg}</pre>
+  <p><a href="mailto:{s_email}">Válasz írása</a></p>
+</body></html>"""
 
         send_email(
             to_email=admin_email,
@@ -365,45 +390,12 @@ def api_contact():
             html=admin_html,
         )
 
-        user_html = f"""
-<!DOCTYPE html>
-<html lang="hu">
-<head>
-  <meta charset="UTF-8">
-  <style>
-    body {{ margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }}
-    .email-container {{ max-width: 600px; margin: 0 auto; background: #ffffff; }}
-    .email-header {{ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 30px; text-align: center; color: #ffffff; }}
-    .email-header h1 {{ font-size: 28px; margin: 0 0 8px 0; font-weight: 600; }}
-    .email-header p {{ font-size: 14px; margin: 0; opacity: 0.95; }}
-    .email-body {{ padding: 40px 30px; }}
-    .greeting {{ font-size: 18px; color: #1a1a1a; margin-bottom: 20px; font-weight: 500; }}
-    .content-text {{ font-size: 15px; line-height: 1.6; color: #4a4a4a; margin-bottom: 24px; }}
-    .email-footer {{ background: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e9ecef; }}
-    .email-footer p {{ font-size: 13px; color: #6c757d; margin-bottom: 8px; }}
-    .company-name {{ color: #667eea; font-weight: 700; font-size: 16px; margin-top: 12px; }}
-  </style>
-</head>
+        user_html = f"""<!DOCTYPE html>
+<html lang="hu"><head><meta charset="UTF-8"></head>
 <body>
-  <div class="email-container">
-    <div class="email-header">
-      <h1>✅ Köszönjük megkeresését!</h1>
-      <p>Üzenetét sikeresen megkaptuk</p>
-    </div>
-    <div class="email-body">
-      <p class="greeting">Kedves {s_name}!</p>
-      <p class="content-text">Köszönjük, hogy felvette velünk a kapcsolatot. Üzenetét megkaptuk, és kollégáink hamarosan válaszolnak.</p>
-      <p class="content-text">Csapatunk 24-48 órán belül értesíti Önt az Ön érdeklődési területével kapcsolatban.</p>
-      <p class="content-text" style="margin-top: 32px;">Üdvözlettel,<br><strong style="color: #667eea;">A CyberCare csapata</strong></p>
-    </div>
-    <div class="email-footer">
-      <p>Ha bármilyen kérdése van, keressen minket bizalommal!</p>
-      <p class="company-name">CyberCare</p>
-    </div>
-  </div>
-</body>
-</html>
-"""
+  <h2>Köszönjük megkeresését!</h2>
+  <p>Kedves {s_name}! Üzenetét megkaptuk, hamarosan válaszolunk.</p>
+</body></html>"""
 
         send_email(
             to_email=email,
@@ -419,38 +411,22 @@ def api_contact():
 
 
 # ==================================================
-# PREVIEW / FEJLESZTÉS ALATT (NEW BACKEND)
+# PREVIEW / FEJLESZTÉS ALATT (FULL)
 # ==================================================
 @app.route("/fejlesztes-alatt", methods=["GET", "POST"])
 def fejlesztes_alatt():
-    """
-    GET: egyszerű kód bekérő oldal (később cseréljük a te design template-edre)
-    POST: kód ellenőrzés DB-ből -> redirect a megfelelő preview oldalra
-    """
     ip = request.headers.get("X-Forwarded-For", request.remote_addr) or "unknown"
 
     if request.method == "GET":
-        # Frontendet majd küldöd – addig minimál
-        return """
-        <!doctype html><html lang="hu"><head><meta charset="utf-8"><title>Fejlesztés alatt</title></head>
-        <body style="font-family:Segoe UI, sans-serif;max-width:520px;margin:40px auto;">
-          <h2>Fejlesztés alatt lévő oldal megtekintése</h2>
-          <form method="post">
-            <label>Kód</label><br>
-            <input name="code" type="password" style="width:100%;padding:10px;margin:10px 0;">
-            <button type="submit" style="padding:10px 14px;">Megnyitás</button>
-          </form>
-        </body></html>
-        """
+        return render_template("preview_gate.html", error=None, info=None)
 
-    # POST
     if not _rate_limit_check(ip):
-        return _response_err("Túl sok próbálkozás. Próbáld később.", 429)
+        return render_template("preview_gate.html", error="Túl sok próbálkozás. Próbáld később.", info=None), 429
 
     code = (request.form.get("code") or "").strip()
     if not code:
         _rate_limit_hit(ip)
-        return _response_err("A kód megadása kötelező.", 400)
+        return render_template("preview_gate.html", error="A kód megadása kötelező.", info=None), 400
 
     try:
         ch = _code_hash(code)
@@ -472,35 +448,28 @@ def fejlesztes_alatt():
 
         if not row:
             _rate_limit_hit(ip)
-            return _response_err("Hibás kód.", 401)
+            return render_template("preview_gate.html", error="Hibás kód.", info=None), 401
 
         expires_at = row.get("expires_at")
         if expires_at:
-            # Postgres driver általában datetime-et ad
             expires_dt = expires_at
             if isinstance(expires_dt, str):
                 expires_dt = datetime.fromisoformat(expires_dt.replace("Z", "+00:00"))
-
             if expires_dt.tzinfo is None:
                 expires_dt = expires_dt.replace(tzinfo=timezone.utc)
-
             if datetime.now(timezone.utc) > expires_dt:
                 _rate_limit_hit(ip)
-                return _response_err("A kód lejárt.", 401)
+                return render_template("preview_gate.html", error="A kód lejárt.", info=None), 401
 
         session["preview_page_key"] = row["page_key"]
         return redirect(url_for("fejlesztes_alatt_page", page_key=row["page_key"]), code=302)
 
     except Exception as e:
-        return _response_err(f"Preview hiba: {e}", 503)
+        return render_template("preview_gate.html", error=f"Preview hiba: {e}", info=None), 503
 
 
 @app.get("/fejlesztes-alatt/<page_key>")
 def fejlesztes_alatt_page(page_key):
-    """
-    Csak akkor engedjük, ha a session-ben megvan az engedély.
-    A template_name DB-ből jön (pl. 'dev/uj_landing_v2.html').
-    """
     allowed = session.get("preview_page_key")
     if not allowed or allowed != page_key:
         return abort(403)
@@ -537,7 +506,7 @@ def health():
 
 
 # ==================================================
-# DEMO OLDALAK (demo_oldalak mappa kiszolgálása)
+# DEMO OLDALAK
 # ==================================================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATES_ROOT = os.path.join(BASE_DIR, "templates")
@@ -567,8 +536,7 @@ def demo_assets(filename):
 
 
 # ==================================================
-# OPTIONAL: DB CONNECTION TEST (hasznos Renderen)
-#   (ha nem kell, törölheted)
+# DB TEST
 # ==================================================
 @app.get("/db-test")
 def db_test():
