@@ -191,6 +191,9 @@ def about():
 def services():
     return render_template("our_services.html")
 
+@app.get("/web-fejlesztes")
+def web_fejlesztes():
+    return redirect(url_for("web_development"), code=301)
 
 @app.get("/szolgaltatasok")
 def services_legacy_hu():
