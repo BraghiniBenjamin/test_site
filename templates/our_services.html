@@ -363,37 +363,49 @@
     const buttons = document.querySelectorAll('[data-toggle="service"]');
     const ids = ['svc1','svc2','svc3','svc4','svc5','svc6'];
 
+    function closePanel(id) {
+      const panel = document.getElementById(id);
+      const icon  = document.getElementById(id + "_icon");
+      if (!panel) return;
+
+      panel.classList.remove("max-h-[600px]", "opacity-100");
+      panel.classList.add("max-h-0", "opacity-0");
+
+      if (icon) icon.classList.remove("rotate-180");
+    }
+
+    function openPanel(id) {
+      const panel = document.getElementById(id);
+      const icon  = document.getElementById(id + "_icon");
+      if (!panel) return;
+
+      panel.classList.remove("max-h-0", "opacity-0");
+      panel.classList.add("max-h-[600px]", "opacity-100");
+
+      if (icon) icon.classList.add("rotate-180");
+    }
+
     function closeAll(exceptId = null) {
       ids.forEach(id => {
         if (id === exceptId) return;
-        const panel = document.getElementById(id);
-        const icon  = document.getElementById(id + "_icon");
-        if (panel) panel.classList.add("hidden");
-        if (icon)  icon.classList.remove("rotate-180");
+        closePanel(id);
       });
     }
 
     buttons.forEach(btn => {
       btn.addEventListener("click", (e) => {
         e.preventDefault();
-
         const id = btn.getAttribute("data-target");
         const panel = document.getElementById(id);
-        const icon  = document.getElementById(id + "_icon");
         if (!panel) return;
 
-        const willOpen = panel.classList.contains("hidden");
+        const isClosed = panel.classList.contains("max-h-0");
 
-        // mindig csak 1 legyen nyitva
-        closeAll(willOpen ? id : null);
+        // csak 1 legyen nyitva
+        closeAll(isClosed ? id : null);
 
-        if (willOpen) {
-          panel.classList.remove("hidden");
-          if (icon) icon.classList.add("rotate-180");
-        } else {
-          panel.classList.add("hidden");
-          if (icon) icon.classList.remove("rotate-180");
-        }
+        if (isClosed) openPanel(id);
+        else closePanel(id);
       });
     });
   });
