@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/cc_logo_bw.png') }}">
+  <title>{% block title %}CyberCare{% endblock %}</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'cyber-green': '#00a355',
+            'cyber-dark': '#2a2c28'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Global Fonts + Base Styles -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+
+    body { font-family: 'Inter', sans-serif; }
+    .cyber-title { font-family: 'Orbitron', monospace; }
+
+    /* Shared hero background helper */
+    .hero-bg {
+      background: linear-gradient(135deg, #000000 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 80%, rgba(0, 163, 85, 0.30) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 163, 85, 0.20) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(0, 163, 85, 0.10) 0%, transparent 50%);
+      animation: pulse 4s ease-in-out infinite alternate;
+    }
+    @keyframes pulse { 0% { opacity: .5; } 100% { opacity: 1; } }
+
+    .cyber-glow {
+      text-shadow: 0 0 20px rgba(0, 163, 85, 0.5), 0 0 40px rgba(0, 163, 85, 0.3);
+      animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+    @keyframes titleGlow {
+      0% { text-shadow: 0 0 20px rgba(0, 163, 85, 0.5), 0 0 40px rgba(0, 163, 85, 0.3); }
+      100% { text-shadow: 0 0 30px rgba(0, 163, 85, 0.8), 0 0 60px rgba(0, 163, 85, 0.5); }
+    }
+  </style>
+
+  {% block head_extra %}{% endblock %}
+</head>
+
+<body class="bg-white">
+  {# ========= ACTIVE NAV HELPER ========= #}
+  {% set ep = request.endpoint or '' %}
+  {% set nav = {
+    'home': {'label':'Főoldal', 'url': url_for('home')},
+    'about': {'label':'Rólunk', 'url': url_for('about')},
+    'services': {'label':'Szolgáltatások', 'url': url_for('services')},
+    'web_development': {'label':'Webfejlesztés', 'url': url_for('web_development')},
+    'contact': {'label':'Kapcsolat', 'url': url_for('contact')},
+    'fejlesztes_alatt': {'label':'Fejlesztés alatt', 'url': url_for('fejlesztes_alatt')}
+  } %}
+
+  {% macro nav_link(endpoint_key) -%}
+    {% set item = nav[endpoint_key] %}
+    {% set active = (ep == endpoint_key) %}
+    <a href="{{ item.url }}"
+       class="
+         px-3 py-2 rounded-lg transition-colors
+         {% if active %}
+           bg-cyber-green text-white font-semibold shadow-md
+         {% else %}
+           text-cyber-dark hover:text-cyber-green
+         {% endif %}
+       ">
+      {{ item.label }}
+    </a>
+  {%- endmacro %}
+
+  <!-- NAVBAR -->
+  <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="{{ url_for('home') }}" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+          <div class="w-10 h-10 flex items-center justify-center">
+            <img src="{{ url_for('static', filename='images/cc_logo_bw.png') }}" alt="CyberCare Logo" class="w-8 h-8">
+          </div>
+          <span class="text-xl font-bold text-cyber-dark">CyberCare</span>
+        </a>
+
+        <!-- Desktop nav -->
+        <div class="hidden md:flex space-x-2">
+          {{ nav_link('home') }}
+          {{ nav_link('about') }}
+          {{ nav_link('services') }}
+          {{ nav_link('web_development') }}
+          {{ nav_link('contact') }}
+          {{ nav_link('fejlesztes_alatt') }}
+        </div>
+
+        <!-- Mobile button -->
+        <div class="md:hidden">
+          <button id="mobile-menu-button" class="text-cyber-dark hover:text-cyber-green transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile menu -->
+      <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-100">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+          <div class="flex flex-col gap-1">
+            {{ nav_link('home') }}
+            {{ nav_link('about') }}
+            {{ nav_link('services') }}
+            {{ nav_link('web_development') }}
+            {{ nav_link('contact') }}
+            {{ nav_link('fejlesztes_alatt') }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE CONTENT -->
+  <main class="pt-16">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-cyber-dark text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-8 mb-12">
+        <!-- Company Info -->
+        <div class="lg:col-span-1">
+          <div class="flex items-center space-x-3 mb-6">
+            <div class="w-12 h-12 flex items-center justify-center">
+              <img src="{{ url_for('static', filename='images/cc_logo_bw.png') }}" alt="CyberCare Logo" class="w-10 h-10">
+            </div>
+            <span class="text-2xl font-bold">CyberCare</span>
+          </div>
+          <p class="text-gray-300 mb-6 leading-relaxed">
+            Informatikai gondoskodás mindenkinek. Személyre szabott szoftvermegoldások
+            és digitális transzformáció szakértői.
+          </p>
+          <div class="flex space-x-4">
+            <a href="https://www.facebook.com/profile.php?id=61574878867280" target="_blank" rel="noopener noreferrer"
+               class="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-cyber-green hover:text-white transition-all duration-300">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
+
+            <a href="https://www.instagram.com/cybercare.hu" target="_blank" rel="noopener noreferrer"
+               class="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-cyber-green hover:text-white transition-all duration-300">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073z"/>
+              </svg>
+            </a>
+
+            <a href="https://www.linkedin.com/in/cyber-care-0a022936b" target="_blank" rel="noopener noreferrer"
+               class="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center text-gray-300 hover:bg-cyber-green hover:text-white transition-all duration-300">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-bold mb-6 text-cyber-green">Gyors linkek</h3>
+          <ul class="space-y-3">
+            <li><a href="{{ url_for('home') }}" class="text-gray-300 hover:text-cyber-green transition-colors">Főoldal</a></li>
+            <li><a href="{{ url_for('about') }}" class="text-gray-300 hover:text-cyber-green transition-colors">Rólunk</a></li>
+            <li><a href="{{ url_for('services') }}" class="text-gray-300 hover:text-cyber-green transition-colors">Szolgáltatások</a></li>
+            <li><a href="{{ url_for('web_development') }}" class="text-gray-300 hover:text-cyber-green transition-colors font-semibold">Webfejlesztés</a></li>
+            <li><a href="{{ url_for('contact') }}" class="text-gray-300 hover:text-cyber-green transition-colors">Kapcsolat</a></li>
+            <li><a href="{{ url_for('fejlesztes_alatt') }}" class="text-gray-300 hover:text-cyber-green transition-colors">Fejlesztés alatt</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-bold mb-6 text-cyber-green">Szolgáltatások</h3>
+          <ul class="space-y-3">
+            <li><a href="{{ url_for('services') }}" class="text-gray-300 hover:text-cyber-green transition-colors">Logisztikai szoftverek</a></li>
+            <li><a href="{{ url_for('services') }}" class="text-gray-300 hover:text-cyber-green transition-colors">Adatvizualizáció</a></li>
+            <li><a href="{{ url_for('services') }}" class="text-gray-300 hover:text-cyber-green transition-colors">AI integráció</a></li>
+            <li><a href="{{ url_for('services') }}" class="text-gray-300 hover:text-cyber-green transition-colors">Rendszer modernizáció</a></li>
+            <li><a href="{{ url_for('web_development') }}" class="text-gray-300 hover:text-cyber-green transition-colors font-semibold">Webfejlesztés</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-bold mb-6 text-cyber-green">Kapcsolat</h3>
+          <div class="space-y-4">
+            <div class="flex items-start space-x-3">
+              <svg class="w-5 h-5 text-cyber-green mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+              </svg>
+              <div>
+                <p class="text-gray-300">2534, Tát</p>
+                <p class="text-gray-300">Halomka liget 17</p>
+              </div>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <svg class="w-5 h-5 text-cyber-green flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17z"/>
+              </svg>
+              <p class="text-gray-300">+36 70 398 9611</p>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <svg class="w-5 h-5 text-cyber-green flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16z"/>
+              </svg>
+              <p class="text-gray-300">info@cybercare.hu</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-600 pt-8">
+        <div class="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
+          <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6 text-sm text-gray-400">
+            <p>© 2026 CyberCare Kft. Minden jog fenntartva.</p>
+            <div class="space-x-4">
+              <a href="#" onclick="openModal('adatvedelemModal'); return false;" class="hover:text-cyber-green transition">Adatvédelmi tájékoztató</a>
+              <a href="#" onclick="openModal('afszModal'); return false;" class="hover:text-cyber-green transition">Felhasználási feltételek</a>
+              <a href="#" onclick="openModal('cookieModal'); return false;" class="hover:text-cyber-green transition">Cookie szabályzat</a>
+            </div>
+          </div>
+          <div class="flex items-center space-x-4 text-sm text-gray-400">
+            <span>Készítve</span><span class="text-cyber-green">💚</span><span>-vel Magyarországon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODALS -->
+  <div id="adatvedelemModal" class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center hidden px-4">
+    <div class="bg-white text-cyber-dark max-w-2xl w-full max-h-[90vh] p-8 rounded-xl shadow-xl overflow-y-auto relative">
+      <button onclick="closeModal('adatvedelemModal')" class="absolute top-4 right-6 text-gray-400 hover:text-red-500 text-3xl font-light">&times;</button>
+      <h2 class="text-2xl font-semibold mb-6 text-center">Adatvédelmi tájékoztató</h2>
+      <div class="space-y-6 text-sm text-gray-700 leading-relaxed">
+        <div><h3 class="font-semibold text-cyber-green mb-1">1. Adatkezelő</h3><p>A jelen weboldal üzemeltetője a CyberCare (info@cybercare.hu).</p></div>
+        <div><h3 class="font-semibold text-cyber-green mb-1">2. Kezelt adatok köre</h3>
+          <ul class="list-disc list-inside space-y-1"><li>Név</li><li>Email cím</li><li>Üzenet szövege</li><li>IP-cím (technikai naplózás céljából)</li></ul>
+        </div>
+        <div><h3 class="font-semibold text-cyber-green mb-1">3. Az adatkezelés célja</h3><p>Kapcsolattartás, ajánlatadás, ügyfélkommunikáció, valamint törvényes érdekvédelem.</p></div>
+        <div><h3 class="font-semibold text-cyber-green mb-1">4. Jogalap</h3><p>Az érintett hozzájárulása (GDPR 6. cikk (1) a)).</p></div>
+        <div><h3 class="font-semibold text-cyber-green mb-1">5. Tárolás időtartama</h3><p>Az adatokat legfeljebb 12 hónapig tároljuk, vagy a kapcsolat megszűnéséig.</p></div>
+        <div><h3 class="font-semibold text-cyber-green mb-1">6. Az érintett jogai</h3><p>Ön jogosult az adataihoz hozzáférni, kérheti azok törlését, módosítását, vagy panaszt tehet a NAIH-nál (www.naih.hu).</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="afszModal" class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center hidden px-4">
+    <div class="bg-white text-cyber-dark max-w-2xl w-full max-h-[90vh] p-8 rounded-xl shadow-xl overflow-y-auto relative">
+      <button onclick="closeModal('afszModal')" class="absolute top-4 right-6 text-gray-400 hover:text-red-500 text-3xl font-light">&times;</button>
+      <h2 class="text-2xl font-semibold mb-6 text-center">Általános Felhasználási Feltételek</h2>
+      <div class="space-y-6 text-sm text-gray-700 leading-relaxed">
+        <div><h3 class="font-semibold text-cyber-green mb-1">1. Általános információk</h3><p>A jelen dokumentum a CyberCare által üzemeltetett weboldal (www.cybercare.hu) használatának feltételeit tartalmazza.</p></div>
+        <div><h3 class="font-semibold text-cyber-green mb-1">2. A szolgáltatás jellege</h3><p>A CyberCare informatikai tanácsadást, rendszerkarbantartást és egyedi fejlesztéseket nyújt partnereinek.</p></div>
+        <div><h3 class="font-semibold text-cyber-green mb-1">3. Weboldal használatának feltételei</h3><p>A weboldalt bárki megtekintheti, de a szolgáltatások igénybevételéhez kapcsolatfelvétel szükséges.</p></div>
+        <div><h3 class="font-semibold text-cyber-green mb-1">4. Felelősség kizárása</h3><p>A Szolgáltató nem vállal felelősséget a weboldalon elhelyezett információk teljességéért vagy azok felhasználásából eredő károkért.</p></div>
+        <div><h3 class="font-semibold text-cyber-green mb-1">5. Szerzői jog</h3><p>A weboldal minden eleme a CyberCare szellemi tulajdonát képezi. Tilos a tartalmak engedély nélküli másolása.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="cookieModal" class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center hidden px-4">
+    <div class="bg-white text-cyber-dark max-w-2xl w-full max-h-[90vh] p-8 rounded-xl shadow-xl overflow-y-auto relative">
+      <button onclick="closeModal('cookieModal')" class="absolute top-4 right-6 text-gray-400 hover:text-red-500 text-3xl font-light">&times;</button>
+      <h2 class="text-2xl font-semibold mb-6 text-center">Cookie szabályzat</h2>
+      <div class="space-y-6 text-sm text-gray-700 leading-relaxed">
+        <div><h3 class="font-semibold text-cyber-green mb-1">1. Mik azok a cookie-k?</h3><p>A cookie-k kis adatfájlok, amelyek kényelmesebbé teszik a böngészést.</p></div>
+        <div><h3 class="font-semibold text-cyber-green mb-1">2. Milyen cookie-kat használunk?</h3>
+          <ul class="list-disc list-inside space-y-1"><li>Alapvető működés</li><li>Analitika</li><li>Marketing (hozzájárulással)</li></ul>
+        </div>
+        <div><h3 class="font-semibold text-cyber-green mb-1">3. Cookie-k kezelése</h3><p>Böngésző beállításokban bármikor törölhető/módosítható.</p></div>
+        <div><h3 class="font-semibold text-cyber-green mb-1">4. Hozzájárulás</h3><p>A nem alap cookie-k csak kifejezett hozzájárulással aktiválódnak.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GLOBAL SCRIPTS -->
+  <script>
+    // Mobile menu
+    document.addEventListener('DOMContentLoaded', function () {
+      const btn = document.getElementById('mobile-menu-button');
+      const menu = document.getElementById('mobile-menu');
+      if (!btn || !menu) return;
+
+      btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+      menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.add('hidden')));
+
+      document.addEventListener('click', (e) => {
+        if (!btn.contains(e.target) && !menu.contains(e.target)) menu.classList.add('hidden');
+      });
+    });
+
+    // Modals
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+    }
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+    window.openModal = openModal;
+    window.closeModal = closeModal;
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        document.querySelectorAll('[id$="Modal"]').forEach(m => m.classList.add('hidden'));
+        document.body.classList.remove('overflow-hidden');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('[id$="Modal"]').forEach(modal => {
+        modal.addEventListener('click', function (e) {
+          if (e.target === modal) {
+            modal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+          }
+        });
+      });
+    });
+  </script>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>
