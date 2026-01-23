@@ -249,6 +249,50 @@
         </div>
       </div>
 
+      <!-- Card 6 -->
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden">
+        <button type="button"
+          class="w-full text-left p-8 flex items-start gap-5 hover:bg-gray-50 transition"
+          onclick="toggleService('svc6')">
+          <div class="w-12 h-12 rounded-xl bg-cyber-green/10 flex items-center justify-center flex-shrink-0">
+            <svg class="w-6 h-6 text-cyber-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 7h18M3 12h18M3 17h18" />
+            </svg>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold text-cyber-dark">Egyedi webfejlesztés</h3>
+            <p class="text-gray-600 mt-1">Gyors, reszponzív, modern weboldalak és webappok – üzleti célra optimalizálva.</p>
+          </div>
+          <div class="mt-1">
+            <svg id="svc6_icon" class="w-6 h-6 text-gray-400 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </button>
+      
+        <div id="svc6" class="hidden px-8 pb-8">
+          <div class="pt-2 text-gray-700 leading-relaxed">
+            <ul class="list-disc list-inside space-y-2">
+              <li>Landing page / céges weboldal / portfólió / foglaló rendszer</li>
+              <li>SEO alapok, gyors betöltés, mobil-first kialakítás</li>
+              <li>Admin felület, űrlapok, email értesítések, integrációk</li>
+              <li>Igény szerint: többnyelvűség, blog, fizetés (Stripe), időpontfoglalás</li>
+            </ul>
+      
+            <div class="mt-6 flex flex-col sm:flex-row gap-3">
+              <a href="{{ url_for('web_development') }}"
+                 class="inline-flex justify-center bg-cyber-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition">
+                Webfejlesztés részletek
+              </a>
+              <a href="{{ url_for('contact') }}"
+                 class="inline-flex justify-center border-2 border-cyber-green text-cyber-green px-6 py-3 rounded-lg font-semibold hover:bg-cyber-green hover:text-white transition">
+                Ajánlatot kérek
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
     </div>
 
   </div>
