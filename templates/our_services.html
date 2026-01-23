@@ -360,14 +360,6 @@
 
     const isHidden = el.classList.contains('hidden');
 
-    // opcionális: egyszerre csak 1 legyen nyitva
-    ['svc1','svc2','svc3','svc4','svc5','svc6'].forEach(x => {
-      const panel = document.getElementById(x);
-      const ic = document.getElementById(x + '_icon');
-      if (panel && x !== id) panel.classList.add('hidden');
-      if (ic && x !== id) ic.classList.remove('rotate-180');
-    });
-
     if (isHidden) {
       el.classList.remove('hidden');
       if (icon) icon.classList.add('rotate-180');
@@ -377,4 +369,5 @@
     }
   }
 </script>
+
 {% endblock %}
