@@ -1,0 +1,1376 @@
+<!doctype html>
+<html lang="hu" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boutique Vendégház - Minimal Luxury</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&amp;family=Inter:wght@300;400&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --color-bg: #faf9f7;
+      --color-surface: #ffffff;
+      --color-text: #2d3436;
+      --color-accent: #4a5d4e;
+      --color-secondary: #8b7e74;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .serif {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .nav-link {
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      width: 0;
+      height: 1px;
+      background: var(--color-accent);
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+      left: 0;
+    }
+
+    .page-container {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .page-container.active {
+      display: block;
+      animation: pageEnter 0.6s ease forwards;
+    }
+
+    @keyframes pageEnter {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .image-placeholder {
+      background: linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .image-placeholder::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+    }
+
+    .btn-primary {
+      background: var(--color-accent);
+      color: var(--color-surface);
+      padding: 14px 36px;
+      border: none;
+      font-size: 14px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      font-weight: 400;
+    }
+
+    .btn-primary:hover {
+      background: #3d4d40;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(74, 93, 78, 0.2);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .gallery-item {
+      cursor: pointer;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.03);
+    }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .lightbox.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .lightbox-content {
+      max-width: 90%;
+      max-height: 90%;
+      position: relative;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: white;
+      font-size: 40px;
+      cursor: pointer;
+      z-index: 10000;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      transition: background 0.3s ease;
+    }
+
+    .lightbox-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .price-card {
+      background: var(--color-surface);
+      padding: 40px 32px;
+      border: 1px solid rgba(139, 126, 116, 0.15);
+      transition: all 0.4s ease;
+    }
+
+    .price-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 40px rgba(45, 52, 54, 0.08);
+    }
+
+    .price-card img {
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .price-card img:hover {
+      transform: scale(1.02);
+    }
+
+    .modal-gallery {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-gallery.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-gallery-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+    }
+
+    .modal-gallery-image {
+      max-width: 85vw;
+      max-height: 85vh;
+      object-fit: contain;
+    }
+
+    .modal-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: none;
+      width: 60px;
+      height: 60px;
+      font-size: 28px;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: background 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-nav-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .modal-nav-btn.prev {
+      left: -80px;
+    }
+
+    .modal-nav-btn.next {
+      right: -80px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -60px;
+      right: 0;
+      color: white;
+      font-size: 40px;
+      cursor: pointer;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      transition: background 0.3s ease;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .modal-counter {
+      position: absolute;
+      bottom: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 8px 20px;
+      border-radius: 20px;
+    }
+
+    .footer-link:hover {
+      color: rgba(255, 255, 255, 1);
+    }
+
+    .policy-notification {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--color-surface);
+      padding: 48px 64px;
+      border: 2px solid var(--color-accent);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      z-index: 10001;
+      max-width: 700px;
+      max-height: 80vh;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .policy-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 10000;
+      display: none;
+    }
+
+    @media (max-width: 1200px) {
+      .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+      }
+    }
+
+    @media (max-width: 992px) {
+      nav > div {
+        flex-direction: column !important;
+        gap: 24px !important;
+        padding: 20px 32px !important;
+      }
+
+      nav > div > div {
+        flex-wrap: wrap !important;
+        gap: 24px !important;
+        justify-content: center !important;
+      }
+
+      .hero-height h2 {
+        font-size: clamp(32px, 8vw, 64px) !important;
+      }
+
+      .content-block {
+        flex-direction: column !important;
+      }
+
+      .content-block > div,
+      .content-block > img {
+        width: 100% !important;
+      }
+
+      .modal-nav-btn.prev {
+        left: 10px !important;
+      }
+
+      .modal-nav-btn.next {
+        right: 10px !important;
+      }
+
+      .modal-close {
+        top: 10px !important;
+        right: 10px !important;
+      }
+
+      .modal-counter {
+        bottom: 10px !important;
+      }
+
+      .policy-notification {
+        padding: 32px 24px !important;
+        max-width: 90% !important;
+      }
+
+      .about-story-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-height {
+        height: 60vh !important;
+        margin-top: 100px !important;
+      }
+
+      .hero-height h2 {
+        font-size: clamp(28px, 7vw, 48px) !important;
+      }
+
+      .hero-height p {
+        font-size: clamp(12px, 3vw, 16px) !important;
+      }
+
+      section {
+        padding: 80px 24px 60px !important;
+      }
+
+      .content-block > div {
+        padding: 48px 32px !important;
+      }
+
+      .content-block h3,
+      .serif h2,
+      .serif h3 {
+        font-size: clamp(28px, 6vw, 42px) !important;
+      }
+
+      .content-block p,
+      section p {
+        font-size: clamp(16px, 4vw, 18px) !important;
+      }
+
+      .price-card {
+        padding: 32px 24px !important;
+      }
+
+      .price-card h3 {
+        font-size: clamp(24px, 5vw, 32px) !important;
+      }
+
+      .price-card p {
+        font-size: clamp(36px, 8vw, 48px) !important;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+
+      .modal-nav-btn {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 20px !important;
+      }
+
+      .modal-close,
+      .lightbox-close {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 30px !important;
+      }
+
+      footer {
+        padding: 32px 24px !important;
+        font-size: 11px !important;
+      }
+
+      footer > div {
+        gap: 16px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav h1 {
+        font-size: clamp(20px, 5vw, 28px) !important;
+      }
+
+      nav a {
+        font-size: clamp(10px, 2.5vw, 13px) !important;
+      }
+
+      .btn-primary {
+        padding: 12px 24px !important;
+        font-size: clamp(11px, 2.5vw, 14px) !important;
+      }
+
+      .hero-height {
+        height: 50vh !important;
+      }
+
+      .content-block > div {
+        padding: 32px 20px !important;
+      }
+
+      .price-card ul {
+        font-size: clamp(14px, 3.5vw, 16px) !important;
+      }
+
+      .policy-notification {
+        padding: 24px 16px !important;
+      }
+
+      .policy-notification h3 {
+        font-size: clamp(24px, 6vw, 32px) !important;
+      }
+
+      .policy-notification h4 {
+        font-size: clamp(18px, 4.5vw, 20px) !important;
+      }
+
+      .policy-notification p,
+      .policy-notification ul {
+        font-size: clamp(14px, 3.5vw, 16px) !important;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div id="app" class="w-full h-full"><!-- Navigation -->
+   <nav id="mainNav" style="background: rgba(250, 249, 247, 0.95); backdrop-filter: blur(10px); position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 1px solid rgba(139, 126, 116, 0.1);">
+    <div style="max-width: 1400px; margin: 0 auto; padding: 24px 48px; display: flex; justify-content: space-between; align-items: center;">
+     <h1 class="serif" style="font-size: 28px; font-weight: 300; letter-spacing: 2px; color: var(--color-text);" id="navTitle">Boutique Vendégház</h1>
+     <div style="display: flex; gap: 48px; align-items: center;"><a href="#home" class="nav-link" style="text-decoration: none; color: var(--color-text); font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 300;">Főoldal</a> <a href="#about" class="nav-link" style="text-decoration: none; color: var(--color-text); font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 300;">Rólunk</a> <a href="#pricing" class="nav-link" style="text-decoration: none; color: var(--color-text); font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 300;">Áraink</a> <a href="#gallery-outdoor" class="nav-link" style="text-decoration: none; color: var(--color-text); font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 300;">Kültér</a> <a href="#gallery-indoor" class="nav-link" style="text-decoration: none; color: var(--color-text); font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 300;">Beltér</a> <a href="#attractions" class="nav-link" style="text-decoration: none; color: var(--color-text); font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 300;">Látnivalók</a> <a href="#contact" class="nav-link" style="text-decoration: none; color: var(--color-text); font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 300;">Kapcsolat</a>
+     </div>
+    </div>
+   </nav><!-- HOME PAGE -->
+   <div id="homePage" class="page-container active"><!-- Hero Section -->
+    <section class="hero-height" style="height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; margin-top: 80px;"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&amp;q=80" alt="Elegant guesthouse exterior" loading="lazy" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7);" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+     <div style="position: relative; z-index: 2; text-align: center; padding: 0 24px;">
+      <h2 class="serif fade-in" id="heroTagline" style="font-size: 64px; font-weight: 300; color: var(--color-surface); letter-spacing: 3px; text-shadow: 0 2px 20px rgba(0,0,0,0.3); margin-bottom: 24px;">Ahol a nyugalom találkozik az eleganciával</h2>
+      <p class="fade-in" style="font-size: 16px; color: var(--color-surface); letter-spacing: 2px; text-transform: uppercase; font-weight: 300; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">Minimal Luxury • Slow Living • Nature</p>
+     </div>
+    </section><!-- Content Block 1 -->
+    <section class="content-block" style="display: flex; min-height: 600px; background: var(--color-bg);"><img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&amp;q=80" alt="Nature surrounding the guesthouse" loading="lazy" style="width: 50%; min-height: 600px; object-fit: cover;" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+     <div style="width: 50%; display: flex; align-items: center; justify-content: center; padding: 80px 64px;">
+      <div class="fade-in" style="max-width: 500px;">
+       <h3 class="serif" id="block1Title" style="font-size: 42px; font-weight: 300; color: var(--color-text); margin-bottom: 24px; letter-spacing: 1px;">Természet ölelésében</h3>
+       <p id="block1Text" style="font-size: 18px; color: var(--color-secondary); line-height: 1.8; font-weight: 300;">Fedezd fel a csendet és a harmóniát, ahol a természet és a modern dizájn tökéletes egyensúlyban találkozik. Minden pillanat a megújulásról szól.</p>
+      </div>
+     </div>
+    </section><!-- Content Block 2 -->
+    <section class="content-block" style="display: flex; min-height: 600px; background: var(--color-surface);">
+     <div style="width: 50%; display: flex; align-items: center; justify-content: center; padding: 80px 64px;">
+      <div class="fade-in" style="max-width: 500px;">
+       <h3 class="serif" id="block2Title" style="font-size: 42px; font-weight: 300; color: var(--color-text); margin-bottom: 24px; letter-spacing: 1px;">Dizájn és minőség</h3>
+       <p id="block2Text" style="font-size: 18px; color: var(--color-secondary); line-height: 1.8; font-weight: 300;">Minden részlet gondosan kiválasztva, hogy a kifinomultság és a természetes elegancia harmonikus egységet alkosson.</p>
+      </div>
+     </div><img src="https://images.unsplash.com/photo-1615873968403-89e068629265?w=1200&amp;q=80" alt="Minimalist interior design" loading="lazy" style="width: 50%; min-height: 600px; object-fit: cover;" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+    </section><!-- Content Block 3 -->
+    <section class="content-block" style="display: flex; min-height: 600px; background: var(--color-bg);"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&amp;q=80" alt="Peaceful reading corner" loading="lazy" style="width: 50%; min-height: 600px; object-fit: cover;" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+     <div style="width: 50%; display: flex; align-items: center; justify-content: center; padding: 80px 64px;">
+      <div class="fade-in" style="max-width: 500px;">
+       <h3 class="serif" id="block3Title" style="font-size: 42px; font-weight: 300; color: var(--color-text); margin-bottom: 24px; letter-spacing: 1px;">Slow living</h3>
+       <p id="block3Text" style="font-size: 18px; color: var(--color-secondary); line-height: 1.8; font-weight: 300;">Lassíts le, lélegezz, élvezd a pillanatot. Itt az időnek más ritmusa van.</p>
+      </div>
+     </div>
+    </section>
+   </div><!-- ABOUT PAGE -->
+   <div id="aboutPage" class="page-container"><!-- Hero Section -->
+    <section style="padding: 160px 48px 80px; max-width: 1000px; margin: 0 auto;">
+     <h2 class="serif fade-in" style="font-size: 56px; font-weight: 300; text-align: center; margin-bottom: 48px; letter-spacing: 2px;">Rólunk</h2>
+     <div class="fade-in" style="text-align: center; max-width: 800px; margin: 0 auto;">
+      <p style="font-size: 20px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 32px; font-weight: 300;">A vendégházunk egy különleges hely, ahol a természet nyugalma és a modern minimalista dizájn találkozik. Filozófiánk egyszerű: kevesebb több.</p>
+      <p style="font-size: 20px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 32px; font-weight: 300;">Minden részletet gondosan válogattunk ki, hogy vendégeink számára egy autentikus, stílusos és harmonikus környezetet teremtsünk.</p>
+      <p style="font-size: 20px; line-height: 1.9; color: var(--color-secondary); font-weight: 300;">Itt nincs felesleges zaj vagy túlterhelés – csak tiszta formák, természetes anyagok és a lassú élet szépsége.</p>
+     </div>
+    </section><!-- Featured Image -->
+    <section class="fade-in" style="padding: 60px 48px; max-width: 1400px; margin: 0 auto;"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&amp;q=80" alt="Boutique guesthouse exterior view" loading="lazy" style="width: 100%; aspect-ratio: 21/9; object-fit: cover; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+    </section><!-- Values Section -->
+    <section style="padding: 80px 48px; max-width: 1200px; margin: 0 auto;">
+     <h3 class="serif fade-in" style="font-size: 42px; font-weight: 300; text-align: center; margin-bottom: 80px; color: var(--color-accent); letter-spacing: 1px;">Értékeink</h3>
+     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 48px;">
+      <div class="fade-in" style="text-align: center;">
+       <div style="width: 100px; height: 100px; margin: 0 auto 28px; background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-secondary) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 48px;">
+        🌿
+       </div>
+       <h4 class="serif" style="font-size: 28px; font-weight: 400; margin-bottom: 16px; color: var(--color-accent);">Fenntarthatóság</h4>
+       <p style="font-size: 17px; line-height: 1.8; color: var(--color-secondary); font-weight: 300;">Helyi alapanyagok, környezetbarát megoldások és a természet tisztelete vezérel minket minden döntésben.</p>
+      </div>
+      <div class="fade-in" style="text-align: center;">
+       <div style="width: 100px; height: 100px; margin: 0 auto 28px; background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-secondary) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 48px;">
+        ✨
+       </div>
+       <h4 class="serif" style="font-size: 28px; font-weight: 400; margin-bottom: 16px; color: var(--color-accent);">Minimalista elegancia</h4>
+       <p style="font-size: 17px; line-height: 1.8; color: var(--color-secondary); font-weight: 300;">Kevesebb, de jobb. Minden tárgy, minden szín és forma gondosan kiválasztott, hogy harmóniát teremtsen.</p>
+      </div>
+      <div class="fade-in" style="text-align: center;">
+       <div style="width: 100px; height: 100px; margin: 0 auto 28px; background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-secondary) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 48px;">
+        🤍
+       </div>
+       <h4 class="serif" style="font-size: 28px; font-weight: 400; margin-bottom: 16px; color: var(--color-accent);">Figyelmesség</h4>
+       <p style="font-size: 17px; line-height: 1.8; color: var(--color-secondary); font-weight: 300;">Minden vendégünk egyedi. Személyre szabott gondoskodással tesszük felejthetetlenné az itt töltött időt.</p>
+      </div>
+     </div>
+    </section><!-- Story Section -->
+    <section style="padding: 80px 48px; background: var(--color-surface);">
+     <div class="about-story-grid" style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
+      <div class="fade-in">
+       <h3 class="serif" style="font-size: 42px; font-weight: 300; margin-bottom: 28px; color: var(--color-accent); letter-spacing: 1px;">Történetünk</h3>
+       <p style="font-size: 18px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 24px; font-weight: 300;">2020-ban kezdődött minden, amikor egy álomból valóság lett. Egy elhagyatott, régi ház, amit megláttunk, és azonnal tudtuk: ez lesz a helyünk.</p>
+       <p style="font-size: 18px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 24px; font-weight: 300;">Két éves felújítás után, ahol minden követ kézzel választottunk ki, minden falat természetes anyagokkal burkoltunk be, megszületett a Boutique Vendégház.</p>
+       <p style="font-size: 18px; line-height: 1.9; color: var(--color-secondary); font-weight: 300;">A célunk az volt, hogy egy olyan teret hozzunk létre, ahol az emberek újra kapcsolatba léphetnek önmagukkal, a természettel és a jelen pillanattal.</p>
+      </div>
+      <div class="fade-in image-placeholder" style="aspect-ratio: 4/5;"></div>
+     </div>
+    </section><!-- Amenities Section -->
+    <section style="padding: 100px 48px; max-width: 1200px; margin: 0 auto;">
+     <h3 class="serif fade-in" style="font-size: 42px; font-weight: 300; text-align: center; margin-bottom: 80px; color: var(--color-accent); letter-spacing: 1px;">Amit kínálunk</h3>
+     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px;">
+      <div class="fade-in" style="background: var(--color-surface); padding: 36px 28px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center; transition: all 0.3s ease;">
+       <div style="font-size: 40px; margin-bottom: 20px;">
+        🛏️
+       </div>
+       <h4 style="font-size: 18px; font-weight: 400; margin-bottom: 12px; color: var(--color-accent); letter-spacing: 0.5px;">Prémium ágyneműk</h4>
+       <p style="font-size: 15px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">100% pamut, légáteresztő anyagok</p>
+      </div>
+      <div class="fade-in" style="background: var(--color-surface); padding: 36px 28px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center; transition: all 0.3s ease;">
+       <div style="font-size: 40px; margin-bottom: 20px;">
+        ☕
+       </div>
+       <h4 style="font-size: 18px; font-weight: 400; margin-bottom: 12px; color: var(--color-accent); letter-spacing: 0.5px;">Helyi reggelik</h4>
+       <p style="font-size: 15px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Bio alapanyagokból készült ételek</p>
+      </div>
+      <div class="fade-in" style="background: var(--color-surface); padding: 36px 28px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center; transition: all 0.3s ease;">
+       <div style="font-size: 40px; margin-bottom: 20px;">
+        🌳
+       </div>
+       <h4 style="font-size: 18px; font-weight: 400; margin-bottom: 12px; color: var(--color-accent); letter-spacing: 0.5px;">Kert és terasz</h4>
+       <p style="font-size: 15px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Nyugodt kültéri helyszínek</p>
+      </div>
+      <div class="fade-in" style="background: var(--color-surface); padding: 36px 28px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center; transition: all 0.3s ease;">
+       <div style="font-size: 40px; margin-bottom: 20px;">
+        📚
+       </div>
+       <h4 style="font-size: 18px; font-weight: 400; margin-bottom: 12px; color: var(--color-accent); letter-spacing: 0.5px;">Könyvtár</h4>
+       <p style="font-size: 15px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Gondosan válogatott olvasmányok</p>
+      </div>
+      <div class="fade-in" style="background: var(--color-surface); padding: 36px 28px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center; transition: all 0.3s ease;">
+       <div style="font-size: 40px; margin-bottom: 20px;">
+        🧘
+       </div>
+       <h4 style="font-size: 18px; font-weight: 400; margin-bottom: 12px; color: var(--color-accent); letter-spacing: 0.5px;">Jóga tér</h4>
+       <p style="font-size: 15px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Meditation és gyakorlás helyszíne</p>
+      </div>
+      <div class="fade-in" style="background: var(--color-surface); padding: 36px 28px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center; transition: all 0.3s ease;">
+       <div style="font-size: 40px; margin-bottom: 20px;">
+        🚗
+       </div>
+       <h4 style="font-size: 18px; font-weight: 400; margin-bottom: 12px; color: var(--color-accent); letter-spacing: 0.5px;">Ingyenes parkolás</h4>
+       <p style="font-size: 15px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Biztonságos, zárt terület</p>
+      </div>
+     </div>
+    </section><!-- Testimonials -->
+    <section style="padding: 80px 48px 120px; background: var(--color-bg);">
+     <div style="max-width: 1000px; margin: 0 auto;">
+      <h3 class="serif fade-in" style="font-size: 42px; font-weight: 300; text-align: center; margin-bottom: 80px; color: var(--color-accent); letter-spacing: 1px;">Vendégeink mondták</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 48px;">
+       <div class="fade-in" style="background: var(--color-surface); padding: 40px 36px; border-left: 3px solid var(--color-accent);">
+        <p style="font-size: 18px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 24px; font-style: italic; font-weight: 300;">"Olyan hely, ahol végre megállt az idő. Minden részlet tökéletes volt, a csend pedig gyógyír."</p>
+        <p style="font-size: 15px; font-weight: 400; color: var(--color-accent); letter-spacing: 0.5px;">— Katalin, Budapest</p>
+       </div>
+       <div class="fade-in" style="background: var(--color-surface); padding: 40px 36px; border-left: 3px solid var(--color-accent);">
+        <p style="font-size: 18px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 24px; font-style: italic; font-weight: 300;">"A minimalista dizájn és a természet tökéletes harmóniája. Visszajövünk!"</p>
+        <p style="font-size: 15px; font-weight: 400; color: var(--color-accent); letter-spacing: 0.5px;">— Péter és Anna, Debrecen</p>
+       </div>
+       <div class="fade-in" style="background: var(--color-surface); padding: 40px 36px; border-left: 3px solid var(--color-accent);">
+        <p style="font-size: 18px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 24px; font-style: italic; font-weight: 300;">"Ez nem csak szállás, hanem egy élmény. Minden pillanat különleges volt."</p>
+        <p style="font-size: 15px; font-weight: 400; color: var(--color-accent); letter-spacing: 0.5px;">— Márta, Győr</p>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div><!-- PRICING PAGE -->
+   <div id="pricingPage" class="page-container">
+    <section style="padding: 160px 48px 120px; max-width: 1200px; margin: 0 auto;">
+     <h2 class="serif fade-in" style="font-size: 56px; font-weight: 300; text-align: center; margin-bottom: 80px; letter-spacing: 2px;">Áraink</h2>
+     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
+      <div class="price-card fade-in"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&amp;q=80" alt="Cozy room for weekend stay" loading="lazy" class="price-room-image" data-room="weekend" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; margin-bottom: 24px;" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+       <h3 class="serif" style="font-size: 32px; font-weight: 400; margin-bottom: 16px; color: var(--color-accent);">Hétvégi pihenés</h3>
+       <p style="font-size: 48px; font-weight: 300; margin-bottom: 24px; color: var(--color-text);">35.000 Ft<span style="font-size: 18px; color: var(--color-secondary);"> / éj</span></p>
+       <ul style="list-style: none; color: var(--color-secondary); font-size: 16px; line-height: 2; margin-bottom: 32px;">
+        <li>• 2 fő részére</li>
+        <li>• Reggeli</li>
+        <li>• Kert használat</li>
+        <li>• Wifi</li>
+       </ul><button class="btn-primary booking-btn" data-room="weekend" style="width: 100%;">Lefoglalom</button>
+      </div>
+      <div class="price-card fade-in"><img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=800&amp;q=80" alt="Spacious suite" loading="lazy" class="price-room-image" data-room="long-weekend" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; margin-bottom: 24px;" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+       <h3 class="serif" style="font-size: 32px; font-weight: 400; margin-bottom: 16px; color: var(--color-accent);">Hosszú hétvége</h3>
+       <p style="font-size: 48px; font-weight: 300; margin-bottom: 24px; color: var(--color-text);">95.000 Ft<span style="font-size: 18px; color: var(--color-secondary);"> / 3 éj</span></p>
+       <ul style="list-style: none; color: var(--color-secondary); font-size: 16px; line-height: 2; margin-bottom: 32px;">
+        <li>• 2 fő részére</li>
+        <li>• Reggelik</li>
+        <li>• Kert használat</li>
+        <li>• Wifi</li>
+        <li>• Túra ajánlások</li>
+       </ul><button class="btn-primary booking-btn" data-room="long-weekend" style="width: 100%;">Lefoglalom</button>
+      </div>
+      <div class="price-card fade-in"><img src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800&amp;q=80" alt="Luxury retreat room" loading="lazy" class="price-room-image" data-room="weekly" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; margin-bottom: 24px;" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+       <h3 class="serif" style="font-size: 32px; font-weight: 400; margin-bottom: 16px; color: var(--color-accent);">Heti menedék</h3>
+       <p style="font-size: 48px; font-weight: 300; margin-bottom: 24px; color: var(--color-text);">210.000 Ft<span style="font-size: 18px; color: var(--color-secondary);"> / hét</span></p>
+       <ul style="list-style: none; color: var(--color-secondary); font-size: 16px; line-height: 2; margin-bottom: 32px;">
+        <li>• 2 fő részére</li>
+        <li>• Reggelik</li>
+        <li>• Kert használat</li>
+        <li>• Wifi</li>
+        <li>• Személyre szabott élmények</li>
+       </ul><button class="btn-primary booking-btn" data-room="weekly" style="width: 100%;">Lefoglalom</button>
+      </div>
+     </div>
+    </section>
+   </div><!-- OUTDOOR GALLERY -->
+   <div id="galleryOutdoorPage" class="page-container">
+    <section style="padding: 160px 48px 120px;">
+     <h2 class="serif fade-in" style="font-size: 56px; font-weight: 300; text-align: center; margin-bottom: 80px; letter-spacing: 2px;">Kültér Galéria</h2>
+     <div class="gallery-grid" style="max-width: 1400px; margin: 0 auto;"><img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&amp;q=80" alt="Guesthouse garden view" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="0" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&amp;q=80" alt="Outdoor terrace" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="1" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&amp;q=80" alt="Garden pathway" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="2" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=800&amp;q=80" alt="Outdoor seating area" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="3" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&amp;q=80" alt="Natural landscape" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="4" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?w=800&amp;q=80" alt="Garden details" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="5" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+     </div>
+    </section>
+   </div><!-- INDOOR GALLERY -->
+   <div id="galleryIndoorPage" class="page-container">
+    <section style="padding: 160px 48px 120px;">
+     <h2 class="serif fade-in" style="font-size: 56px; font-weight: 300; text-align: center; margin-bottom: 80px; letter-spacing: 2px;">Beltér Galéria</h2>
+     <div class="gallery-grid" style="max-width: 1400px; margin: 0 auto;"><img src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&amp;q=80" alt="Bedroom interior" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="indoor" data-index="0" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=800&amp;q=80" alt="Living room" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="indoor" data-index="1" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&amp;q=80" alt="Bathroom details" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="indoor" data-index="2" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600210491369-e753d80a41f3?w=800&amp;q=80" alt="Dining area" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="indoor" data-index="3" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&amp;q=80" alt="Cozy corner" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="indoor" data-index="4" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&amp;q=80" alt="Interior details" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="indoor" data-index="5" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+     </div>
+    </section>
+   </div><!-- ATTRACTIONS PAGE -->
+   <div id="attractionsPage" class="page-container">
+    <section style="padding: 160px 48px 120px; max-width: 1400px; margin: 0 auto;">
+     <h2 class="serif fade-in" style="font-size: 56px; font-weight: 300; text-align: center; margin-bottom: 80px; letter-spacing: 2px;">Látnivalók</h2>
+     <div style="display: grid; gap: 80px;"><!-- Attraction 1 -->
+      <div class="fade-in" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&amp;q=80" alt="Forest hiking trails" loading="lazy" style="aspect-ratio: 16/10; width: 100%; object-fit: cover;" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+       <div>
+        <h3 class="serif" style="font-size: 36px; font-weight: 300; margin-bottom: 20px; color: var(--color-accent);">Erdei túraútvonalak</h3>
+        <p style="font-size: 18px; line-height: 1.8; color: var(--color-secondary); font-weight: 300;">Fedezd fel a környező erdők rejtett ösvényeit. Kilométereken át húzódó jelzett túraútvonalak várnak, ahol csak a madarak éneke kísér.</p>
+       </div>
+      </div><!-- Attraction 2 -->
+      <div class="fade-in" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
+       <div>
+        <h3 class="serif" style="font-size: 36px; font-weight: 300; margin-bottom: 20px; color: var(--color-accent);">Hegyi kilátó</h3>
+        <p style="font-size: 18px; line-height: 1.8; color: var(--color-secondary); font-weight: 300;">30 perces séta a közeli hegyi kilátóhoz, ahonnan lélegzetelállító panoráma tárul a szemünk elé. Tökéletes hely a naplementéhez.</p>
+       </div>
+       <div class="image-placeholder" style="aspect-ratio: 16/10;"></div>
+      </div><!-- Attraction 3 -->
+      <div class="fade-in" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;"><img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1200&amp;q=80" alt="Mountain stream and waterfall" loading="lazy" style="aspect-ratio: 16/10; width: 100%; object-fit: cover;" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+       <div>
+        <h3 class="serif" style="font-size: 36px; font-weight: 300; margin-bottom: 20px; color: var(--color-accent);">Patak és vízesés</h3>
+        <p style="font-size: 18px; line-height: 1.8; color: var(--color-secondary); font-weight: 300;">A kristálytiszta hegyi patak mentén sétálva érhetőek el a festői kis vízesések. A természet tiszta hangjai és a friss levegő felüdít.</p>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div><!-- CONTACT PAGE -->
+   <div id="contactPage" class="page-container">
+    <section style="padding: 160px 48px 120px; max-width: 1200px; margin: 0 auto;">
+     <h2 class="serif fade-in" style="font-size: 56px; font-weight: 300; text-align: center; margin-bottom: 80px; letter-spacing: 2px;">Elérhetőségek</h2><!-- Contact Cards -->
+     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; margin-bottom: 100px;">
+      <div class="price-card fade-in" style="text-align: center;">
+       <div style="width: 80px; height: 80px; margin: 0 auto 24px; background: var(--color-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px;">
+        📍
+       </div>
+       <h3 class="serif" style="font-size: 24px; font-weight: 400; margin-bottom: 16px; color: var(--color-accent);">Címünk</h3>
+       <p style="color: var(--color-secondary); font-size: 16px; line-height: 1.8;">1234 Természetfalva<br>
+        Csend utca 12.</p>
+      </div>
+      <div class="price-card fade-in" style="text-align: center;">
+       <div style="width: 80px; height: 80px; margin: 0 auto 24px; background: var(--color-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px;">
+        📞
+       </div>
+       <h3 class="serif" style="font-size: 24px; font-weight: 400; margin-bottom: 16px; color: var(--color-accent);">Telefonszám</h3>
+       <p style="color: var(--color-secondary); font-size: 16px; line-height: 1.8;">+36 30 123 4567<br><span style="font-size: 14px;">Hétfő - Vasárnap: 8:00 - 20:00</span></p>
+      </div>
+      <div class="price-card fade-in" style="text-align: center;">
+       <div style="width: 80px; height: 80px; margin: 0 auto 24px; background: var(--color-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px;">
+        ✉️
+       </div>
+       <h3 class="serif" style="font-size: 24px; font-weight: 400; margin-bottom: 16px; color: var(--color-accent);">Email</h3>
+       <p style="color: var(--color-secondary); font-size: 16px; line-height: 1.8;">info@boutique-vendeghaz.hu<br><span style="font-size: 14px;">24 órán belül válaszolunk</span></p>
+      </div>
+     </div><!-- Contact Form Section -->
+     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;">
+      <div class="fade-in">
+       <h3 class="serif" style="font-size: 42px; font-weight: 300; margin-bottom: 24px; color: var(--color-accent); letter-spacing: 1px;">Üzenjen nekünk</h3>
+       <p style="font-size: 18px; color: var(--color-secondary); line-height: 1.8; margin-bottom: 40px;">Szívesen válaszolunk minden kérdésére. Töltse ki az űrlapot, és hamarosan felvesszük Önnel a kapcsolatot.</p>
+       <div style="background: var(--color-surface); padding: 32px; border: 1px solid rgba(139, 126, 116, 0.15);">
+        <h4 style="font-size: 18px; font-weight: 400; margin-bottom: 20px; color: var(--color-accent);">Gyakori információk</h4>
+        <ul style="list-style: none; color: var(--color-secondary); font-size: 15px; line-height: 2.2;">
+         <li>• Check-in: 14:00</li>
+         <li>• Check-out: 11:00</li>
+         <li>• Ingyenes parkolás</li>
+         <li>• Háziállatok megbeszélés alapján</li>
+         <li>• Dohányzás tilos a szobákban</li>
+        </ul>
+       </div>
+      </div>
+      <div class="fade-in">
+       <form id="contactForm" style="display: flex; flex-direction: column; gap: 24px; background: var(--color-surface); padding: 40px; border: 1px solid rgba(139, 126, 116, 0.15);">
+        <div><label for="contactName" style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: 400; color: var(--color-accent); letter-spacing: 0.5px;">NÉV *</label> <input type="text" id="contactName" placeholder="Teljes név" required style="width: 100%; padding: 16px; border: 1px solid rgba(139, 126, 116, 0.3); background: var(--color-bg); font-size: 15px; color: var(--color-text); font-family: 'Inter', sans-serif;">
+        </div>
+        <div><label for="contactEmail" style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: 400; color: var(--color-accent); letter-spacing: 0.5px;">EMAIL *</label> <input type="email" id="contactEmail" placeholder="email@example.com" required style="width: 100%; padding: 16px; border: 1px solid rgba(139, 126, 116, 0.3); background: var(--color-bg); font-size: 15px; color: var(--color-text); font-family: 'Inter', sans-serif;">
+        </div>
+        <div><label for="contactPhone" style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: 400; color: var(--color-accent); letter-spacing: 0.5px;">TELEFON</label> <input type="tel" id="contactPhone" placeholder="+36 30 123 4567" style="width: 100%; padding: 16px; border: 1px solid rgba(139, 126, 116, 0.3); background: var(--color-bg); font-size: 15px; color: var(--color-text); font-family: 'Inter', sans-serif;">
+        </div>
+        <div><label for="contactMessage" style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: 400; color: var(--color-accent); letter-spacing: 0.5px;">ÜZENET *</label> <textarea id="contactMessage" placeholder="Írja le kérdését vagy üzenetét..." rows="6" required style="width: 100%; padding: 16px; border: 1px solid rgba(139, 126, 116, 0.3); background: var(--color-bg); font-size: 15px; color: var(--color-text); font-family: 'Inter', sans-serif; resize: vertical;"></textarea>
+        </div><button type="submit" class="btn-primary" style="width: 100%; margin-top: 8px;">Üzenet küldése</button>
+       </form>
+       <div id="formMessage" style="margin-top: 20px; padding: 20px; display: none; background: rgba(74, 93, 78, 0.1); color: var(--color-accent); border-left: 4px solid var(--color-accent); font-size: 15px;"></div>
+      </div>
+     </div><!-- Map Section -->
+     <div class="fade-in" style="margin-top: 100px;">
+      <h3 class="serif" style="font-size: 42px; font-weight: 300; text-align: center; margin-bottom: 40px; color: var(--color-accent); letter-spacing: 1px;">Megközelítés</h3>
+      <div style="width: 100%; height: 500px; border: 1px solid rgba(139, 126, 116, 0.15); overflow: hidden;"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d42471.08832187548!2d18.95861887832031!3d47.79086!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476a7aa00f1d51e1%3A0x400c4290c1e1360!2sVisegrád!5e0!3m2!1shu!2shu!4v1234567890123!5m2!1shu!2shu" width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Boutique Vendégház helyszín térképe"> </iframe>
+      </div>
+      <p style="text-align: center; margin-top: 24px; font-size: 16px; color: var(--color-secondary); line-height: 1.8;">Visegrád, a Dunakanyar gyöngyszeme. Budapesttől mindössze 40 km.<br>
+       Autóval könnyen megközelíthető, ingyenes parkolási lehetőséggel.</p>
+     </div>
+    </section>
+   </div><!-- Footer -->
+   <footer style="background: var(--color-accent); color: rgba(255, 255, 255, 0.8); padding: 48px; text-align: center; font-size: 13px; letter-spacing: 1px;">
+    <p style="margin-bottom: 12px;">© 2024 Boutique Vendégház. Minden jog fenntartva.</p>
+    <p style="margin-bottom: 8px; font-weight: 400; color: rgba(255, 255, 255, 0.95);">NTAK regisztrációs szám: MA26121506</p>
+    <p style="margin-bottom: 20px; font-weight: 400; color: rgba(255, 255, 255, 0.95);">Szálláshely típusa: Magánszállás</p>
+    <div style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;"><a href="#" class="footer-link" data-policy="gdpr" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease;">GDPR</a> <a href="#" class="footer-link" data-policy="aszf" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease;">ÁSZF</a> <a href="#" class="footer-link" data-policy="adatkezeles" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease;">Adatkezelési szabályzat</a>
+    </div>
+   </footer><!-- Lightbox -->
+   <div id="lightbox" class="lightbox"><span class="lightbox-close" id="closeLightbox">×</span>
+    <div class="lightbox-content"><img id="lightboxImage" src="" alt="Gallery image" loading="lazy" style="max-width: 90vw; max-height: 90vh; object-fit: contain;" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+    </div>
+   </div><!-- Modal Gallery for Rooms -->
+   <div id="modalGallery" class="modal-gallery">
+    <div class="modal-gallery-content"><span class="modal-close" id="modalClose">×</span> <button class="modal-nav-btn prev" id="modalPrev">‹</button> <img id="modalImage" src="" alt="Room image" loading="lazy" class="modal-gallery-image" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <button class="modal-nav-btn next" id="modalNext">›</button>
+     <div class="modal-counter" id="modalCounter">
+      1 / 5
+     </div>
+    </div>
+   </div><!-- Policy Overlay and Notification -->
+   <div id="policyOverlay" class="policy-overlay"></div>
+   <div id="policyNotification" class="policy-notification"></div>
+  </div>
+  <script>
+    const defaultConfig = {
+      site_title: "Boutique Vendégház",
+      hero_tagline: "Ahol a nyugalom találkozik az eleganciával",
+      block1_title: "Természet ölelésében",
+      block1_text: "Fedezd fel a csendet és a harmóniát, ahol a természet és a modern dizájn tökéletes egyensúlyban találkozik. Minden pillanat a megújulásról szól.",
+      block2_title: "Dizájn és minőség",
+      block2_text: "Minden részlet gondosan kiválasztva, hogy a kifinomultság és a természetes elegancia harmonikus egységet alkosson.",
+      block3_title: "Slow living",
+      block3_text: "Lassíts le, lélegezz, élvezd a pillanatot. Itt az időnek más ritmusa van.",
+      background_color: "#faf9f7",
+      surface_color: "#ffffff",
+      text_color: "#2d3436",
+      accent_color: "#4a5d4e",
+      secondary_color: "#8b7e74",
+      font_family: "Cormorant Garamond",
+      font_size: 16
+    };
+
+    async function onConfigChange(config) {
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = 'serif';
+      const baseSize = config.font_size || defaultConfig.font_size;
+
+      document.documentElement.style.setProperty('--color-bg', config.background_color || defaultConfig.background_color);
+      document.documentElement.style.setProperty('--color-surface', config.surface_color || defaultConfig.surface_color);
+      document.documentElement.style.setProperty('--color-text', config.text_color || defaultConfig.text_color);
+      document.documentElement.style.setProperty('--color-accent', config.accent_color || defaultConfig.accent_color);
+      document.documentElement.style.setProperty('--color-secondary', config.secondary_color || defaultConfig.secondary_color);
+
+      const serifElements = document.querySelectorAll('.serif');
+      serifElements.forEach(el => {
+        el.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      });
+
+      document.getElementById('navTitle').textContent = config.site_title || defaultConfig.site_title;
+      document.getElementById('heroTagline').textContent = config.hero_tagline || defaultConfig.hero_tagline;
+      document.getElementById('block1Title').textContent = config.block1_title || defaultConfig.block1_title;
+      document.getElementById('block1Text').textContent = config.block1_text || defaultConfig.block1_text;
+      document.getElementById('block2Title').textContent = config.block2_title || defaultConfig.block2_title;
+      document.getElementById('block2Text').textContent = config.block2_text || defaultConfig.block2_text;
+      document.getElementById('block3Title').textContent = config.block3_title || defaultConfig.block3_title;
+      document.getElementById('block3Text').textContent = config.block3_text || defaultConfig.block3_text;
+
+      document.getElementById('heroTagline').style.fontSize = `${baseSize * 4}px`;
+      document.querySelectorAll('.serif h2, .serif h3').forEach(el => {
+        if (el.id === 'heroTagline') return;
+        el.style.fontSize = `${baseSize * 2.5}px`;
+      });
+      document.querySelectorAll('p').forEach(el => {
+        el.style.fontSize = `${baseSize * 1.125}px`;
+      });
+    }
+
+    const capabilities = {
+      recolorables: [
+        {
+          get: () => window.elementSdk.config.background_color || defaultConfig.background_color,
+          set: (value) => {
+            window.elementSdk.config.background_color = value;
+            window.elementSdk.setConfig({ background_color: value });
+          }
+        },
+        {
+          get: () => window.elementSdk.config.surface_color || defaultConfig.surface_color,
+          set: (value) => {
+            window.elementSdk.config.surface_color = value;
+            window.elementSdk.setConfig({ surface_color: value });
+          }
+        },
+        {
+          get: () => window.elementSdk.config.text_color || defaultConfig.text_color,
+          set: (value) => {
+            window.elementSdk.config.text_color = value;
+            window.elementSdk.setConfig({ text_color: value });
+          }
+        },
+        {
+          get: () => window.elementSdk.config.accent_color || defaultConfig.accent_color,
+          set: (value) => {
+            window.elementSdk.config.accent_color = value;
+            window.elementSdk.setConfig({ accent_color: value });
+          }
+        },
+        {
+          get: () => window.elementSdk.config.secondary_color || defaultConfig.secondary_color,
+          set: (value) => {
+            window.elementSdk.config.secondary_color = value;
+            window.elementSdk.setConfig({ secondary_color: value });
+          }
+        }
+      ],
+      borderables: [],
+      fontEditable: {
+        get: () => window.elementSdk.config.font_family || defaultConfig.font_family,
+        set: (value) => {
+          window.elementSdk.config.font_family = value;
+          window.elementSdk.setConfig({ font_family: value });
+        }
+      },
+      fontSizeable: {
+        get: () => window.elementSdk.config.font_size || defaultConfig.font_size,
+        set: (value) => {
+          window.elementSdk.config.font_size = value;
+          window.elementSdk.setConfig({ font_size: value });
+        }
+      }
+    };
+
+    function mapToCapabilities(config) {
+      return capabilities;
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["site_title", config.site_title || defaultConfig.site_title],
+        ["hero_tagline", config.hero_tagline || defaultConfig.hero_tagline],
+        ["block1_title", config.block1_title || defaultConfig.block1_title],
+        ["block1_text", config.block1_text || defaultConfig.block1_text],
+        ["block2_title", config.block2_title || defaultConfig.block2_title],
+        ["block2_text", config.block2_text || defaultConfig.block2_text],
+        ["block3_title", config.block3_title || defaultConfig.block3_title],
+        ["block3_text", config.block3_text || defaultConfig.block3_text]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    // Navigation
+    const pages = {
+      'home': 'homePage',
+      'about': 'aboutPage',
+      'pricing': 'pricingPage',
+      'gallery-outdoor': 'galleryOutdoorPage',
+      'gallery-indoor': 'galleryIndoorPage',
+      'attractions': 'attractionsPage',
+      'contact': 'contactPage'
+    };
+
+    function showPage(pageId) {
+      Object.values(pages).forEach(id => {
+        document.getElementById(id).classList.remove('active');
+      });
+      document.getElementById(pageId).classList.add('active');
+      window.scrollTo(0, 0);
+      observeElements();
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const hash = e.target.getAttribute('href').substring(1);
+        if (pages[hash]) {
+          showPage(pages[hash]);
+          window.location.hash = hash;
+        }
+      });
+    });
+
+    // Handle initial hash
+    if (window.location.hash) {
+      const hash = window.location.hash.substring(1);
+      if (pages[hash]) {
+        showPage(pages[hash]);
+      }
+    }
+
+    // Fade-in animation observer
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    function observeElements() {
+      document.querySelectorAll('.fade-in').forEach(el => {
+        observer.observe(el);
+      });
+    }
+
+    observeElements();
+
+    // Gallery lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const closeLightbox = document.getElementById('closeLightbox');
+
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const imgSrc = item.getAttribute('src');
+        const imgAlt = item.getAttribute('alt');
+        lightboxImage.src = imgSrc;
+        lightboxImage.alt = imgAlt;
+        lightbox.classList.add('active');
+      });
+    });
+
+    closeLightbox.addEventListener('click', () => {
+      lightbox.classList.remove('active');
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox.classList.remove('active');
+      }
+    });
+
+    // Contact form
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const messageDiv = document.getElementById('formMessage');
+      messageDiv.textContent = 'Köszönjük az üzenetet! Hamarosan felvesszük Önnel a kapcsolatot.';
+      messageDiv.style.display = 'block';
+      e.target.reset();
+      setTimeout(() => {
+        messageDiv.style.display = 'none';
+      }, 5000);
+    });
+
+    // Booking buttons
+    const bookingLinks = {
+      'weekend': 'https://booking.com/hetvegi-pihenes',
+      'long-weekend': 'https://booking.com/hosszu-hetvege',
+      'weekly': 'https://booking.com/heti-menedek'
+    };
+
+    document.querySelectorAll('.booking-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const room = btn.getAttribute('data-room');
+        const bookingUrl = bookingLinks[room];
+        
+        // Create inline notification message
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: var(--color-surface);
+          padding: 48px 64px;
+          border: 2px solid var(--color-accent);
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+          z-index: 10001;
+          text-align: center;
+          max-width: 500px;
+        `;
+        
+        notification.innerHTML = `
+          <h3 class="serif" style="font-size: 28px; font-weight: 400; margin-bottom: 20px; color: var(--color-accent);">Foglalás átirányítás</h3>
+          <p style="font-size: 16px; color: var(--color-secondary); margin-bottom: 24px; line-height: 1.8;">
+            A foglaláshoz a Booking.com oldalára irányítanánk:<br>
+            <strong style="color: var(--color-text); display: block; margin-top: 12px; word-break: break-all;">${bookingUrl}</strong>
+          </p>
+          <button id="closeNotification" class="btn-primary" style="margin-top: 12px;">Rendben</button>
+        `;
+        
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.7);
+          z-index: 10000;
+        `;
+        
+        document.body.appendChild(overlay);
+        document.body.appendChild(notification);
+        
+        const closeNotification = () => {
+          document.body.removeChild(notification);
+          document.body.removeChild(overlay);
+        };
+        
+        document.getElementById('closeNotification').addEventListener('click', closeNotification);
+        overlay.addEventListener('click', closeNotification);
+      });
+    });
+
+    // Modal Gallery for Room Images
+    const roomGalleries = {
+      'weekend': [
+        { src: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200&q=80', alt: 'Cozy bedroom' },
+        { src: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=1200&q=80', alt: 'Room view' },
+        { src: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=1200&q=80', alt: 'Bathroom' },
+        { src: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1200&q=80', alt: 'Room details' },
+        { src: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=1200&q=80', alt: 'Comfortable space' }
+      ],
+      'long-weekend': [
+        { src: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=1200&q=80', alt: 'Spacious suite' },
+        { src: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=1200&q=80', alt: 'Luxury bedroom' },
+        { src: 'https://images.unsplash.com/photo-1631049035182-249067d7618e?w=1200&q=80', alt: 'Modern interior' },
+        { src: 'https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1200&q=80', alt: 'Suite bathroom' },
+        { src: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1200&q=80', alt: 'Living area' }
+      ],
+      'weekly': [
+        { src: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=1200&q=80', alt: 'Luxury retreat room' },
+        { src: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200&q=80', alt: 'Premium bedroom' },
+        { src: 'https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=1200&q=80', alt: 'Elegant bathroom' },
+        { src: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&q=80', alt: 'Spacious room' },
+        { src: 'https://images.unsplash.com/photo-1611048267451-e6ed903d4a38?w=1200&q=80', alt: 'Retreat amenities' }
+      ]
+    };
+
+    let currentRoom = '';
+    let currentImageIndex = 0;
+
+    const modalGallery = document.getElementById('modalGallery');
+    const modalImage = document.getElementById('modalImage');
+    const modalClose = document.getElementById('modalClose');
+    const modalPrev = document.getElementById('modalPrev');
+    const modalNext = document.getElementById('modalNext');
+    const modalCounter = document.getElementById('modalCounter');
+
+    function openModalGallery(room, index = 0) {
+      currentRoom = room;
+      currentImageIndex = index;
+      updateModalImage();
+      modalGallery.classList.add('active');
+    }
+
+    function closeModalGallery() {
+      modalGallery.classList.remove('active');
+    }
+
+    function updateModalImage() {
+      const gallery = roomGalleries[currentRoom];
+      if (!gallery) return;
+
+      const image = gallery[currentImageIndex];
+      modalImage.src = image.src;
+      modalImage.alt = image.alt;
+      modalCounter.textContent = `${currentImageIndex + 1} / ${gallery.length}`;
+    }
+
+    function navigateModal(direction) {
+      const gallery = roomGalleries[currentRoom];
+      if (!gallery) return;
+
+      currentImageIndex += direction;
+      if (currentImageIndex < 0) currentImageIndex = gallery.length - 1;
+      if (currentImageIndex >= gallery.length) currentImageIndex = 0;
+      updateModalImage();
+    }
+
+    // Room image click handlers
+    document.querySelectorAll('.price-room-image').forEach(img => {
+      img.addEventListener('click', () => {
+        const room = img.getAttribute('data-room');
+        openModalGallery(room, 0);
+      });
+    });
+
+    // Modal controls
+    modalClose.addEventListener('click', closeModalGallery);
+    modalPrev.addEventListener('click', () => navigateModal(-1));
+    modalNext.addEventListener('click', () => navigateModal(1));
+
+    modalGallery.addEventListener('click', (e) => {
+      if (e.target === modalGallery) {
+        closeModalGallery();
+      }
+    });
+
+    // Keyboard navigation for both galleries
+    document.addEventListener('keydown', (e) => {
+      if (modalGallery.classList.contains('active')) {
+        if (e.key === 'Escape') closeModalGallery();
+        if (e.key === 'ArrowLeft') navigateModal(-1);
+        if (e.key === 'ArrowRight') navigateModal(1);
+      }
+      
+      if (policyNotification.style.display === 'block') {
+        if (e.key === 'Escape') closePolicyNotification();
+      }
+    });
+
+    // Policy notification content
+    const policyContent = {
+      gdpr: {
+        title: 'GDPR - Általános adatvédelmi rendelet',
+        content: `
+          <h3 class="serif" style="font-size: 32px; font-weight: 400; margin-bottom: 24px; color: var(--color-accent);">GDPR Tájékoztató</h3>
+          <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+            A Boutique Vendégház elkötelezett az Ön személyes adatainak védelme iránt. Az Európai Unió Általános Adatvédelmi Rendelete (GDPR) szerint jogai vannak az adatkezelés tekintetében.
+          </p>
+          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">Az Ön jogai:</h4>
+          <ul style="list-style: disc; padding-left: 24px; color: var(--color-secondary); font-size: 16px; line-height: 2;">
+            <li>Joga van hozzáférni a kezelt személyes adataihoz</li>
+            <li>Joga van kérni adatai helyesbítését vagy törlését</li>
+            <li>Joga van az adatkezelés korlátozását kérni</li>
+            <li>Joga van tiltakozni az adatkezelés ellen</li>
+            <li>Joga van az adathordozhatósághoz</li>
+          </ul>
+          <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-top: 24px;">
+            <strong>Kapcsolat:</strong> info@boutique-vendeghaz.hu<br>
+            <strong>Adatvédelmi tisztviselő:</strong> +36 30 123 4567
+          </p>
+        `
+      },
+      aszf: {
+        title: 'Általános Szerződési Feltételek',
+        content: `
+          <h3 class="serif" style="font-size: 32px; font-weight: 400; margin-bottom: 24px; color: var(--color-accent);">Általános Szerződési Feltételek</h3>
+          
+          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">1. Általános rendelkezések</h4>
+          <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+            Jelen általános szerződési feltételek (a továbbiakban: ÁSZF) tartalmazzák a Boutique Vendégház által nyújtott szálláshely-szolgáltatás igénybevételének feltételeit.
+          </p>
+
+          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">2. Foglalás és lemondás</h4>
+          <ul style="list-style: disc; padding-left: 24px; color: var(--color-secondary); font-size: 16px; line-height: 2; margin-bottom: 20px;">
+            <li>A foglalás az előleg befizetésével válik érvényessé</li>
+            <li>Lemondás esetén 30 nappal az érkezés előtt teljes visszatérítés</li>
+            <li>14-30 nap között 50% visszatérítés</li>
+            <li>14 napon belüli lemondás esetén nincs visszatérítés</li>
+          </ul>
+
+          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">3. Érkezés és távozás</h4>
+          <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+            <strong>Check-in:</strong> 14:00<br>
+            <strong>Check-out:</strong> 11:00
+          </p>
+
+          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">4. Háziállatok</h4>
+          <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+            Háziállatok csak előzetes egyeztetés alapján hozhatók. Pótdíj 5.000 Ft/éj.
+          </p>
+
+          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">5. Felelősség</h4>
+          <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary);">
+            A vendégek felelősek a szálláshely és berendezési tárgyak épségéért. Károkozás esetén teljes kártérítési kötelezettség áll fenn.
+          </p>
+        `
+      },
+      adatkezeles: {
+        title: 'Adatkezelési Szabályzat',
+        content: `
+          <h3 class="serif" style="font-size: 32px; font-weight: 400; margin-bottom: 24px; color: var(--color-accent);">Adatkezelési Szabályzat</h3>
+          
+          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">1. Adatkezelő adatai</h4>
+          <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+            <strong>Név:</strong> Boutique Vendégház<br>
+            <strong>Cím:</strong> 1234 Természetfalva, Csend utca 12.<br>
+            <strong>Email:</strong> info@boutique-vendeghaz.hu<br>
+            <strong>Telefon:</strong> +36 30 123 4567
+          </p>
+
+          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">2. Kezelt adatok köre</h4>
+          <ul style="list-style: disc; padding-left: 24px; color: var(--color-secondary); font-size: 16px; line-height: 2; margin-bottom: 20px;">
+            <li>Név</li>
+            <li>Email cím</li>
+            <li>Telefonszám</li>
+            <li>Címadatok</li>
+            <li>Foglalási adatok</li>
+          </ul>
+
+          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">3. Adatkezelés célja</h4>
+          <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+            Az adatkezelés kizárólag a szállásfoglalás lebonyolítása, a vendégkapcsolat fenntartása és a jogszabályi kötelezettségek teljesítése céljából történik.
+          </p>
+
+          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">4. Adatkezelés időtartama</h4>
+          <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+            Személyes adatait a szolgáltatás teljesítését követő 5 évig őrizzük meg számviteli és adózási kötelezettségek teljesítése céljából.
+          </p>
+
+          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">5. Adatbiztonság</h4>
+          <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+            Megfelelő technikai és szervezési intézkedéseket alkalmazunk az adatok védelme érdekében. Az adatokat nem adjuk át harmadik félnek marketingcélokra.
+          </p>
+
+          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">6. Cookie-k használata</h4>
+          <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary);">
+            Weboldalunk alapvető működési cookie-kat használ. Harmadik féltől származó cookie-kat nem alkalmazunk.
+          </p>
+        `
+      }
+    };
+
+    // Policy notification functionality
+    const policyOverlay = document.getElementById('policyOverlay');
+    const policyNotification = document.getElementById('policyNotification');
+
+    function openPolicyNotification(policyType) {
+      const policy = policyContent[policyType];
+      if (!policy) return;
+
+      policyNotification.innerHTML = `
+        ${policy.content}
+        <button id="closePolicyBtn" class="btn-primary" style="width: 100%; margin-top: 32px;">Rendben</button>
+      `;
+      
+      policyOverlay.style.display = 'block';
+      policyNotification.style.display = 'block';
+
+      const closeBtn = document.getElementById('closePolicyBtn');
+      closeBtn.addEventListener('click', closePolicyNotification);
+    }
+
+    function closePolicyNotification() {
+      policyOverlay.style.display = 'none';
+      policyNotification.style.display = 'none';
+    }
+
+    // Footer policy links
+    document.querySelectorAll('.footer-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const policyType = link.getAttribute('data-policy');
+        openPolicyNotification(policyType);
+      });
+    });
+
+    policyOverlay.addEventListener('click', closePolicyNotification);
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c3a3f2fa60bc1b2',t:'MTc2OTM3MDA3My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
