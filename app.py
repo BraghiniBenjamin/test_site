@@ -86,11 +86,13 @@ def _rate_limit_hit(ip: str):
 # ==================================================
 # DB INIT + SEED (AUTOMATIKUS)
 # ==================================================
+from sqlalchemy import text
+
 def _ensure_preview_tables_and_seed():
     """
     - Létrehozza a preview táblákat, ha nem léteznek
-    - Felveszi / frissíti a George_Logistic_Team oldalt
-    - Felveszi a hozzá tartozó kódot (hash-elve), ha nincs bent
+    - Felveszi / frissíti a preview_pages rekordokat
+    - Felveszi a hozzá tartozó kódokat (hash-elve), ha nincs bent
     """
     eng = _engine()
 
@@ -116,50 +118,64 @@ def _ensure_preview_tables_and_seed():
     CREATE INDEX IF NOT EXISTS idx_preview_codes_page_key ON preview_codes(page_key);
     """
 
-    # Seed adatok
-    page_key = "George_Logistic_Team"
-    template_name = "George_Logistic_Team.html"
-    raw_code = "UL7dISvX4zdaLiJ5mvgKvmxn"
-    code_hash = _code_hash(raw_code)
+    # ✅ Seed rekordok (bármennyit felvehetsz ide)
+    seeds = [
+        {
+            "page_key": "George_Logistic_Team",
+            "template_name": "George_Logistic_Team.html",
+            "raw_code": "UL7dISvX4zdaLiJ5mvgKvmxn",
+        },
+        {
+            "page_key": "Visegrádi Kincseskert Vendégház",
+            "template_name": "vendeghaz_demo.html",
+            "raw_code": "FDxTdbeyenFs0prF",  # <-- ide írj egy új kulcsot
+        },
+    ]
 
     with eng.begin() as conn:
         # Táblák
         conn.execute(text(create_pages))
-        # (create_codes több statement, ezért így:
         for stmt in create_codes.split(";"):
             s = stmt.strip()
             if s:
                 conn.execute(text(s))
 
-        # Page upsert
-        conn.execute(
-            text("""
-            INSERT INTO preview_pages (page_key, template_name, is_active)
-            VALUES (:k, :t, TRUE)
-            ON CONFLICT (page_key) DO UPDATE
-            SET template_name = EXCLUDED.template_name,
-                is_active = TRUE
-            """),
-            {"k": page_key, "t": template_name},
-        )
+        # Seed + upsert + code insert
+        for item in seeds:
+            page_key = item["page_key"]
+            template_name = item["template_name"]
+            raw_code = item["raw_code"]
+            code_hash = _code_hash(raw_code)
 
-        # Code insert (ha nincs)
-        conn.execute(
-            text("""
-            INSERT INTO preview_codes (code_hash, page_key, is_active, expires_at)
-            VALUES (:h, :k, TRUE, NULL)
-            ON CONFLICT (code_hash) DO NOTHING
-            """),
-            {"h": code_hash, "k": page_key},
-        )
+            # Page upsert
+            conn.execute(
+                text("""
+                INSERT INTO preview_pages (page_key, template_name, is_active)
+                VALUES (:k, :t, TRUE)
+                ON CONFLICT (page_key) DO UPDATE
+                SET template_name = EXCLUDED.template_name,
+                    is_active = TRUE
+                """),
+                {"k": page_key, "t": template_name},
+            )
+
+            # Code insert (ha nincs)
+            conn.execute(
+                text("""
+                INSERT INTO preview_codes (code_hash, page_key, is_active, expires_at)
+                VALUES (:h, :k, TRUE, NULL)
+                ON CONFLICT (code_hash) DO NOTHING
+                """),
+                {"h": code_hash, "k": page_key},
+            )
 
 
 # Induláskor egyszer fusson le
 try:
     _ensure_preview_tables_and_seed()
 except Exception as e:
-    # Ne álljon meg az app indulás, de lásd a logban
     print(f"[WARN] Preview DB init/seed failed: {e}")
+
 
 
 # ==================================================
