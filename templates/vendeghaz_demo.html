@@ -530,9 +530,7 @@
     </div>
    </nav><!-- HOME PAGE -->
    <div id="homePage" class="page-container active"><!-- Hero Section -->
-    <section class="hero-height" style="height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; margin-top: 80px;">
-      <!-- ✅ FŐOLDALI KÉP -->
-      <img src="{{ url_for('static', filename='panorammakep.jfif') }}" alt="Visegrádi Kincseskert Vendégház panoráma" loading="lazy" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7);" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+    <section class="hero-height" style="height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; margin-top: 80px;"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&amp;q=80" alt="Elegant guesthouse exterior" loading="lazy" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7);" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
      <div style="position: relative; z-index: 2; text-align: center; padding: 0 24px;">
       <h2 class="serif fade-in" id="heroTagline" style="font-size: 64px; font-weight: 300; color: var(--color-surface); letter-spacing: 3px; text-shadow: 0 2px 20px rgba(0,0,0,0.3); margin-bottom: 24px;">Ahol a nyugalom találkozik az eleganciával</h2>
       <p class="fade-in" style="font-size: 16px; color: var(--color-surface); letter-spacing: 2px; text-transform: uppercase; font-weight: 300; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">Minimal Luxury • Slow Living • Nature</p>
@@ -552,7 +550,7 @@
        <h3 class="serif" id="block2Title" style="font-size: 42px; font-weight: 300; color: var(--color-text); margin-bottom: 24px; letter-spacing: 1px;">Dizájn és minőség</h3>
        <p id="block2Text" style="font-size: 18px; color: var(--color-secondary); line-height: 1.8; font-weight: 300;">Minden részlet gondosan kiválasztva, hogy a kifinomultság és a természetes elegancia harmonikus egységet alkosson.</p>
       </div>
-     </div><img src="{{ url_for('static', filename='erdoreszlet.jpg') }}" alt="Minimalist interior design" loading="lazy" style="width: 50%; min-height: 600px; object-fit: cover;" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+     </div><img src="https://images.unsplash.com/photo-1615873968403-89e068629265?w=1200&amp;q=80" alt="Minimalist interior design" loading="lazy" style="width: 50%; min-height: 600px; object-fit: cover;" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
     </section><!-- Content Block 3 -->
     <section class="content-block" style="display: flex; min-height: 600px; background: var(--color-bg);"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&amp;q=80" alt="Peaceful reading corner" loading="lazy" style="width: 50%; min-height: 600px; object-fit: cover;" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
      <div style="width: 50%; display: flex; align-items: center; justify-content: center; padding: 80px 64px;">
@@ -720,18 +718,7 @@
    <div id="galleryOutdoorPage" class="page-container">
     <section style="padding: 160px 48px 120px;">
      <h2 class="serif fade-in" style="font-size: 56px; font-weight: 300; text-align: center; margin-bottom: 80px; letter-spacing: 2px;">Kültér Galéria</h2>
-     <div class="gallery-grid" style="max-width: 1400px; margin: 0 auto;">
-       <!-- ✅ ÚJ KÉPEK BEKERÜLTEK A KÜLTÉRBE -->
-       <img src="teli_kep_a_vendeghazrol.jpg" alt="Téli kép a vendégházról" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="0" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
-       <img src="havas_kasvirak.jpg" alt="Havas kásvirágok" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="1" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
-
-       <!-- Megmaradó képek -->
-       <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&amp;q=80" alt="Guesthouse garden view" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="2" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
-       <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&amp;q=80" alt="Outdoor terrace" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="3" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
-       <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&amp;q=80" alt="Garden pathway" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="4" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
-       <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=800&amp;q=80" alt="Outdoor seating area" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="5" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
-       <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&amp;q=80" alt="Natural landscape" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="6" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
-       <img src="https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?w=800&amp;q=80" alt="Garden details" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="7" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+     <div class="gallery-grid" style="max-width: 1400px; margin: 0 auto;"><img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&amp;q=80" alt="Guesthouse garden view" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="0" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&amp;q=80" alt="Outdoor terrace" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="1" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&amp;q=80" alt="Garden pathway" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="2" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=800&amp;q=80" alt="Outdoor seating area" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="3" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&amp;q=80" alt="Natural landscape" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="4" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?w=800&amp;q=80" alt="Garden details" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="5" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
      </div>
     </section>
    </div><!-- INDOOR GALLERY -->
@@ -746,9 +733,7 @@
     <section style="padding: 160px 48px 120px; max-width: 1400px; margin: 0 auto;">
      <h2 class="serif fade-in" style="font-size: 56px; font-weight: 300; text-align: center; margin-bottom: 80px; letter-spacing: 2px;">Látnivalók</h2>
      <div style="display: grid; gap: 80px;"><!-- Attraction 1 -->
-      <div class="fade-in" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
-        <!-- ✅ ERDEI TÚRAÚTVONALAK KÉP -->
-        <img src="erdoreszlet.jpg" alt="Erdei túraútvonalak" loading="lazy" style="aspect-ratio: 16/10; width: 100%; object-fit: cover;" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+      <div class="fade-in" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&amp;q=80" alt="Forest hiking trails" loading="lazy" style="aspect-ratio: 16/10; width: 100%; object-fit: cover;" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
        <div>
         <h3 class="serif" style="font-size: 36px; font-weight: 300; margin-bottom: 20px; color: var(--color-accent);">Erdei túraútvonalak</h3>
         <p style="font-size: 18px; line-height: 1.8; color: var(--color-secondary); font-weight: 300;">Fedezd fel a környező erdők rejtett ösvényeit. Kilométereken át húzódó jelzett túraútvonalak várnak, ahol csak a madarak éneke kísér.</p>
@@ -761,9 +746,7 @@
        </div>
        <div class="image-placeholder" style="aspect-ratio: 16/10;"></div>
       </div><!-- Attraction 3 -->
-      <div class="fade-in" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
-        <!-- ✅ PATAK ÉS VÍZESÉS KÉP -->
-        <img src="kaan_forras.jpg" alt="Patak és vízesés" loading="lazy" style="aspect-ratio: 16/10; width: 100%; object-fit: cover;" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+      <div class="fade-in" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;"><img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1200&amp;q=80" alt="Mountain stream and waterfall" loading="lazy" style="aspect-ratio: 16/10; width: 100%; object-fit: cover;" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
        <div>
         <h3 class="serif" style="font-size: 36px; font-weight: 300; margin-bottom: 20px; color: var(--color-accent);">Patak és vízesés</h3>
         <p style="font-size: 18px; line-height: 1.8; color: var(--color-secondary); font-weight: 300;">A kristálytiszta hegyi patak mentén sétálva érhetőek el a festői kis vízesések. A természet tiszta hangjai és a friss levegő felüdít.</p>
@@ -1355,7 +1338,7 @@
       }
     };
 
-    // Policy notification content
+    // Policy notification functionality
     const policyOverlay = document.getElementById('policyOverlay');
     const policyNotification = document.getElementById('policyNotification');
 
