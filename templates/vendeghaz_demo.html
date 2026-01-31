@@ -572,121 +572,190 @@
       </div>
      </div>
     </section>
-   </div><!-- ABOUT PAGE -->
-   <div id="aboutPage" class="page-container"><!-- Hero Section -->
-    <section style="padding: 160px 48px 80px; max-width: 1000px; margin: 0 auto;">
-     <h2 class="serif fade-in" style="font-size: 56px; font-weight: 300; text-align: center; margin-bottom: 48px; letter-spacing: 2px;">Rólunk</h2>
-     <div class="fade-in" style="text-align: center; max-width: 800px; margin: 0 auto;">
-      <p style="font-size: 20px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 32px; font-weight: 300;">A vendégházunk egy különleges hely, ahol a természet nyugalma és a modern minimalista dizájn találkozik. Filozófiánk egyszerű: kevesebb több.</p>
-      <p style="font-size: 20px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 32px; font-weight: 300;">Minden részletet gondosan válogattunk ki, hogy vendégeink számára egy autentikus, stílusos és harmonikus környezetet teremtsünk.</p>
-      <p style="font-size: 20px; line-height: 1.9; color: var(--color-secondary); font-weight: 300;">Itt nincs felesleges zaj vagy túlterhelés – csak tiszta formák, természetes anyagok és a lassú élet szépsége.</p>
-     </div>
-    </section><!-- Featured Image -->
-    <section class="fade-in" style="padding: 60px 48px; max-width: 1400px; margin: 0 auto;"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&amp;q=80" alt="Boutique guesthouse exterior view" loading="lazy" style="width: 100%; aspect-ratio: 21/9; object-fit: cover; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
-    </section><!-- Values Section -->
-    <section style="padding: 80px 48px; max-width: 1200px; margin: 0 auto;">
-     <h3 class="serif fade-in" style="font-size: 42px; font-weight: 300; text-align: center; margin-bottom: 80px; color: var(--color-accent); letter-spacing: 1px;">Értékeink</h3>
-     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 48px;">
-      <div class="fade-in" style="text-align: center;">
-       <div style="width: 100px; height: 100px; margin: 0 auto 28px; background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-secondary) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 48px;">
-        ���
-       </div>
-       <h4 class="serif" style="font-size: 28px; font-weight: 400; margin-bottom: 16px; color: var(--color-accent);">Fenntarthatóság</h4>
-       <p style="font-size: 17px; line-height: 1.8; color: var(--color-secondary); font-weight: 300;">Helyi alapanyagok, környezetbarát megoldások és a természet tisztelete vezérel minket minden döntésben.</p>
+   <!-- ABOUT PAGE -->
+<div id="aboutPage" class="page-container">
+
+  <!-- 1) Ugyanaz a kép, mint a főoldalon -->
+  <section class="fade-in" style="padding: 140px 48px 60px; max-width: 1400px; margin: 0 auto;">
+    <img
+      src="{{ url_for('static', filename='images/panorammakep.png') }}"
+      alt="Panoráma"
+      loading="lazy"
+      style="width: 100%; aspect-ratio: 21/9; object-fit: cover; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);"
+      onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"
+    >
+  </section>
+
+  <!-- 2) Történetünk -->
+  <section style="padding: 40px 48px 40px; max-width: 1100px; margin: 0 auto;">
+    <h2 class="serif fade-in" style="font-size: 56px; font-weight: 300; text-align: center; margin-bottom: 48px; letter-spacing: 2px;">
+      Történetünk
+    </h2>
+
+    <div class="fade-in" style="max-width: 950px; margin: 0 auto;">
+      <p style="font-size: 20px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 28px; font-weight: 300;">
+        <strong style="color: var(--color-text); font-weight: 600;">
+          Nálunk a "kincs" a csend, a kert szépsége, a hegyek látványa és az erdő közelsége.
+        </strong>
+      </p>
+
+      <p style="font-size: 20px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 28px; font-weight: 300;">
+        Régi álmunk volt egy saját vendégház. Sokáig kerestük azt a helyet, ahol valóban otthon érezhetjük magunkat. Végül Visegrádon, az Apátkúti-völgyben találtunk rá erre a mesebeli házra, amely pontosan olyan, amilyet megálmodtunk. Előtte az Apátkúti-patak csobog, mögötte pedig a hegyoldal és az erdő zöldje magasodik. Itt végre megtaláltuk, amit kerestünk: a csendet, a nyugalmat és a kristálytiszta hegyi levegőt.
+      </p>
+
+      <p style="font-size: 20px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 28px; font-weight: 300;">
+        A ház átalakítása lendületesen zajlott; ügyeltünk rá, hogy az alsó és a felső szintről is élvezhető legyen a csodás kilátás. A kert azonban kezdetben üres volt. Bár a gyepszőnyeg üde zöldje szemet gyönyörködtető volt, mégis azt éreztük, valami hiányzik. Hosszas tervezgetés után döntöttünk az „erdőkert” kialakítása mellett. Minden egyes növényt saját kezűleg ültettünk el, minden egyes farönköt mi választottunk ki. Ahogy szépült a kert, úgy születtek az újabb ötletek. Így kerültek a helyükre az energiapadok is, ahol megpihenve bárki átadhatja magát a pillanatnak. A kertünk már több mint egy éves és minden évszakban más-más arcát mutatva újra és újra megbizonyosodhatunk arról, micsoda kincset találtunk.
+      </p>
+
+      <p style="font-size: 20px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 28px; font-weight: 300;">
+        A Kincseskert azonban nálunk nem ér véget a kerítésnél. Ha kilép a kapun, a patak vezeti végig a völgy rejtett ösvényein, kristálytiszta vizű források és jelzett túraútvonalak mentén. De a legnagyobb titkot a ház mögötti erdőnk rejti: bár a hegyoldalra vezető ösvény meredek és kihívásokkal teli, a hegytetőn a Dunakanyar pazar, lélegzetelállító panorámája mindenért kárpótolja az embert.
+      </p>
+
+      <p style="font-size: 20px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 18px; font-weight: 300;">
+        Ha szeretné megtapasztalni a Kincseskert varázsát, jöjjön és fedezze fel saját nyugalmát!
+      </p>
+
+      <p style="font-size: 20px; line-height: 1.9; color: var(--color-secondary); font-weight: 300;">
+        <strong style="color: var(--color-text); font-weight: 600;">Szeretettel várjuk!</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- 3) Amit kínálunk -->
+  <section style="padding: 80px 48px 40px; max-width: 1400px; margin: 0 auto;">
+    <h3 class="serif fade-in" style="font-size: 42px; font-weight: 300; text-align: center; margin-bottom: 60px; color: var(--color-accent); letter-spacing: 1px;">
+      Amit kínálunk
+    </h3>
+
+    <!-- 2x5 (ha kifér), különben tördel -->
+    <div class="fade-in" style="
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 24px;
+    ">
+
+      <!-- 1 -->
+      <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
+        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">⛰</div>
+        <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Csodás környezet</h4>
+        <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Patakpart, magánerdő és békés erdőkert</p>
       </div>
-      <div class="fade-in" style="text-align: center;">
-       <div style="width: 100px; height: 100px; margin: 0 auto 28px; background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-secondary) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 48px;">
-        ✨
-       </div>
-       <h4 class="serif" style="font-size: 28px; font-weight: 400; margin-bottom: 16px; color: var(--color-accent);">Minimalista elegancia</h4>
-       <p style="font-size: 17px; line-height: 1.8; color: var(--color-secondary); font-weight: 300;">Kevesebb, de jobb. Minden tárgy, minden szín és forma gondosan kiválasztott, hogy harmóniát teremtsen.</p>
+
+      <!-- 2 -->
+      <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
+        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">🌿</div>
+        <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Kerti élmények</h4>
+        <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Dísznövények, gyümölcsfák és energiapadok</p>
       </div>
-      <div class="fade-in" style="text-align: center;">
-       <div style="width: 100px; height: 100px; margin: 0 auto 28px; background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-secondary) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 48px;">
-        🤍
-       </div>
-       <h4 class="serif" style="font-size: 28px; font-weight: 400; margin-bottom: 16px; color: var(--color-accent);">Figyelmesség</h4>
-       <p style="font-size: 17px; line-height: 1.8; color: var(--color-secondary); font-weight: 300;">Minden vendégünk egyedi. Személyre szabott gondoskodással tesszük felejthetetlenné az itt töltött időt.</p>
+
+      <!-- 3 -->
+      <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
+        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">☀</div>
+        <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Kültéri kényelem</h4>
+        <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Terasz és hangulatos, nyugodt kültéri helyszínek.</p>
       </div>
-     </div>
-    </section><!-- Story Section -->
-    <section style="padding: 80px 48px; background: var(--color-surface);">
-     <div class="about-story-grid" style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
-      <div class="fade-in">
-       <h3 class="serif" style="font-size: 42px; font-weight: 300; margin-bottom: 28px; color: var(--color-accent); letter-spacing: 1px;">Történetünk</h3>
-       <p style="font-size: 18px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 24px; font-weight: 300;">2020-ban kezdődött minden, amikor egy álomból valóság lett. Egy elhagyatott, régi ház, amit megláttunk, és azonnal tudtuk: ez lesz a helyünk.</p>
-       <p style="font-size: 18px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 24px; font-weight: 300;">Két éves felújítás után, ahol minden követ kézzel választottunk ki, minden falat természetes anyagokkal burkoltunk be, megszületett a Visegrádi Kincseskert Vendégház.</p>
-       <p style="font-size: 18px; line-height: 1.9; color: var(--color-secondary); font-weight: 300;">A célunk az volt, hogy egy olyan teret hozzunk létre, ahol az emberek újra kapcsolatba léphetnek önmagukkal, a természettel és a jelen pillanattal.</p>
+
+      <!-- 4 -->
+      <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
+        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">🔥</div>
+        <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Kerti konyha</h4>
+        <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Hagyományos kemence és bográcsozási lehetőség</p>
       </div>
-      <div class="fade-in image-placeholder" style="aspect-ratio: 4/5;"></div>
-     </div>
-    </section><!-- Amenities Section -->
-    <section style="padding: 100px 48px; max-width: 1200px; margin: 0 auto;">
-     <h3 class="serif fade-in" style="font-size: 42px; font-weight: 300; text-align: center; margin-bottom: 80px; color: var(--color-accent); letter-spacing: 1px;">Amit kínálunk</h3>
-     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px;">
-      <div class="fade-in" style="background: var(--color-surface); padding: 36px 28px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center; transition: all 0.3s ease;">
-       <div style="font-size: 40px; margin-bottom: 20px; color: var(--color-accent);">
-        ◈
-       </div>
-       <h4 style="font-size: 18px; font-weight: 400; margin-bottom: 12px; color: var(--color-accent); letter-spacing: 0.5px;">Prémium ágyneműk</h4>
-       <p style="font-size: 15px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">100% pamut, légáteresztő anyagok</p>
+
+      <!-- 5 -->
+      <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
+        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">🚶</div>
+        <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Aktív kikapcsolódás</h4>
+        <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Ingyenes Nordic Walking bot használat a túrákhoz</p>
       </div>
-      <div class="fade-in" style="background: var(--color-surface); padding: 36px 28px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center; transition: all 0.3s ease;">
-       <div style="font-size: 40px; margin-bottom: 20px; color: var(--color-accent);">
-        ※
-       </div>
-       <h4 style="font-size: 18px; font-weight: 400; margin-bottom: 12px; color: var(--color-accent); letter-spacing: 0.5px;">Helyi reggelik</h4>
-       <p style="font-size: 15px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Bio alapanyagokból készült ételek</p>
+
+      <!-- 6 (kiemelt) -->
+      <div style="
+        background: rgba(74, 93, 78, 0.10);
+        padding: 28px 22px;
+        border: 2px solid var(--color-accent);
+        text-align: center;
+        box-shadow: 0 16px 40px rgba(74, 93, 78, 0.18);
+      ">
+        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.22); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">♻</div>
+        <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">
+          Zöld kedvezmény visszatérő vendégeinknek ( - 3%)
+        </h4>
+        <p style="font-size: 14px; line-height: 1.7; color: var(--color-text); font-weight: 300;">
+          Tudatos hulladékkezelésért és házirend szerinti eszközhasználatért
+        </p>
       </div>
-      <div class="fade-in" style="background: var(--color-surface); padding: 36px 28px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center; transition: all 0.3s ease;">
-       <div style="font-size: 40px; margin-bottom: 20px; color: var(--color-accent);">
-        ❋
-       </div>
-       <h4 style="font-size: 18px; font-weight: 400; margin-bottom: 12px; color: var(--color-accent); letter-spacing: 0.5px;">Kert és terasz</h4>
-       <p style="font-size: 15px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Nyugodt kültéri helyszínek</p>
+
+      <!-- 7 -->
+      <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
+        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">📶</div>
+        <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Digitális kényelem</h4>
+        <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Ingyenes Wifi és TV szolgáltatás</p>
       </div>
-      <div class="fade-in" style="background: var(--color-surface); padding: 36px 28px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center; transition: all 0.3s ease;">
-       <div style="font-size: 40px; margin-bottom: 20px; color: var(--color-accent);">
-        ◆
-       </div>
-       <h4 style="font-size: 18px; font-weight: 400; margin-bottom: 12px; color: var(--color-accent); letter-spacing: 0.5px;">Könyvtár</h4>
-       <p style="font-size: 15px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Gondosan válogatott olvasmányok</p>
+
+      <!-- 8 -->
+      <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
+        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">❄</div>
+        <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Klíma és komfort</h4>
+        <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Modern hűtő-fűtő légkondicionáló minden évszakra</p>
       </div>
-      <div class="fade-in" style="background: var(--color-surface); padding: 36px 28px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center; transition: all 0.3s ease;">
-       <div style="font-size: 40px; margin-bottom: 20px; color: var(--color-accent);">
-        ✿
-       </div>
-       <h4 style="font-size: 18px; font-weight: 400; margin-bottom: 12px; color: var(--color-accent); letter-spacing: 0.5px;">Jóga tér</h4>
-       <p style="font-size: 15px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Meditation és gyakorlás helyszíne</p>
+
+      <!-- 9 -->
+      <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
+        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">🅿</div>
+        <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Biztonságos parkolás</h4>
+        <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Ingyenes parkolás, zárt terület</p>
       </div>
-      <div class="fade-in" style="background: var(--color-surface); padding: 36px 28px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center; transition: all 0.3s ease;">
-       <div style="font-size: 40px; margin-bottom: 20px; color: var(--color-accent);">
-        ■
-       </div>
-       <h4 style="font-size: 18px; font-weight: 400; margin-bottom: 12px; color: var(--color-accent); letter-spacing: 0.5px;">Ingyenes parkolás</h4>
-       <p style="font-size: 15px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Biztonságos, zárt terület</p>
+
+      <!-- 10 -->
+      <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
+        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">⚡</div>
+        <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">E-autó töltés</h4>
+        <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Elektromos autó töltési lehetőség ( térítési díj ellenében)</p>
       </div>
-     </div>
-    </section><!-- Testimonials -->
-    <section style="padding: 80px 48px 120px; background: var(--color-bg);">
-     <div style="max-width: 1000px; margin: 0 auto;">
-      <h3 class="serif fade-in" style="font-size: 42px; font-weight: 300; text-align: center; margin-bottom: 80px; color: var(--color-accent); letter-spacing: 1px;">Vendégeink mondták</h3>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 48px;">
-       <div class="fade-in" style="background: var(--color-surface); padding: 40px 36px; border-left: 3px solid var(--color-accent);">
-        <p style="font-size: 18px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 24px; font-style: italic; font-weight: 300;">"Olyan hely, ahol végre megállt az idő. Minden részlet tökéletes volt, a csend pedig gyógyír."</p>
-        <p style="font-size: 15px; font-weight: 400; color: var(--color-accent); letter-spacing: 0.5px;">— Katalin, Budapest</p>
-       </div>
-       <div class="fade-in" style="background: var(--color-surface); padding: 40px 36px; border-left: 3px solid var(--color-accent);">
-        <p style="font-size: 18px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 24px; font-style: italic; font-weight: 300;">"A minimalista dizájn és a természet tökéletes harmóniája. Visszajövünk!"</p>
-        <p style="font-size: 15px; font-weight: 400; color: var(--color-accent); letter-spacing: 0.5px;">— Péter és Anna, Debrecen</p>
-       </div>
-       <div class="fade-in" style="background: var(--color-surface); padding: 40px 36px; border-left: 3px solid var(--color-accent);">
-        <p style="font-size: 18px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 24px; font-style: italic; font-weight: 300;">"Ez nem csak szállás, hanem egy élmény. Minden pillanat különleges volt."</p>
-        <p style="font-size: 15px; font-weight: 400; color: var(--color-accent); letter-spacing: 0.5px;">— Márta, Győr</p>
-       </div>
+
+    </div>
+
+    <!-- reszponzív tördelés -->
+    <style>
+      @media (max-width: 1400px) {
+        #aboutPage section > div[style*="grid-template-columns: repeat(5"] {
+          grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        }
+      }
+      @media (max-width: 900px) {
+        #aboutPage section > div[style*="grid-template-columns: repeat(5"] {
+          grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        }
+      }
+      @media (max-width: 520px) {
+        #aboutPage section > div[style*="grid-template-columns: repeat(5"] {
+          grid-template-columns: 1fr !important;
+        }
+      }
+    </style>
+  </section>
+
+  <!-- Vendégeink mondták (egyelőre üres) -->
+  <section style="padding: 40px 48px 120px; background: var(--color-bg);">
+    <div style="max-width: 1000px; margin: 0 auto;">
+      <h3 class="serif fade-in" style="font-size: 42px; font-weight: 300; text-align: center; margin-bottom: 40px; color: var(--color-accent); letter-spacing: 1px;">
+        Vendégeink mondták
+      </h3>
+
+      <div class="fade-in" style="
+        background: var(--color-surface);
+        border: 1px dashed rgba(139, 126, 116, 0.35);
+        padding: 28px 24px;
+        text-align: center;
+        color: var(--color-secondary);
+        font-weight: 300;
+      ">
+        ........ még egyenlőre üres.....
       </div>
-     </div>
-    </section>
+    </div>
+  </section>
+</div>
    </div><!-- PRICING PAGE -->
    <div id="pricingPage" class="page-container">
     <section style="padding: 160px 48px 120px; max-width: 1200px; margin: 0 auto;">
