@@ -575,7 +575,7 @@
    <!-- ABOUT PAGE -->
 <div id="aboutPage" class="page-container">
 
-  <!-- 1) Ugyanaz a kép, mint a főoldalon -->
+  <!-- 1) Ugyanaz a kép mint a főoldalon -->
   <section class="fade-in" style="padding: 140px 48px 60px; max-width: 1400px; margin: 0 auto;">
     <img
       src="{{ url_for('static', filename='images/panorammakep.png') }}"
@@ -599,144 +599,129 @@
         </strong>
       </p>
 
-      <p style="font-size: 20px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 28px; font-weight: 300;">
+      <p style="font-size: 18px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 22px; font-weight: 300;">
         Régi álmunk volt egy saját vendégház. Sokáig kerestük azt a helyet, ahol valóban otthon érezhetjük magunkat. Végül Visegrádon, az Apátkúti-völgyben találtunk rá erre a mesebeli házra, amely pontosan olyan, amilyet megálmodtunk. Előtte az Apátkúti-patak csobog, mögötte pedig a hegyoldal és az erdő zöldje magasodik. Itt végre megtaláltuk, amit kerestünk: a csendet, a nyugalmat és a kristálytiszta hegyi levegőt.
       </p>
 
-      <p style="font-size: 20px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 28px; font-weight: 300;">
+      <p style="font-size: 18px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 22px; font-weight: 300;">
         A ház átalakítása lendületesen zajlott; ügyeltünk rá, hogy az alsó és a felső szintről is élvezhető legyen a csodás kilátás. A kert azonban kezdetben üres volt. Bár a gyepszőnyeg üde zöldje szemet gyönyörködtető volt, mégis azt éreztük, valami hiányzik. Hosszas tervezgetés után döntöttünk az „erdőkert” kialakítása mellett. Minden egyes növényt saját kezűleg ültettünk el, minden egyes farönköt mi választottunk ki. Ahogy szépült a kert, úgy születtek az újabb ötletek. Így kerültek a helyükre az energiapadok is, ahol megpihenve bárki átadhatja magát a pillanatnak. A kertünk már több mint egy éves és minden évszakban más-más arcát mutatva újra és újra megbizonyosodhatunk arról, micsoda kincset találtunk.
       </p>
 
-      <p style="font-size: 20px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 28px; font-weight: 300;">
+      <p style="font-size: 18px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 22px; font-weight: 300;">
         A Kincseskert azonban nálunk nem ér véget a kerítésnél. Ha kilép a kapun, a patak vezeti végig a völgy rejtett ösvényein, kristálytiszta vizű források és jelzett túraútvonalak mentén. De a legnagyobb titkot a ház mögötti erdőnk rejti: bár a hegyoldalra vezető ösvény meredek és kihívásokkal teli, a hegytetőn a Dunakanyar pazar, lélegzetelállító panorámája mindenért kárpótolja az embert.
       </p>
 
-      <p style="font-size: 20px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 18px; font-weight: 300;">
+      <p style="font-size: 18px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 22px; font-weight: 300;">
         Ha szeretné megtapasztalni a Kincseskert varázsát, jöjjön és fedezze fel saját nyugalmát!
       </p>
 
-      <p style="font-size: 20px; line-height: 1.9; color: var(--color-secondary); font-weight: 300;">
-        <strong style="color: var(--color-text); font-weight: 600;">Szeretettel várjuk!</strong>
+      <p style="font-size: 18px; line-height: 1.9; color: var(--color-secondary); font-weight: 300;">
+        Szeretettel várjuk!
       </p>
     </div>
   </section>
 
   <!-- 3) Amit kínálunk -->
-  <section style="padding: 80px 48px 40px; max-width: 1400px; margin: 0 auto;">
-    <h3 class="serif fade-in" style="font-size: 42px; font-weight: 300; text-align: center; margin-bottom: 60px; color: var(--color-accent); letter-spacing: 1px;">
-      Amit kínálunk
-    </h3>
+  <section style="padding: 40px 48px 40px; background: var(--color-bg);">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <h3 class="serif fade-in" style="font-size: 48px; font-weight: 300; text-align: center; margin-bottom: 56px; letter-spacing: 1px; color: var(--color-accent);">
+        Amit kínálunk
+      </h3>
 
-    <!-- 2x5 (ha kifér), különben tördel -->
-    <div class="fade-in" style="
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 24px;
-    ">
+      <div class="fade-in" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px;">
+        <!-- 1 -->
+        <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
+          <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">🌿</div>
+          <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Csodás környezet</h4>
+          <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Patakpart, magánerdő és békés erdőkert</p>
+        </div>
 
-      <!-- 1 -->
-      <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
-        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">⛰</div>
-        <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Csodás környezet</h4>
-        <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Patakpart, magánerdő és békés erdőkert</p>
+        <!-- 2 -->
+        <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
+          <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">🌸</div>
+          <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Kerti élmények</h4>
+          <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Dísznövények, gyümölcsfák és energiapadok</p>
+        </div>
+
+        <!-- 3 -->
+        <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
+          <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">☀️</div>
+          <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Kültéri kényelem</h4>
+          <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Terasz és hangulatos, nyugodt kültéri helyszínek.</p>
+        </div>
+
+        <!-- 4 -->
+        <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
+          <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">🔥</div>
+          <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Kerti konyha</h4>
+          <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Hagyományos kemence és bográcsozási lehetőség</p>
+        </div>
+
+        <!-- 5 -->
+        <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
+          <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">🥾</div>
+          <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Aktív kikapcsolódás</h4>
+          <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Ingyenes Nordic Walking bot használat a túrákhoz</p>
+        </div>
+
+        <!-- 6 (kiemelt) -->
+        <div style="background: rgba(74, 93, 78, 0.08); padding: 28px 22px; border: 2px solid var(--color-accent); text-align: center; box-shadow: 0 16px 40px rgba(74, 93, 78, 0.18);">
+          <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: var(--color-accent); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-surface);">♻️</div>
+          <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Zöld kedvezmény visszatérő vendégeinknek ( - 3%)</h4>
+          <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Tudatos hulladékkezelésért és házirend szerinti eszközhasználatért</p>
+        </div>
+
+        <!-- 7 -->
+        <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
+          <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">📶</div>
+          <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Digitális kényelem</h4>
+          <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Ingyenes Wifi és TV szolgáltatás</p>
+        </div>
+
+        <!-- 8 -->
+        <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
+          <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">❄️</div>
+          <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Klíma és komfort</h4>
+          <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Modern hűtő-fűtő légkondicionáló minden évszakra</p>
+        </div>
+
+        <!-- 9 -->
+        <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
+          <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">🅿️</div>
+          <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Biztonságos parkolás</h4>
+          <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Ingyenes parkolás, zárt terület</p>
+        </div>
+
+        <!-- 10 -->
+        <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
+          <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">⚡</div>
+          <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">E-autó töltés</h4>
+          <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Elektromos autó töltési lehetőség ( térítési díj ellenében)</p>
+        </div>
       </div>
 
-      <!-- 2 -->
-      <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
-        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">🌿</div>
-        <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Kerti élmények</h4>
-        <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Dísznövények, gyümölcsfák és energiapadok</p>
-      </div>
-
-      <!-- 3 -->
-      <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
-        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">☀</div>
-        <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Kültéri kényelem</h4>
-        <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Terasz és hangulatos, nyugodt kültéri helyszínek.</p>
-      </div>
-
-      <!-- 4 -->
-      <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
-        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">🔥</div>
-        <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Kerti konyha</h4>
-        <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Hagyományos kemence és bográcsozási lehetőség</p>
-      </div>
-
-      <!-- 5 -->
-      <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
-        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">🚶</div>
-        <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Aktív kikapcsolódás</h4>
-        <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Ingyenes Nordic Walking bot használat a túrákhoz</p>
-      </div>
-
-      <!-- 6 (kiemelt) -->
-      <div style="
-        background: rgba(74, 93, 78, 0.10);
-        padding: 28px 22px;
-        border: 2px solid var(--color-accent);
-        text-align: center;
-        box-shadow: 0 16px 40px rgba(74, 93, 78, 0.18);
-      ">
-        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.22); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">♻</div>
-        <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">
-          Zöld kedvezmény visszatérő vendégeinknek ( - 3%)
-        </h4>
-        <p style="font-size: 14px; line-height: 1.7; color: var(--color-text); font-weight: 300;">
-          Tudatos hulladékkezelésért és házirend szerinti eszközhasználatért
-        </p>
-      </div>
-
-      <!-- 7 -->
-      <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
-        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">📶</div>
-        <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Digitális kényelem</h4>
-        <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Ingyenes Wifi és TV szolgáltatás</p>
-      </div>
-
-      <!-- 8 -->
-      <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
-        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">❄</div>
-        <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Klíma és komfort</h4>
-        <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Modern hűtő-fűtő légkondicionáló minden évszakra</p>
-      </div>
-
-      <!-- 9 -->
-      <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
-        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">🅿</div>
-        <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Biztonságos parkolás</h4>
-        <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Ingyenes parkolás, zárt terület</p>
-      </div>
-
-      <!-- 10 -->
-      <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
-        <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">⚡</div>
-        <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">E-autó töltés</h4>
-        <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Elektromos autó töltési lehetőség ( térítési díj ellenében)</p>
-      </div>
-
+      <!-- reszponzív tördelés -->
+      <style>
+        @media (max-width: 1400px) {
+          #aboutPage section > div[style*="grid-template-columns: repeat(5"] {
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+          }
+        }
+        @media (max-width: 900px) {
+          #aboutPage section > div[style*="grid-template-columns: repeat(5"] {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+          }
+        }
+        @media (max-width: 520px) {
+          #aboutPage section > div[style*="grid-template-columns: repeat(5"] {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      </style>
     </div>
-
-    <!-- reszponzív tördelés -->
-    <style>
-      @media (max-width: 1400px) {
-        #aboutPage section > div[style*="grid-template-columns: repeat(5"] {
-          grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-        }
-      }
-      @media (max-width: 900px) {
-        #aboutPage section > div[style*="grid-template-columns: repeat(5"] {
-          grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-        }
-      }
-      @media (max-width: 520px) {
-        #aboutPage section > div[style*="grid-template-columns: repeat(5"] {
-          grid-template-columns: 1fr !important;
-        }
-      }
-    </style>
   </section>
 
-  <!-- Vendégeink mondták (egyelőre üres) -->
+  <!-- Vendégeink mondták -->
   <section style="padding: 40px 48px 120px; background: var(--color-bg);">
     <div style="max-width: 1000px; margin: 0 auto;">
       <h3 class="serif fade-in" style="font-size: 42px; font-weight: 300; text-align: center; margin-bottom: 40px; color: var(--color-accent); letter-spacing: 1px;">
@@ -756,7 +741,7 @@
     </div>
   </section>
 </div>
-   </div><!-- PRICING PAGE -->
+<!-- PRICING PAGE -->
    <div id="pricingPage" class="page-container">
     <section style="padding: 160px 48px 120px; max-width: 1200px; margin: 0 auto;">
      <h2 class="serif fade-in" style="font-size: 56px; font-weight: 300; text-align: center; margin-bottom: 80px; letter-spacing: 2px;">Áraink</h2>
