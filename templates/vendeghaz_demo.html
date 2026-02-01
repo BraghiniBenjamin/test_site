@@ -673,20 +673,16 @@
      </div>
     </section>
    </div>
-   <div id="aboutPage" class="page-container">
-     <!-- 1) Ugyanaz a kép mint a főoldalon -->
-     <section class="hero-height" style="height: 100vh; ...">
-       <img
-         src="{{ url_for('static', filename='images/Fooldalkep.jpg') }}"
-         style="
-           position:absolute; top:0; left:0;
-           width:20%; height:20%;
-           object-fit:cover;
-           object-position: 70% center;
-           filter:brightness(0.7);
-         "
-       >
-     </section>
+  <div id="aboutPage" class="page-container">
+  
+    <!-- ✅ Rólunk header: külön blokk, nem a hero-height -->
+    <div class="about-hero-image">
+      <img
+        src="{{ url_for('static', filename='images/Rolunk_header.gif') }}"
+        alt="Rólunk fejléc"
+        loading="lazy"
+      >
+    </div>
 
 
    
