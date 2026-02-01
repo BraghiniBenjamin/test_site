@@ -442,6 +442,81 @@
       .policy-notification p,
       .policy-notification ul { font-size: clamp(14px, 3.5vw, 16px) !important; }
     }
+
+   /* ===== CAROUSEL (LÁTNIVALÓK – KILÁTÓ) ===== */
+   .carousel-container{
+     position: relative;
+     width: 100%;
+     max-width: 1100px;
+     margin: 48px auto;
+     overflow: hidden;
+     border-radius: 4px;
+   }
+   
+   .carousel-track{
+     display: flex;
+     transition: transform 0.6s ease;
+   }
+   
+   .carousel-track img{
+     width: 100%;
+     flex-shrink: 0;
+     object-fit: cover;
+     height: 420px;
+   }
+   
+   /* nyilak */
+   .carousel-btn{
+     position: absolute;
+     top: 50%;
+     transform: translateY(-50%);
+     width: 56px;
+     height: 56px;
+     border-radius: 50%;
+     border: none;
+     background: rgba(255,255,255,0.75);
+     font-size: 28px;
+     cursor: pointer;
+     z-index: 10;
+     transition: background 0.3s ease;
+   }
+   
+   .carousel-btn:hover{
+     background: rgba(255,255,255,0.95);
+   }
+   
+   .carousel-btn.prev{ left: 16px; }
+   .carousel-btn.next{ right: 16px; }
+   
+   /* pöttyök */
+   .carousel-dots{
+     position: absolute;
+     bottom: 16px;
+     left: 50%;
+     transform: translateX(-50%);
+     display: flex;
+     gap: 10px;
+   }
+   
+   .carousel-dots span{
+     width: 10px;
+     height: 10px;
+     border-radius: 50%;
+     background: rgba(255,255,255,0.5);
+     cursor: pointer;
+   }
+   
+   .carousel-dots span.active{
+     background: white;
+   }
+   
+   /* mobil */
+   @media (max-width: 768px){
+     .carousel-track img{
+       height: 260px;
+     }
+   }
+
   </style>
 
   <style>@view-transition { navigation: auto; }</style>
@@ -976,7 +1051,19 @@
                 Látogasson el a környék legszebb panoráma pontjaihoz, melyeket hangulatos erdei utak kötnek össze! A Zsitvay-kilátóból megcsodálhatja a tájat a Mátrától egészen a fővárosig, és a Fellegvárat is egy különleges szögből láthatja. A Fellegvár patinás falait is érdemes meghódítani a festői dunakanyari látképért. Kösse össze a két pontot egy frissítő túrával és töltődjön fel a természetben!
               </p>
             </div>
-            <div class="image-placeholder" style="aspect-ratio: 16/10;"></div>
+            <div class="carousel-container" id="kilatoCarousel">
+             <div class="carousel-track">
+               <img src="{{ url_for('static', filename='images/kilatopont_1.jpg') }}" alt="Kilátópont 1">
+               <img src="{{ url_for('static', filename='images/kilatopont_2.jpg') }}" alt="Kilátópont 2">
+             </div>
+           
+             <!-- navigáció -->
+             <button class="carousel-btn prev">‹</button>
+             <button class="carousel-btn next">›</button>
+           
+             <!-- pöttyök -->
+             <div class="carousel-dots"></div>
+           </div>
           </div>
     
           <!-- Attraction 3 -->
@@ -1642,5 +1729,53 @@
 
     policyOverlay.addEventListener('click', closePolicyNotification);
   </script>
+  <script>
+   (() => {
+     const carousel = document.getElementById('kilatoCarousel');
+     if (!carousel) return;
+   
+     const track = carousel.querySelector('.carousel-track');
+     const slides = Array.from(track.children);
+     const prevBtn = carousel.querySelector('.prev');
+     const nextBtn = carousel.querySelector('.next');
+     const dotsContainer = carousel.querySelector('.carousel-dots');
+   
+     let index = 0;
+   
+     // pöttyök
+     slides.forEach((_, i) => {
+       const dot = document.createElement('span');
+       if (i === 0) dot.classList.add('active');
+       dot.addEventListener('click', () => goToSlide(i));
+       dotsContainer.appendChild(dot);
+     });
+   
+     const dots = Array.from(dotsContainer.children);
+   
+     function update(){
+       track.style.transform = `translateX(-${index * 100}%)`;
+       dots.forEach(d => d.classList.remove('active'));
+       dots[index].classList.add('active');
+     }
+   
+     function goToSlide(i){
+       index = (i + slides.length) % slides.length;
+       update();
+     }
+   
+     prevBtn.addEventListener('click', () => goToSlide(index - 1));
+     nextBtn.addEventListener('click', () => goToSlide(index + 1));
+   
+     // swipe mobilra
+     let startX = 0;
+     track.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+     track.addEventListener('touchend', e => {
+       const diff = e.changedTouches[0].clientX - startX;
+       if (diff > 50) goToSlide(index - 1);
+       if (diff < -50) goToSlide(index + 1);
+     });
+   })();
+ </script>
+
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c46266cb33dc1b2',t:'MTc2OTQ5NDg4OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
