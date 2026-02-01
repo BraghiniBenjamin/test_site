@@ -523,96 +523,103 @@
    }
 
    /* ===== CAROUSEL (KÜLTÉR GALÉRIA – KIEMELT) ===== */
-    .carousel-container{
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      border-radius: 8px;
-      background: #f3f1ec;
-    }
-    
-    .carousel-track{
-      display: flex;
-      transition: transform 0.6s ease;
-    }
-    
-    .carousel-track img{
-      width: 100%;
-      flex-shrink: 0;
-      object-fit: cover;
-      height: 520px; /* nagy kiemelt kép */
-    }
-    
-    .carousel-btn{
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 56px;
-      height: 56px;
-      border-radius: 999px;
-      border: none;
-      background: rgba(255,255,255,0.78);
-      font-size: 30px;
-      cursor: pointer;
-      z-index: 10;
-      transition: background 0.2s ease, transform 0.2s ease;
-    }
-    
-    .carousel-btn:hover{
-      background: rgba(255,255,255,0.95);
-      transform: translateY(-50%) scale(1.03);
-    }
-    
-    .carousel-btn.prev{ left: 16px; }
-    .carousel-btn.next{ right: 16px; }
-    
-    .carousel-dots{
-      position: absolute;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 10px;
-      z-index: 10;
-    }
-    
-    .carousel-dots span{
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.55);
-      cursor: pointer;
-    }
-    
-    .carousel-dots span.active{
-      background: rgba(255,255,255,0.98);
-    }
-    
-    /* Thumb kiemelés (amelyik épp aktív) */
-    .gallery-thumb.active-thumb{
-      outline: 2px solid rgba(0,0,0,0.18);
-      outline-offset: 2px;
-    }
-    
-    /* mobil */
-    @media (max-width: 768px){
-      .carousel-track img{
-        height: 300px;
-      }
-    }
-
+   /* ===== CAROUSEL (KÜLTÉR GALÉRIA – KIEMELT) ===== */
+   .carousel-container{
+     position: relative;
+     width: 100%;
+     overflow: hidden;
+     border-radius: 8px;
+     background: #f3f1ec;
+   
+     /* ⬇️ ÚJ: legyen fix magassága a konténernek is */
+     height: 650px; /* <-- állítsd bátran 600-750 között */
+   }
+   
+   /* ⬇️ ÚJ: a track töltse ki a konténert */
+   .carousel-track{
+     display: flex;
+     height: 100%;
+     transition: transform 0.6s ease;
+   }
+   
+   /* ⬇️ MÓDOSÍTVA: ne fix px legyen az img magassága, hanem 100% */
+   .carousel-track img{
+     width: 100%;
+     height: 100%;
+     flex-shrink: 0;
+     object-fit: cover;
+   }
+   
+   /* gombok maradnak */
+   .carousel-btn{
+     position: absolute;
+     top: 50%;
+     transform: translateY(-50%);
+     width: 56px;
+     height: 56px;
+     border-radius: 999px;
+     border: none;
+     background: rgba(255,255,255,0.78);
+     font-size: 30px;
+     cursor: pointer;
+     z-index: 10;
+     transition: background 0.2s ease, transform 0.2s ease;
+   }
+   
+   .carousel-btn:hover{
+     background: rgba(255,255,255,0.95);
+     transform: translateY(-50%) scale(1.03);
+   }
+   
+   .carousel-btn.prev{ left: 16px; }
+   .carousel-btn.next{ right: 16px; }
+   
+   .carousel-dots{
+     position: absolute;
+     bottom: 16px;
+     left: 50%;
+     transform: translateX(-50%);
+     display: flex;
+     gap: 10px;
+     z-index: 10;
+   }
+   
+   .carousel-dots span{
+     width: 10px;
+     height: 10px;
+     border-radius: 999px;
+     background: rgba(255,255,255,0.55);
+     cursor: pointer;
+   }
+   
+   .carousel-dots span.active{
+     background: rgba(255,255,255,0.98);
+   }
+   
+   /* Thumb kiemelés (amelyik épp aktív) */
+   .gallery-thumb.active-thumb{
+     outline: 2px solid rgba(0,0,0,0.18);
+     outline-offset: 2px;
+   }
+   
+   /* mobil */
+   @media (max-width: 768px){
+     .carousel-container{
+       height: 360px; /* mobilon kisebb, de még jó nagy */
+     }
+   }
+   
    /* ===== KÜLTÉR GALÉRIA – TOP SPACING FIX ===== */
-    #galleryOutdoorPage .outdoor-section{
-      padding: 72px 48px 120px;   /* ⬅️ ez a helyes érték nav alatt */
-    }
-    
-    /* mobil */
-    @media (max-width: 768px){
-      #galleryOutdoorPage .outdoor-section{
-        padding: 48px 24px 96px;
-      }
-    }
-
+   #galleryOutdoorPage .outdoor-section{
+     padding: 72px 48px 120px; /* nav alatti rész */
+   }
+   
+   /* mobil */
+   @media (max-width: 768px){
+     #galleryOutdoorPage .outdoor-section{
+       padding: 48px 24px 96px;
+     }
+   }
   </style>
 
   <style>@view-transition { navigation: auto; }</style>
