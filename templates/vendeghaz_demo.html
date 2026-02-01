@@ -1379,11 +1379,16 @@
     });
 
     // Booking buttons
-    const bookingLinks = {
-      'weekend': 'https://booking.com/hetvegi-pihenes',
-      'long-weekend': 'https://booking.com/hosszu-hetvege',
-      'weekly': 'https://booking.com/heti-menedek'
-    };
+   const bookingLinks = {
+     'apt1-weekend': 'https://booking.com/apartman1-hetvege',
+     'apt1-long-weekend': 'https://booking.com/apartman1-hosszu-hetvege',
+     'apt1-weekly': 'https://booking.com/apartman1-heti',
+   
+     'apt2-weekend': 'https://booking.com/apartman2-hetvege',
+     'apt2-long-weekend': 'https://booking.com/apartman2-hosszu-hetvege',
+     'apt2-weekly': 'https://booking.com/apartman2-heti'
+   };
+
 
     document.querySelectorAll('.booking-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1441,28 +1446,29 @@
 
     // Modal Gallery for Room Images
     const roomGalleries = {
-      'weekend': [
-        { src: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200&q=80', alt: 'Cozy bedroom' },
-        { src: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=1200&q=80', alt: 'Room view' },
-        { src: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=1200&q=80', alt: 'Bathroom' },
-        { src: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1200&q=80', alt: 'Room details' },
-        { src: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=1200&q=80', alt: 'Comfortable space' }
+      'apt1-weekend': [
+        { src: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200&q=80', alt: 'Apartman 1 – háló' },
+        { src: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1200&q=80', alt: 'Apartman 1 – részlet' }
       ],
-      'long-weekend': [
-        { src: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=1200&q=80', alt: 'Spacious suite' },
-        { src: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=1200&q=80', alt: 'Luxury bedroom' },
-        { src: 'https://images.unsplash.com/photo-1631049035182-249067d7618e?w=1200&q=80', alt: 'Modern interior' },
-        { src: 'https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1200&q=80', alt: 'Suite bathroom' },
-        { src: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1200&q=80', alt: 'Living area' }
+      'apt1-long-weekend': [
+        { src: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=1200&q=80', alt: 'Apartman 1 – lakótér' },
+        { src: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&q=80', alt: 'Apartman 1 – szoba' }
       ],
-      'weekly': [
-        { src: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=1200&q=80', alt: 'Luxury retreat room' },
-        { src: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200&q=80', alt: 'Premium bedroom' },
-        { src: 'https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=1200&q=80', alt: 'Elegant bathroom' },
-        { src: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&q=80', alt: 'Spacious room' },
-        { src: 'https://images.unsplash.com/photo-1611048267451-e6ed903d4a38?w=1200&q=80', alt: 'Retreat amenities' }
+      'apt1-weekly': [
+        { src: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=1200&q=80', alt: 'Apartman 1 – kényelem' }
+      ],
+    
+      'apt2-weekend': [
+        { src: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=1200&q=80', alt: 'Apartman 2 – háló' }
+      ],
+      'apt2-long-weekend': [
+        { src: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1200&q=80', alt: 'Apartman 2 – hangulat' }
+      ],
+      'apt2-weekly': [
+        { src: 'https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=1200&q=80', alt: 'Apartman 2 – fürdő' }
       ]
     };
+
 
     let currentRoom = '';
     let currentImageIndex = 0;
