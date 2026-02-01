@@ -596,6 +596,18 @@
       }
     }
 
+   /* ===== KÜLTÉR GALÉRIA – TOP SPACING FIX ===== */
+    #galleryOutdoorPage .outdoor-section{
+      padding: 72px 48px 120px;   /* ⬅️ ez a helyes érték nav alatt */
+    }
+    
+    /* mobil */
+    @media (max-width: 768px){
+      #galleryOutdoorPage .outdoor-section{
+        padding: 48px 24px 96px;
+      }
+    }
+
   </style>
 
   <style>@view-transition { navigation: auto; }</style>
@@ -1070,7 +1082,7 @@
   </section>
 </div><!-- OUTDOOR GALLERY -->
 <div id="galleryOutdoorPage" class="page-container">
-  <section style="padding: 160px 48px 120px;">
+  <section class="outdoor-section">
     <h2 class="serif fade-in" style="font-size: 56px; font-weight: 300; text-align: center; margin-bottom: 60px; letter-spacing: 2px;">
       Kültér Galéria
     </h2>
