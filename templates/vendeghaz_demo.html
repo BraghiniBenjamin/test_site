@@ -9,598 +9,441 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&amp;family=Inter:wght@300;400&amp;display=swap" rel="stylesheet">
-<style>
-  /* =========================
-     RESET + BASE
-  ========================= */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  :root {
-    --color-bg: #faf9f7;
-    --color-surface: #ffffff;
-    --color-text: #2d3436;
-    --color-accent: #4a5d4e;
-    --color-secondary: #8b7e74;
-
-    /* ✅ FIX NAV magasság (desktop alap). Ha a nav magasabb/alacsonyabb, itt állítsd. */
-    --nav-h: 96px;
-  }
-
-  html, body {
-    height: 100%;
-  }
-
-  html {
-    /* ✅ ha anchor/hashtag jellegű scroll lenne, ne menjen a nav alá */
-    scroll-padding-top: var(--nav-h);
-  }
-
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--color-bg);
-    color: var(--color-text);
-    line-height: 1.6;
-    overflow-x: hidden;
-
-    /* ✅ fixed nav miatt: a tartalom induljon alatta */
-    padding-top: var(--nav-h);
-  }
-
-  /* ✅ App layout: footer alul, oldalak normálisan töltsék a magasságot */
-  #app {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  footer {
-    margin-top: auto;
-  }
-
-  .serif { font-family: 'Cormorant Garamond', serif; }
-
-  /* =========================
-     PAGE SWITCH (a te logikád)
-  ========================= */
-  .page-container {
-    display: none;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-  }
-
-  .page-container.active {
-    display: block;
-    flex: 1;
-    animation: pageEnter 0.6s ease forwards;
-  }
-
-  @keyframes pageEnter {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  /* =========================
-     FADE-IN
-  ========================= */
-  .fade-in {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 1.2s ease-out, transform 1.2s ease-out;
-    will-change: opacity, transform;
-  }
-
-  .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* =========================
-     NAV LINK underline
-  ========================= */
-  .nav-link {
-    position: relative;
-    transition: color 0.3s ease;
-  }
-
-  .nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 50%;
-    width: 0;
-    height: 1px;
-    background: var(--color-accent);
-    transition: width 0.3s ease, left 0.3s ease;
-  }
-
-  .nav-link:hover::after {
-    width: 100%;
-    left: 0;
-  }
-
-  /* =========================
-     HERO – ✅ a felső “üres sáv” javítása
-     (Nálad a hero inline style-ban van margin-top:80px; ezt itt felülírjuk.)
-  ========================= */
-  .hero-height {
-    margin-top: 0 !important;                 /* ✅ felülírja az inline margin-top: 80px-ot */
-    height: calc(100vh - var(--nav-h)) !important; /* ✅ ne csússzon ki a nav alatt */
-  }
-
-  /* =========================
-     IMAGE SAFETY
-  ========================= */
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-
-  .image-placeholder {
-    background: linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .image-placeholder::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60px;
-    height: 60px;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-  }
-
-  /* =========================
-     BUTTONS
-  ========================= */
-  .btn-primary {
-    background: var(--color-accent);
-    color: var(--color-surface);
-    padding: 14px 36px;
-    border: none;
-    font-size: 14px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    font-weight: 400;
-  }
-
-  .btn-primary:hover {
-    background: #3d4d40;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(74, 93, 78, 0.2);
-  }
-
-  /* =========================
-     GALLERY GRID
-  ========================= */
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px;
-  }
-
-  .gallery-item {
-    cursor: pointer;
-    transition: transform 0.4s ease;
-  }
-
-  .gallery-item:hover {
-    transform: scale(1.03);
-  }
-
-  /* =========================
-     LIGHTBOX
-  ========================= */
-  .lightbox {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.95);
-    z-index: 9999;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .lightbox.active {
-    display: flex;
-    opacity: 1;
-  }
-
-  .lightbox-content {
-    max-width: 90%;
-    max-height: 90%;
-    position: relative;
-  }
-
-  .lightbox-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    color: white;
-    font-size: 40px;
-    cursor: pointer;
-    z-index: 10000;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    transition: background 0.3s ease;
-  }
-
-  .lightbox-close:hover {
-    background: rgba(255, 255, 255, 0.2);
-  }
-
-  /* =========================
-     PRICE CARDS
-  ========================= */
-  .price-card {
-    background: var(--color-surface);
-    padding: 40px 32px;
-    border: 1px solid rgba(139, 126, 116, 0.15);
-    transition: all 0.4s ease;
-  }
-
-  .price-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 16px 40px rgba(45, 52, 54, 0.08);
-  }
-
-  .price-card img {
-    cursor: pointer;
-    transition: transform 0.3s ease;
-  }
-
-  .price-card img:hover {
-    transform: scale(1.02);
-  }
-
-  /* =========================
-     MODAL GALLERY (ROOMS)
-  ========================= */
-  .modal-gallery {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.95);
-    z-index: 10000;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .modal-gallery.active {
-    display: flex;
-    opacity: 1;
-  }
-
-  .modal-gallery-content {
-    position: relative;
-    max-width: 90%;
-    max-height: 90%;
-  }
-
-  .modal-gallery-image {
-    max-width: 85vw;
-    max-height: 85vh;
-    object-fit: contain;
-  }
-
-  .modal-nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: none;
-    width: 60px;
-    height: 60px;
-    font-size: 28px;
-    cursor: pointer;
-    border-radius: 50%;
-    transition: background 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .modal-nav-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-  }
-
-  .modal-nav-btn.prev { left: -80px; }
-  .modal-nav-btn.next { right: -80px; }
-
-  .modal-close {
-    position: absolute;
-    top: -60px;
-    right: 0;
-    color: white;
-    font-size: 40px;
-    cursor: pointer;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    transition: background 0.3s ease;
-  }
-
-  .modal-close:hover {
-    background: rgba(255, 255, 255, 0.2);
-  }
-
-  .modal-counter {
-    position: absolute;
-    bottom: -50px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: white;
-    font-size: 16px;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 8px 20px;
-    border-radius: 20px;
-  }
-
-  /* =========================
-     FOOTER LINKS
-  ========================= */
-  .footer-link:hover {
-    color: rgba(255, 255, 255, 1);
-  }
-
-  /* =========================
-     POLICY MODAL
-  ========================= */
-  .policy-notification {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: var(--color-surface);
-    padding: 48px 64px;
-    border: 2px solid var(--color-accent);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    z-index: 10001;
-    max-width: 700px;
-    max-height: 80vh;
-    overflow-y: auto;
-    display: none;
-  }
-
-  .policy-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 10000;
-    display: none;
-  }
-
-  /* =========================
-     ABOUT HEADER – ✅ duplikáció összevonva
-  ========================= */
-  #aboutPage .about-hero-image{
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    margin-top: 0;
-    margin-bottom: 48px;
-    overflow: hidden;
-    position: relative;
-  }
-
-  #aboutPage .about-hero-image img{
-    width: 100%;
-    height: clamp(140px, 22vw, 260px);
-    object-fit: cover;
-    object-position: center;
-    display: block;
-    filter: brightness(0.92);
-  }
-
-  #aboutPage .about-hero-image::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background: linear-gradient(
-      to bottom,
-      rgba(0,0,0,0.18),
-      rgba(0,0,0,0) 35%,
-      rgba(0,0,0,0.18)
-    );
-    pointer-events:none;
-  }
-
-  /* =========================
-     ATTRACTIONS – ha nem akarsz vágást
-  ========================= */
-  .attraction-image-free {
-    width: 100%;
-    max-height: 520px;
-    object-fit: contain;
-    background: #f3f2ee;
-    padding: 16px;
-    display: block;
-  }
-
-  /* =========================
-     RESPONSIVE
-  ========================= */
-  @media (max-width: 1200px) {
-    .gallery-grid {
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+  <style>
+    /* =========================
+       RESET + ROOT
+    ========================= */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+    :root {
+      --color-bg: #faf9f7;
+      --color-surface: #ffffff;
+      --color-text: #2d3436;
+      --color-accent: #4a5d4e;
+      --color-secondary: #8b7e74;
+  
+      /* NAV fix magasság (anchor + body padding miatt) */
+      --nav-h: 90px;
     }
-  }
-
-  @media (max-width: 992px) {
-    /* ✅ nav tördelés */
-    nav > div {
-      flex-direction: column !important;
-      gap: 24px !important;
-      padding: 20px 32px !important;
+  
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      overflow-x: hidden;
+  
+      /* ✅ fix nav miatt */
+      padding-top: var(--nav-h);
     }
-
-    nav > div > div {
-      flex-wrap: wrap !important;
-      gap: 24px !important;
-      justify-content: center !important;
+  
+    #app {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-
-    .hero-height h2 {
-      font-size: clamp(32px, 8vw, 64px) !important;
+  
+    .page-container {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.6s ease;
     }
-
-    .content-block {
-      flex-direction: column !important;
+  
+    .page-container.active {
+      display: block;
+      flex: 1;
+      animation: pageEnter 0.6s ease forwards;
     }
-
-    .content-block > div,
-    .content-block > img {
-      width: 100% !important;
+  
+    footer { margin-top: auto; }
+  
+    .serif { font-family: 'Cormorant Garamond', serif; }
+  
+    /* =========================
+       ANIM
+    ========================= */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1.2s ease-out, transform 1.2s ease-out;
     }
-
-    .modal-nav-btn.prev { left: 10px !important; }
-    .modal-nav-btn.next { right: 10px !important; }
-
-    .modal-close {
-      top: 10px !important;
-      right: 10px !important;
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+  
+    @keyframes pageEnter {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
-
-    .modal-counter { bottom: 10px !important; }
-
-    .policy-notification {
-      padding: 32px 24px !important;
-      max-width: 90% !important;
+  
+    /* =========================
+       NAV LINK UNDERLINE
+    ========================= */
+    .nav-link {
+      position: relative;
+      transition: color 0.3s ease;
     }
-  }
-
-  @media (max-width: 768px) {
-    /* ✅ mobil nav általában magasabb */
-    :root { --nav-h: 108px; }
-
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      width: 0;
+      height: 1px;
+      background: var(--color-accent);
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+    .nav-link:hover::after { width: 100%; left: 0; }
+  
+    /* =========================
+       HERO FIX: NINCS RÉS A NAV ALATT
+    ========================= */
     .hero-height {
-      height: 60vh !important;
-      margin-top: 0 !important;
+      /* ✅ a nav alatti teljes képernyő */
+      height: calc(100vh - var(--nav-h));
+      margin-top: 0 !important; /* ✅ eltünteti a rést */
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-
-    .hero-height h2 {
-      font-size: clamp(28px, 7vw, 48px) !important;
+  
+    /* =========================
+       IMAGE SAFETY
+    ========================= */
+    img { max-width: 100%; height: auto; }
+  
+    .image-placeholder {
+      background: linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%);
+      position: relative;
+      overflow: hidden;
     }
-
-    .hero-height p {
-      font-size: clamp(12px, 3vw, 16px) !important;
+    .image-placeholder::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
     }
-
-    section {
-      padding: 80px 24px 60px !important;
-    }
-
-    .content-block > div {
-      padding: 48px 32px !important;
-    }
-
-    .content-block h3,
-    .serif h2,
-    .serif h3 {
-      font-size: clamp(28px, 6vw, 42px) !important;
-    }
-
-    .content-block p,
-    section p {
-      font-size: clamp(16px, 4vw, 18px) !important;
-    }
-
-    .price-card { padding: 32px 24px !important; }
-
-    .price-card h3 {
-      font-size: clamp(24px, 5vw, 32px) !important;
-    }
-
-    .price-card p {
-      font-size: clamp(36px, 8vw, 48px) !important;
-    }
-
-    .gallery-grid {
-      grid-template-columns: 1fr !important;
-      gap: 16px !important;
-    }
-
-    .modal-nav-btn {
-      width: 40px !important;
-      height: 40px !important;
-      font-size: 20px !important;
-    }
-
-    .modal-close,
-    .lightbox-close {
-      width: 40px !important;
-      height: 40px !important;
-      font-size: 30px !important;
-    }
-
-    footer {
-      padding: 32px 24px !important;
-      font-size: 11px !important;
-    }
-
-    footer > div {
-      gap: 16px !important;
-    }
-  }
-
-  @media (max-width: 480px) {
-    nav h1 {
-      font-size: clamp(20px, 5vw, 28px) !important;
-    }
-
-    nav a {
-      font-size: clamp(10px, 2.5vw, 13px) !important;
-    }
-
+  
+    /* =========================
+       BUTTON
+    ========================= */
     .btn-primary {
-      padding: 12px 24px !important;
-      font-size: clamp(11px, 2.5vw, 14px) !important;
+      background: var(--color-accent);
+      color: var(--color-surface);
+      padding: 14px 36px;
+      border: none;
+      font-size: 14px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      font-weight: 400;
     }
-
-    .hero-height { height: 50vh !important; }
-
-    .content-block > div {
-      padding: 32px 20px !important;
+    .btn-primary:hover {
+      background: #3d4d40;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(74, 93, 78, 0.2);
     }
-
-    .price-card ul {
-      font-size: clamp(14px, 3.5vw, 16px) !important;
+  
+    /* =========================
+       GALLERY
+    ========================= */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
     }
-
+    .gallery-item {
+      cursor: pointer;
+      transition: transform 0.4s ease;
+    }
+    .gallery-item:hover { transform: scale(1.03); }
+  
+    /* =========================
+       LIGHTBOX
+    ========================= */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .lightbox.active { display: flex; opacity: 1; }
+  
+    .lightbox-content { max-width: 90%; max-height: 90%; position: relative; }
+  
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: white;
+      font-size: 40px;
+      cursor: pointer;
+      z-index: 10000;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      transition: background 0.3s ease;
+    }
+    .lightbox-close:hover { background: rgba(255, 255, 255, 0.2); }
+  
+    /* =========================
+       PRICE CARD
+    ========================= */
+    .price-card {
+      background: var(--color-surface);
+      padding: 40px 32px;
+      border: 1px solid rgba(139, 126, 116, 0.15);
+      transition: all 0.4s ease;
+    }
+    .price-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 40px rgba(45, 52, 54, 0.08);
+    }
+    .price-card img { cursor: pointer; transition: transform 0.3s ease; }
+    .price-card img:hover { transform: scale(1.02); }
+  
+    /* =========================
+       MODAL GALLERY
+    ========================= */
+    .modal-gallery {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .modal-gallery.active { display: flex; opacity: 1; }
+  
+    .modal-gallery-content { position: relative; max-width: 90%; max-height: 90%; }
+    .modal-gallery-image { max-width: 85vw; max-height: 85vh; object-fit: contain; }
+  
+    .modal-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: none;
+      width: 60px;
+      height: 60px;
+      font-size: 28px;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: background 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-nav-btn:hover { background: rgba(255, 255, 255, 0.2); }
+    .modal-nav-btn.prev { left: -80px; }
+    .modal-nav-btn.next { right: -80px; }
+  
+    .modal-close {
+      position: absolute;
+      top: -60px;
+      right: 0;
+      color: white;
+      font-size: 40px;
+      cursor: pointer;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      transition: background 0.3s ease;
+    }
+    .modal-close:hover { background: rgba(255, 255, 255, 0.2); }
+  
+    .modal-counter {
+      position: absolute;
+      bottom: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 8px 20px;
+      border-radius: 20px;
+    }
+  
+    /* =========================
+       POLICY MODAL
+    ========================= */
     .policy-notification {
-      padding: 24px 16px !important;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--color-surface);
+      padding: 48px 64px;
+      border: 2px solid var(--color-accent);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      z-index: 10001;
+      max-width: 700px;
+      max-height: 80vh;
+      overflow-y: auto;
+      display: none;
     }
-  }
-</style>
+    .policy-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 10000;
+      display: none;
+    }
+    .footer-link:hover { color: rgba(255, 255, 255, 1); }
+  
+    /* =========================
+       ABOUT HEADER (ugyanaz a logika, tiszta)
+    ========================= */
+    #aboutPage .about-hero-image {
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+      margin-top: 0;
+      margin-bottom: 48px;
+      overflow: hidden;
+      position: relative;
+    }
+    #aboutPage .about-hero-image img {
+      width: 100%;
+      height: clamp(140px, 22vw, 260px);
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      filter: brightness(0.92);
+    }
+    #aboutPage .about-hero-image::after {
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.18), rgba(0,0,0,0) 35%, rgba(0,0,0,0.18));
+      pointer-events:none;
+    }
+  
+    /* Látnivalók - ha nem akarod vágni */
+    .attraction-image-free {
+      width: 100%;
+      max-height: 520px;
+      object-fit: contain;
+      background: #f3f2ee;
+      padding: 16px;
+      display: block;
+    }
+  
+    /* =========================
+       RESPONSIVE
+    ========================= */
+    @media (max-width: 1200px) {
+      .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+      }
+    }
+  
+    @media (max-width: 992px) {
+      nav > div {
+        flex-direction: column !important;
+        gap: 24px !important;
+        padding: 20px 32px !important;
+      }
+  
+      nav > div > div {
+        flex-wrap: wrap !important;
+        gap: 24px !important;
+        justify-content: center !important;
+      }
+  
+      .hero-height h2 {
+        font-size: clamp(32px, 8vw, 64px) !important;
+      }
+  
+      .content-block { flex-direction: column !important; }
+      .content-block > div,
+      .content-block > img { width: 100% !important; }
+  
+      .modal-nav-btn.prev { left: 10px !important; }
+      .modal-nav-btn.next { right: 10px !important; }
+      .modal-close { top: 10px !important; right: 10px !important; }
+      .modal-counter { bottom: 10px !important; }
+  
+      .policy-notification {
+        padding: 32px 24px !important;
+        max-width: 90% !important;
+      }
+      .about-story-grid { grid-template-columns: 1fr !important; }
+    }
+  
+    @media (max-width: 768px) {
+      .hero-height { height: calc(60vh) !important; }
+  
+      .hero-height h2 { font-size: clamp(28px, 7vw, 48px) !important; }
+      .hero-height p { font-size: clamp(12px, 3vw, 16px) !important; }
+  
+      section { padding: 80px 24px 60px !important; }
+  
+      .content-block > div { padding: 48px 32px !important; }
+  
+      .content-block h3,
+      .serif h2,
+      .serif h3 { font-size: clamp(28px, 6vw, 42px) !important; }
+  
+      .content-block p,
+      section p { font-size: clamp(16px, 4vw, 18px) !important; }
+  
+      .price-card { padding: 32px 24px !important; }
+      .price-card h3 { font-size: clamp(24px, 5vw, 32px) !important; }
+      .price-card p { font-size: clamp(36px, 8vw, 48px) !important; }
+  
+      .gallery-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+  
+      .modal-nav-btn { width: 40px !important; height: 40px !important; font-size: 20px !important; }
+      .modal-close,
+      .lightbox-close { width: 40px !important; height: 40px !important; font-size: 30px !important; }
+  
+      footer { padding: 32px 24px !important; font-size: 11px !important; }
+      footer > div { gap: 16px !important; }
+    }
+  
+    @media (max-width: 480px) {
+      nav h1 { font-size: clamp(20px, 5vw, 28px) !important; }
+      nav a { font-size: clamp(10px, 2.5vw, 13px) !important; }
+  
+      .btn-primary { padding: 12px 24px !important; font-size: clamp(11px, 2.5vw, 14px) !important; }
+  
+      .hero-height { height: 50vh !important; }
+  
+      .content-block > div { padding: 32px 20px !important; }
+  
+      .price-card ul { font-size: clamp(14px, 3.5vw, 16px) !important; }
+  
+      .policy-notification { padding: 24px 16px !important; }
+      .policy-notification h3 { font-size: clamp(24px, 6vw, 32px) !important; }
+      .policy-notification h4 { font-size: clamp(18px, 4.5vw, 20px) !important; }
+      .policy-notification p,
+      .policy-notification ul { font-size: clamp(14px, 3.5vw, 16px) !important; }
+    }
+  </style>
+
   <style>@view-transition { navigation: auto; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
@@ -612,64 +455,94 @@
      <div style="display: flex; gap: 48px; align-items: center;"><a href="#home" class="nav-link" style="text-decoration: none; color: var(--color-text); font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 300;">Főoldal</a> <a href="#about" class="nav-link" style="text-decoration: none; color: var(--color-text); font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 300;">Rólunk</a> <a href="#pricing" class="nav-link" style="text-decoration: none; color: var(--color-text); font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 300;">Áraink</a> <a href="#gallery-outdoor" class="nav-link" style="text-decoration: none; color: var(--color-text); font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 300;">Kültér</a> <a href="#gallery-indoor" class="nav-link" style="text-decoration: none; color: var(--color-text); font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 300;">Beltér</a> <a href="#attractions" class="nav-link" style="text-decoration: none; color: var(--color-text); font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 300;">Látnivalók</a> <a href="#contact" class="nav-link" style="text-decoration: none; color: var(--color-text); font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 300;">Kapcsolat</a>
      </div>
     </div>
-   </nav><!-- HOME PAGE -->
-   <div id="homePage" class="page-container active"><!-- Hero Section -->
-    <section class="hero-height" style="height: 100vh; position: relative; display: flex; align-items: center; justify-content: center;">
-     <!-- alt="Fooldalkep"
-     loading="lazy"
-     style="
-       position:absolute;
-       top:0;
-       left:0;
-       width:100%;
-       height:100%;
-       object-fit:cover;
-       object-position: 70% center;
-       filter:brightness(0.7);
-     "> -->
-     <div style="position: relative; z-index: 2; text-align: center; padding: 0 24px;">
-      <h2 class="serif fade-in" id="heroTagline" style="font-size: 64px; font-weight: 300; color: var(--color-surface); letter-spacing: 3px; text-shadow: 0 2px 20px rgba(0,0,0,0.3); margin-bottom: 24px;">Ahol a nyugalom találkozik az eleganciával</h2>
-      <p class="fade-in" style="font-size: 16px; color: var(--color-surface); letter-spacing: 2px; text-transform: uppercase; font-weight: 300; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">Minimal Luxury • Slow Living • Nature</p>
-     </div>
-    </section><!-- Content Block 1 -->
-    <section class="content-block" style="display: flex; min-height: 600px; background: var(--color-bg);"><img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&amp;q=80" alt="Nature surrounding the guesthouse" loading="lazy" style="width: 50%; min-height: 600px; object-fit: cover;" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
-     <div style="width: 50%; display: flex; align-items: center; justify-content: center; padding: 80px 64px;">
-      <div class="fade-in" style="max-width: 500px;">
-       <h3 class="serif" id="block1Title" style="font-size: 42px; font-weight: 300; color: var(--color-text); margin-bottom: 24px; letter-spacing: 1px;">Természet ölelésében</h3>
-       <p id="block1Text" style="font-size: 18px; color: var(--color-secondary); line-height: 1.8; font-weight: 300;">Fedezd fel a csendet és a harmóniát, ahol a természet és a modern dizájn tökéletes egyensúlyban találkozik. Minden pillanat a megújulásról szól.</p>
-      </div>
-     </div>
-    </section><!-- Content Block 2 -->
-    <section class="content-block" style="display: flex; min-height: 600px; background: var(--color-surface);">
-     <div style="width: 50%; display: flex; align-items: center; justify-content: center; padding: 80px 64px;">
-      <div class="fade-in" style="max-width: 500px;">
-       <h3 class="serif" id="block2Title" style="font-size: 42px; font-weight: 300; color: var(--color-text); margin-bottom: 24px; letter-spacing: 1px;">Dizájn és minőség</h3>
-       <p id="block2Text" style="font-size: 18px; color: var(--color-secondary); line-height: 1.8; font-weight: 300;">Minden részlet gondosan kiválasztva, hogy a kifinomultság és a természetes elegancia harmonikus egységet alkosson.</p>
-      </div>
-     </div><img src="https://images.unsplash.com/photo-1615873968403-89e068629265?w=1200&amp;q=80" alt="Minimalist interior design" loading="lazy" style="width: 50%; min-height: 600px; object-fit: cover;" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
-    </section><!-- Content Block 3 -->
-    <section class="content-block" style="display: flex; min-height: 600px; background: var(--color-bg);"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&amp;q=80" alt="Peaceful reading corner" loading="lazy" style="width: 50%; min-height: 600px; object-fit: cover;" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
-     <div style="width: 50%; display: flex; align-items: center; justify-content: center; padding: 80px 64px;">
-      <div class="fade-in" style="max-width: 500px;">
-       <h3 class="serif" id="block3Title" style="font-size: 42px; font-weight: 300; color: var(--color-text); margin-bottom: 24px; letter-spacing: 1px;">Slow living</h3>
-       <p id="block3Text" style="font-size: 18px; color: var(--color-secondary); line-height: 1.8; font-weight: 300;">Lassíts le, lélegezz, élvezd a pillanatot. Itt az időnek más ritmusa van.</p>
-      </div>
-     </div>
-    </section>
-   </div>
-  <div id="aboutPage" class="page-container">
-  
-    <!-- ✅ Rólunk header: külön blokk, nem a hero-height -->
-    <div class="about-hero-image">
-      <img
-        src="{{ url_for('static', filename='images/Rolunk_header.gif') }}"
-        alt="Rólunk fejléc"
-        loading="lazy"
-      >
+  </nav>
+
+<!-- HOME PAGE -->
+<div id="homePage" class="page-container active">
+  <!-- Hero Section -->
+  <section class="hero-height" style="position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+
+    <img
+      src="{{ url_for('static', filename='images/Fooldalkep.jpg') }}"
+      alt="Főoldali hero kép"
+      loading="lazy"
+      style="
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 70% center;
+        filter: brightness(0.7);
+      "
+      onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"
+    >
+
+    <div style="position: relative; z-index: 2; text-align: center; padding: 0 24px;">
+      <h2 class="serif fade-in" id="heroTagline" style="font-size: 64px; font-weight: 300; color: var(--color-surface); letter-spacing: 3px; text-shadow: 0 2px 20px rgba(0,0,0,0.3); margin-bottom: 24px;">
+        Ahol a nyugalom találkozik az eleganciával
+      </h2>
+      <p class="fade-in" style="font-size: 16px; color: var(--color-surface); letter-spacing: 2px; text-transform: uppercase; font-weight: 300; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">
+        Minimal Luxury • Slow Living • Nature
+      </p>
     </div>
+  </section>
 
+  <!-- Content Block 1 -->
+  <section class="content-block" style="display: flex; min-height: 600px; background: var(--color-bg);">
+    <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&amp;q=80"
+         alt="Nature surrounding the guesthouse"
+         loading="lazy"
+         style="width: 50%; min-height: 600px; object-fit: cover;"
+         onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+    <div style="width: 50%; display: flex; align-items: center; justify-content: center; padding: 80px 64px;">
+      <div class="fade-in" style="max-width: 500px;">
+        <h3 class="serif" id="block1Title" style="font-size: 42px; font-weight: 300; color: var(--color-text); margin-bottom: 24px; letter-spacing: 1px;">Természet ölelésében</h3>
+        <p id="block1Text" style="font-size: 18px; color: var(--color-secondary); line-height: 1.8; font-weight: 300;">Fedezd fel a csendet és a harmóniát, ahol a természet és a modern dizájn tökéletes egyensúlyban találkozik. Minden pillanat a megújulásról szól.</p>
+      </div>
+    </div>
+  </section>
 
-   
+  <!-- Content Block 2 -->
+  <section class="content-block" style="display: flex; min-height: 600px; background: var(--color-surface);">
+    <div style="width: 50%; display: flex; align-items: center; justify-content: center; padding: 80px 64px;">
+      <div class="fade-in" style="max-width: 500px;">
+        <h3 class="serif" id="block2Title" style="font-size: 42px; font-weight: 300; color: var(--color-text); margin-bottom: 24px; letter-spacing: 1px;">Dizájn és minőség</h3>
+        <p id="block2Text" style="font-size: 18px; color: var(--color-secondary); line-height: 1.8; font-weight: 300;">Minden részlet gondosan kiválasztva, hogy a kifinomultság és a természetes elegancia harmonikus egységet alkosson.</p>
+      </div>
+    </div>
+    <img src="https://images.unsplash.com/photo-1615873968403-89e068629265?w=1200&amp;q=80"
+         alt="Minimalist interior design"
+         loading="lazy"
+         style="width: 50%; min-height: 600px; object-fit: cover;"
+         onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+  </section>
+
+  <!-- Content Block 3 -->
+  <section class="content-block" style="display: flex; min-height: 600px; background: var(--color-bg);">
+    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&amp;q=80"
+         alt="Peaceful reading corner"
+         loading="lazy"
+         style="width: 50%; min-height: 600px; object-fit: cover;"
+         onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+    <div style="width: 50%; display: flex; align-items: center; justify-content: center; padding: 80px 64px;">
+      <div class="fade-in" style="max-width: 500px;">
+        <h3 class="serif" id="block3Title" style="font-size: 42px; font-weight: 300; color: var(--color-text); margin-bottom: 24px; letter-spacing: 1px;">Slow living</h3>
+        <p id="block3Text" style="font-size: 18px; color: var(--color-secondary); line-height: 1.8; font-weight: 300;">Lassíts le, lélegezz, élvezd a pillanatot. Itt az időnek más ritmusa van.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+  <div id="aboutPage" class="page-container">
+     <!-- ✅ Rólunk header: külön blokk, nem a hero-height -->
+     <div class="about-hero-image">
+       <img
+         src="{{ url_for('static', filename='images/Fooldalkep.jpg') }}"
+         alt="Rólunk fejléc"
+         loading="lazy"
+       >
+     </div>
      <!-- 2) Történetünk -->
      <section style="padding: 40px 48px 40px; max-width: 1100px; margin: 0 auto;">
        <h2 class="serif fade-in" style="font-size: 56px; font-weight: 300; text-align: center; margin-bottom: 48px; letter-spacing: 2px;">
