@@ -515,6 +515,16 @@
       .policy-notification ul {
         font-size: clamp(14px, 3.5vw, 16px) !important;
       }
+     .attraction-image-free {
+       width: 100%;
+       max-height: 520px;
+       object-fit: contain;
+       background: #f3f2ee;
+       padding: 20px;
+       border: 1px solid rgba(139,126,116,0.25);
+       box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+     }
+
     }
   </style>
   <style>@view-transition { navigation: auto; }</style>
@@ -1023,11 +1033,13 @@
     
           <!-- Attraction 3 -->
           <div class="fade-in" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
-            <img src="/static/images/kaan_forras.png"
-            alt="Kaán Károly-forrás Visegrád"
-            loading="lazy"
-            style="aspect-ratio: 16/10; width: 100%; object-fit: cover;"
-            onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+          <img
+             src="/static/images/kaan_forras.png"
+             alt="Kaán Károly-forrás Visegrád"
+             loading="lazy"
+             class="attraction-image-free"
+           >
+
 
     
             <div>
