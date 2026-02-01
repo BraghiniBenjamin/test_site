@@ -517,6 +517,85 @@
      }
    }
 
+   /* ===== CAROUSEL (KÜLTÉR GALÉRIA – KIEMELT) ===== */
+    .carousel-container{
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #f3f1ec;
+    }
+    
+    .carousel-track{
+      display: flex;
+      transition: transform 0.6s ease;
+    }
+    
+    .carousel-track img{
+      width: 100%;
+      flex-shrink: 0;
+      object-fit: cover;
+      height: 520px; /* nagy kiemelt kép */
+    }
+    
+    .carousel-btn{
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 56px;
+      height: 56px;
+      border-radius: 999px;
+      border: none;
+      background: rgba(255,255,255,0.78);
+      font-size: 30px;
+      cursor: pointer;
+      z-index: 10;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    
+    .carousel-btn:hover{
+      background: rgba(255,255,255,0.95);
+      transform: translateY(-50%) scale(1.03);
+    }
+    
+    .carousel-btn.prev{ left: 16px; }
+    .carousel-btn.next{ right: 16px; }
+    
+    .carousel-dots{
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 10;
+    }
+    
+    .carousel-dots span{
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.55);
+      cursor: pointer;
+    }
+    
+    .carousel-dots span.active{
+      background: rgba(255,255,255,0.98);
+    }
+    
+    /* Thumb kiemelés (amelyik épp aktív) */
+    .gallery-thumb.active-thumb{
+      outline: 2px solid rgba(0,0,0,0.18);
+      outline-offset: 2px;
+    }
+    
+    /* mobil */
+    @media (max-width: 768px){
+      .carousel-track img{
+        height: 300px;
+      }
+    }
+
   </style>
 
   <style>@view-transition { navigation: auto; }</style>
@@ -1778,6 +1857,7 @@
 
     policyOverlay.addEventListener('click', closePolicyNotification);
   </script>
+  
   <script>
    (() => {
      const carousel = document.getElementById('kilatoCarousel');
@@ -1825,6 +1905,85 @@
      });
    })();
  </script>
+<script>
+(function () {
+
+  function initCarousel(carouselId){
+    const carousel = document.getElementById(carouselId);
+    if (!carousel) return null;
+
+    const track = carousel.querySelector('.carousel-track');
+    const slides = Array.from(track.children);
+    const prevBtn = carousel.querySelector('.prev');
+    const nextBtn = carousel.querySelector('.next');
+    const dotsContainer = carousel.querySelector('.carousel-dots');
+
+    let index = 0;
+
+    // dots
+    dotsContainer.innerHTML = '';
+    slides.forEach((_, i) => {
+      const dot = document.createElement('span');
+      if (i === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => goTo(i));
+      dotsContainer.appendChild(dot);
+    });
+    const dots = Array.from(dotsContainer.children);
+
+    function update(){
+      track.style.transform = `translateX(-${index * 100}%)`;
+      dots.forEach(d => d.classList.remove('active'));
+      if (dots[index]) dots[index].classList.add('active');
+
+      // thumb highlight
+      document.querySelectorAll(`.gallery-thumb[data-carousel="${carouselId}"]`)
+        .forEach(t => t.classList.remove('active-thumb'));
+      const activeThumb = document.querySelector(`.gallery-thumb[data-carousel="${carouselId}"][data-slide="${index}"]`);
+      if (activeThumb) activeThumb.classList.add('active-thumb');
+    }
+
+    function goTo(i){
+      index = (i + slides.length) % slides.length;
+      update();
+    }
+
+    prevBtn.addEventListener('click', () => goTo(index - 1));
+    nextBtn.addEventListener('click', () => goTo(index + 1));
+
+    // swipe
+    let startX = 0;
+    track.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
+    track.addEventListener('touchend', e => {
+      const diff = e.changedTouches[0].clientX - startX;
+      if (diff > 50) goTo(index - 1);
+      if (diff < -50) goTo(index + 1);
+    }, {passive:true});
+
+    update();
+
+    return { goTo };
+  }
+
+  // init az outdoor carousel
+  const outdoor = initCarousel('outdoorCarousel');
+
+  // thumbs kattintás -> carousel ugrik
+  document.addEventListener('click', (e) => {
+    const thumb = e.target.closest('.gallery-thumb');
+    if (!thumb) return;
+
+    const carId = thumb.getAttribute('data-carousel');
+    const slideIndex = parseInt(thumb.getAttribute('data-slide'), 10);
+
+    if (carId === 'outdoorCarousel' && outdoor) {
+      outdoor.goTo(slideIndex);
+      // finom scroll a nagy képhez (opcionális)
+      document.getElementById('outdoorCarousel')?.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+  });
+
+})();
+</script>
 
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c46266cb33dc1b2',t:'MTc2OTQ5NDg4OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
