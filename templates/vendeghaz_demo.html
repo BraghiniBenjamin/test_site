@@ -990,28 +990,77 @@
     </style>
   </section>
 </div><!-- OUTDOOR GALLERY -->
-   <div id="galleryOutdoorPage" class="page-container">
-    <section style="padding: 160px 48px 120px;">
-     <h2 class="serif fade-in" style="font-size: 56px; font-weight: 300; text-align: center; margin-bottom: 80px; letter-spacing: 2px;">Kültér Galéria</h2>
-     <div class="gallery-grid" style="max-width: 1400px; margin: 0 auto;">
-       <img src="/static/images/teli_kep_a_vendeghazrol.png"
-          alt="Visegrádi Kincseskert Vendégház télen"
-          loading="lazy"
-          class="gallery-item fade-in"
-          style="aspect-ratio: 4/3; object-fit: cover; width: 100%;"
-          onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)';">
-  <!-- Kültér – havas kasvirág -->
-       <img src="/static/images/havas_kasvirag.png"
-          alt="Havas kasvirág a kertben"
-          loading="lazy"
-          class="gallery-item fade-in"
-          style="aspect-ratio: 4/3; object-fit: cover; width: 100%;"
-          onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)';">
-      
-      <!-- <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&amp;q=80" alt="Guesthouse garden view" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="0" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&amp;q=80" alt="Outdoor terrace" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="1" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&amp;q=80" alt="Garden pathway" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="2" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=800&amp;q=80" alt="Outdoor seating area" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="3" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&amp;q=80" alt="Natural landscape" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="4" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?w=800&amp;q=80" alt="Garden details" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="outdoor" data-index="5" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> -->
-     </div>
-    </section>
-   </div><!-- INDOOR GALLERY -->
+<div id="galleryOutdoorPage" class="page-container">
+  <section style="padding: 160px 48px 120px;">
+    <h2 class="serif fade-in" style="font-size: 56px; font-weight: 300; text-align: center; margin-bottom: 60px; letter-spacing: 2px;">
+      Kültér Galéria
+    </h2>
+
+    <!-- TOP: CAROUSEL (nagy kép) -->
+    <div class="carousel-container" id="outdoorCarousel" style="max-width: 1400px; margin: 0 auto 28px;">
+      <div class="carousel-track">
+        <img src="/static/images/teli_kep_a_vendeghazrol.png"
+             alt="Visegrádi Kincseskert Vendégház télen"
+             loading="lazy">
+        <img src="/static/images/havas_kasvirag.png"
+             alt="Havas kasvirág a kertben"
+             loading="lazy">
+        <img src="/static/images/kerti_havas_kep_1.jpg"
+             alt="Havas kasvirág a kertben"
+             loading="lazy">
+        <img src="/static/images/kerti_havas_kep_2.jpg"
+             alt="Havas kasvirág a kertben"
+             loading="lazy">
+      </div>
+
+      <button class="carousel-btn prev" type="button">‹</button>
+      <button class="carousel-btn next" type="button">›</button>
+
+      <div class="carousel-dots"></div>
+    </div>
+
+    <!-- BOTTOM: THUMB GRID (kisebb képek megmaradnak) -->
+    <div class="gallery-grid" style="max-width: 1400px; margin: 0 auto;">
+      <img src="/static/images/teli_kep_a_vendeghazrol.png"
+           alt="Visegrádi Kincseskert Vendégház télen"
+           loading="lazy"
+           class="gallery-item fade-in gallery-thumb"
+           data-carousel="outdoorCarousel"
+           data-slide="0"
+           style="aspect-ratio: 4/3; object-fit: cover; width: 100%; cursor: pointer;"
+           onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)';">
+
+      <img src="/static/images/havas_kasvirag.png"
+           alt="Havas kasvirág a kertben"
+           loading="lazy"
+           class="gallery-item fade-in gallery-thumb"
+           data-carousel="outdoorCarousel"
+           data-slide="1"
+           style="aspect-ratio: 4/3; object-fit: cover; width: 100%; cursor: pointer;"
+           onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)';">
+
+     <img src="/static/images/kerti_havas_kep_1.jpg"
+           alt="Havas kasvirág a kertben"
+           loading="lazy"
+           class="gallery-item fade-in gallery-thumb"
+           data-carousel="outdoorCarousel"
+           data-slide="1"
+           style="aspect-ratio: 4/3; object-fit: cover; width: 100%; cursor: pointer;"
+           onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)';">
+     
+      <img src="/static/images/kerti_havas_kep_2.jpg"
+           alt="Havas kasvirág a kertben"
+           loading="lazy"
+           class="gallery-item fade-in gallery-thumb"
+           data-carousel="outdoorCarousel"
+           data-slide="1"
+           style="aspect-ratio: 4/3; object-fit: cover; width: 100%; cursor: pointer;"
+           onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)';">
+    </div>
+  </section>
+</div>
+
+   <!-- INDOOR GALLERY -->
    <div id="galleryIndoorPage" class="page-container">
     <section style="padding: 160px 48px 120px;">
      <h2 class="serif fade-in" style="font-size: 56px; font-weight: 300; text-align: center; margin-bottom: 80px; letter-spacing: 2px;">Beltér Galéria</h2>
