@@ -1350,10 +1350,9 @@
 </style>
 
 <!-- ===============================
-     INDOOR GALLERY + LIGHTBOX (FIXED)
+     INDOOR GALLERY (USES GLOBAL LIGHTBOX)
 ================================ -->
 
-<!-- INDOOR GALLERY -->
 <section id="galleryIndoorPage" class="page-container indoor-section">
   <div class="indoor-wrap">
 
@@ -1374,11 +1373,16 @@
       </div>
 
       <div class="indoor-grid">
-        <img class="indoor-img" src="/static/images/belter_1.jpg"  alt="Patak apartman – 1" loading="lazy">
-        <img class="indoor-img" src="/static/images/belter_2.jpg"  alt="Patak apartman – 2" loading="lazy">
-        <img class="indoor-img" src="/static/images/belter_3.jpg"  alt="Patak apartman – 3" loading="lazy">
-        <img class="indoor-img" src="/static/images/belter_4.jpg"  alt="Patak apartman – 4" loading="lazy">
-        <img class="indoor-img" src="/static/images/belter_5.jpg"  alt="Patak apartman – 5" loading="lazy">
+        <img class="indoor-img gallery-item" data-gallery="indoor"
+             src="/static/images/belter_1.jpg" alt="Patak apartman – 1" loading="lazy">
+        <img class="indoor-img gallery-item" data-gallery="indoor"
+             src="/static/images/belter_2.jpg" alt="Patak apartman – 2" loading="lazy">
+        <img class="indoor-img gallery-item" data-gallery="indoor"
+             src="/static/images/belter_3.jpg" alt="Patak apartman – 3" loading="lazy">
+        <img class="indoor-img gallery-item" data-gallery="indoor"
+             src="/static/images/belter_4.jpg" alt="Patak apartman – 4" loading="lazy">
+        <img class="indoor-img gallery-item" data-gallery="indoor"
+             src="/static/images/belter_5.jpg" alt="Patak apartman – 5" loading="lazy">
       </div>
     </div>
 
@@ -1392,37 +1396,21 @@
       </div>
 
       <div class="indoor-grid">
-        <img class="indoor-img" src="/static/images/belter_6.jpg"  alt="Erdő apartman – 1" loading="lazy">
-        <img class="indoor-img" src="/static/images/belter_7.jpg"  alt="Erdő apartman – 2" loading="lazy">
-        <img class="indoor-img" src="/static/images/belter_8.jpg"  alt="Erdő apartman – 3" loading="lazy">
-        <img class="indoor-img" src="/static/images/belter_9.jpg"  alt="Erdő apartman – 4" loading="lazy">
-        <img class="indoor-img" src="/static/images/belter_10.jpg" alt="Erdő apartman – 5" loading="lazy">
+        <img class="indoor-img gallery-item" data-gallery="indoor"
+             src="/static/images/belter_6.jpg" alt="Erdő apartman – 1" loading="lazy">
+        <img class="indoor-img gallery-item" data-gallery="indoor"
+             src="/static/images/belter_7.jpg" alt="Erdő apartman – 2" loading="lazy">
+        <img class="indoor-img gallery-item" data-gallery="indoor"
+             src="/static/images/belter_8.jpg" alt="Erdő apartman – 3" loading="lazy">
+        <img class="indoor-img gallery-item" data-gallery="indoor"
+             src="/static/images/belter_9.jpg" alt="Erdő apartman – 4" loading="lazy">
+        <img class="indoor-img gallery-item" data-gallery="indoor"
+             src="/static/images/belter_10.jpg" alt="Erdő apartman – 5" loading="lazy">
       </div>
     </div>
 
   </div>
 </section>
-
-<!-- LIGHTBOX MODAL -->
-<div id="indoorLightbox" class="lb" aria-hidden="true">
-  <div class="lb-backdrop" data-close></div>
-
-  <div class="lb-dialog" role="dialog" aria-modal="true" aria-label="Beltér galéria">
-    <button class="lb-close" data-close aria-label="Bezárás">×</button>
-
-    <button class="lb-nav lb-prev" type="button" aria-label="Előző">‹</button>
-
-    <figure class="lb-figure">
-      <img class="lb-img" alt="">
-      <figcaption class="lb-caption">
-        <span class="lb-caption-text"></span>
-        <span class="lb-caption-counter"></span>
-      </figcaption>
-    </figure>
-
-    <button class="lb-nav lb-next" type="button" aria-label="Következő">›</button>
-  </div>
-</div>
 
 <style>
 /* ===== Indoor gallery ===== */
@@ -1468,150 +1456,108 @@
 
 @media(max-width:1100px){ .indoor-img{ grid-column:span 6; } }
 @media(max-width:640px){ .indoor-img{ grid-column:span 12; } }
-
-/* ===== Lightbox ===== */
-.lb{ position:fixed; inset:0; display:none; z-index:9999; }
-.lb.is-open{ display:block; }
-
-.lb-backdrop{
-  position:absolute; inset:0;
-  background:rgba(20,16,14,.78);
-  backdrop-filter:blur(6px);
-}
-
-.lb-dialog{
-  position:relative;
-  height:100%;
-  display:grid;
-  grid-template-columns:64px 1fr 64px;
-  align-items:center;
-  padding:18px;
-}
-
-.lb-figure{
-  margin:0;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
-
-.lb-img{
-  max-width:92vw;
-  max-height:78vh;
-  border-radius:16px;
-}
-
-.lb-caption{
-  width:min(92vw, 980px);
-  display:flex;
-  justify-content:space-between;
-  color:#fff;
-  opacity:.85;
-  margin-top:10px;
-  font-size:14px;
-}
-
-/* ===== Buttons (CENTER FIX) ===== */
-.lb-close{
-  position:absolute;
-  top:14px;
-  right:14px;
-}
-
-/* közös alap */
-.lb-close,.lb-nav{
-  width:52px;
-  height:52px;
-  border-radius:999px;
-
-  display:grid;
-  place-items:center;
-
-  padding:0;            /* fontos: ne csússzon */
-  line-height:1;        /* fontos: betű-metrika fix */
-  background:rgba(255,255,255,.1);
-  border:1px solid rgba(255,255,255,.14);
-  color:#fff;
-  cursor:pointer;
-
-  /* opcionális, de segít egységesen renderelni */
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-}
-
-/* külön méretek */
-.lb-nav{ font-size:42px; transform: translateY(-1px); }
-.lb-close{ font-size:36px; transform: translateY(-1px); }
-
-.lb-close:hover,.lb-nav:hover{
-  background:rgba(255,255,255,.18);
-}
 </style>
 
-
 <script>
+/**
+ * INDOOR → GLOBAL LIGHTBOX BRIDGE
+ * - Nem hoz létre saját modalt
+ * - Csak biztosítja, hogy a beltéri képek "gallery-item" + data-gallery="indoor" formában legyenek
+ * - Ha az áraknál használt lightbox JS már a .gallery-item-et kezeli, akkor ez a script akár el is hagyható.
+ *
+ * Ha mégsem kezeli: ez a bridge egy minimál kompatibilis fallback, ami a meglévő #lightbox elemet próbálja meghajtani.
+ */
 (() => {
-  const section = document.getElementById('galleryIndoorPage');
-  const lb = document.getElementById('indoorLightbox');
-  if (!section || !lb) return;
+  const globalLb =
+    document.getElementById('lightbox') ||
+    document.getElementById('pricingLightbox') ||
+    document.querySelector('.lb');
 
-  // csak ebben a szekcióban keresünk képeket
-  const imgs = Array.from(section.querySelectorAll('.indoor-img'));
+  // Ha nincs globális lightbox, akkor ne csináljunk semmit.
+  if (!globalLb) return;
+
+  const imgs = Array.from(document.querySelectorAll('.gallery-item[data-gallery="indoor"]'));
   if (!imgs.length) return;
 
-  // mindent a lightboxon belül keresünk (nem dokumentum szinten)
-  const lbImg = lb.querySelector('.lb-img');
-  const captionText = lb.querySelector('.lb-caption-text');
-  const captionCounter = lb.querySelector('.lb-caption-counter');
-  const btnPrev = lb.querySelector('.lb-prev');
-  const btnNext = lb.querySelector('.lb-next');
-  const closers = lb.querySelectorAll('[data-close]');
+  // Ha a globális JS már rá van kötve a .gallery-item clickre, akkor ez nem szükséges.
+  // Biztonság: csak akkor kötünk rá, ha NINCS jel, hogy már kezeli (data-bound).
+  if (globalLb.dataset.bound === '1') return;
+
+  // --- Próbáljuk meg felderíteni a globális lightbox belső elemeit ---
+  const lbImg =
+    globalLb.querySelector('#lbImg') ||
+    globalLb.querySelector('#lightboxImage') ||
+    globalLb.querySelector('.lb-img') ||
+    globalLb.querySelector('img');
+
+  const lbCaption =
+    globalLb.querySelector('#lbCaption') ||
+    globalLb.querySelector('#lightboxCaption') ||
+    globalLb.querySelector('.lb-caption-text');
+
+  const lbCounter =
+    globalLb.querySelector('#lbCounter') ||
+    globalLb.querySelector('#lightboxCounter') ||
+    globalLb.querySelector('.lb-caption-counter');
+
+  const btnPrev =
+    globalLb.querySelector('.lb-prev') ||
+    globalLb.querySelector('[data-prev]');
+
+  const btnNext =
+    globalLb.querySelector('.lb-next') ||
+    globalLb.querySelector('[data-next]');
+
+  const closers = globalLb.querySelectorAll('[data-close], .lb-close');
 
   let i = 0;
 
   const render = () => {
     const img = imgs[i];
-    lbImg.src = img.currentSrc || img.src;
-    lbImg.alt = img.alt || '';
-    captionText.textContent = img.alt || '';
-    captionCounter.textContent = `${i + 1} / ${imgs.length}`;
+    if (lbImg) {
+      lbImg.src = img.currentSrc || img.src;
+      lbImg.alt = img.alt || '';
+    }
+    if (lbCaption) lbCaption.textContent = img.alt || '';
+    if (lbCounter) lbCounter.textContent = `${i + 1} / ${imgs.length}`;
   };
 
   const open = (idx) => {
     i = idx;
     render();
-    lb.classList.add('is-open');
-    lb.setAttribute('aria-hidden', 'false');
+    globalLb.classList.add('is-open');
+    globalLb.classList.add('open');
+    globalLb.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
   };
 
   const close = () => {
-    lb.classList.remove('is-open');
-    lb.setAttribute('aria-hidden', 'true');
+    globalLb.classList.remove('is-open');
+    globalLb.classList.remove('open');
+    globalLb.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
-    lbImg.src = ''; // opcionális: gyors “reset”
   };
 
   const prev = () => { i = (i - 1 + imgs.length) % imgs.length; render(); };
   const next = () => { i = (i + 1) % imgs.length; render(); };
 
-  imgs.forEach((img, idx) => {
-    img.addEventListener('click', () => open(idx));
-  });
+  // Click-ek a beltéri képekre → globális lightbox
+  imgs.forEach((img, idx) => img.addEventListener('click', () => open(idx)));
 
-  btnPrev && btnPrev.addEventListener('click', prev);
-  btnNext && btnNext.addEventListener('click', next);
+  // Globális gombokra ráakaszkodunk (ha vannak)
+  if (btnPrev) btnPrev.addEventListener('click', prev);
+  if (btnNext) btnNext.addEventListener('click', next);
   closers.forEach(el => el.addEventListener('click', close));
 
   window.addEventListener('keydown', (e) => {
-    if (!lb.classList.contains('is-open')) return;
+    const isOpen = globalLb.classList.contains('is-open') || globalLb.classList.contains('open');
+    if (!isOpen) return;
     if (e.key === 'Escape') close();
     if (e.key === 'ArrowLeft') prev();
     if (e.key === 'ArrowRight') next();
   });
 })();
 </script>
-
-
    <!-- ATTRACTIONS PAGE -->
     <div id="attractionsPage" class="page-container">
       <section style="padding: 160px 48px 120px; max-width: 1400px; margin: 0 auto;">
