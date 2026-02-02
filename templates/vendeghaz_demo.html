@@ -1473,27 +1473,23 @@
           </div>
     
           <!-- Attraction 2 -->
-          <div class="fade-in" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
-            <div>
-              <h3 class="serif" style="font-size: 36px; font-weight: 300; margin-bottom: 20px; color: var(--color-accent);">Kilátópontok</h3>
-              <p style="font-size: 18px; line-height: 1.8; color: var(--color-secondary); font-weight: 300;">
-                Látogasson el a környék legszebb panoráma pontjaihoz, melyeket hangulatos erdei utak kötnek össze! A Zsitvay-kilátóból megcsodálhatja a tájat a Mátrától egészen a fővárosig, és a Fellegvárat is egy különleges szögből láthatja. A Fellegvár patinás falait is érdemes meghódítani a festői dunakanyari látképért. Kösse össze a két pontot egy frissítő túrával és töltődjön fel a természetben!
-              </p>
-            </div>
-            <div class="carousel-container" id="kilatoCarousel">
-             <div class="carousel-track">
-               <img src="{{ url_for('static', filename='images/kilatopont_1.jpg') }}" alt="Kilátópont 1">
-               <img src="{{ url_for('static', filename='images/kilatopont_2.jpg') }}" alt="Kilátópont 2">
+           <div class="fade-in" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
+             <div>
+               <h3 class="serif" style="font-size: 36px; font-weight: 300; margin-bottom: 20px; color: var(--color-accent);">
+                 Kilátópontok
+               </h3>
+               <p style="font-size: 18px; line-height: 1.8; color: var(--color-secondary); font-weight: 300;">
+                 Látogasson el a környék legszebb panoráma pontjaihoz, melyeket hangulatos erdei utak kötnek össze! A Zsitvay-kilátóból megcsodálhatja a tájat a Mátrától egészen a fővárosig, és a Fellegvárat is egy különleges szögből láthatja. A Fellegvár patinás falait is érdemes meghódítani a festői dunakanyari látképért. Kösse össze a két pontot egy frissítő túrával és töltődjön fel a természetben!
+               </p>
              </div>
            
-             <!-- navigáció -->
-             <button class="carousel-btn prev">‹</button>
-             <button class="carousel-btn next">›</button>
-           
-             <!-- pöttyök -->
-             <div class="carousel-dots"></div>
+             <!-- Egyetlen kép -->
+             <img src="{{ url_for('static', filename='images/kilatopont_1.jpg') }}"
+                  alt="Kilátópont panoráma"
+                  loading="lazy"
+                  style="width: 100%; border-radius: 14px; object-fit: cover; aspect-ratio: 16/10;">
            </div>
-          </div>
+
     
           <!-- Attraction 3 -->
           <div class="fade-in" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
@@ -1515,18 +1511,24 @@
           </div>
     
           <!-- Attraction 4 -->
-          <div class="fade-in" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
-            
-            <div>
-              <h3 class="serif" style="font-size: 36px; font-weight: 300; margin-bottom: 20px; color: var(--color-accent);">Időutazás</h3>
-              <p style="font-size: 18px; line-height: 1.8; color: var(--color-secondary); font-weight: 300;">
-                Lépjen be a középkori Magyarország világába, és fedezze fel Visegrád gazdag történelmi örökségét! Hódítsa meg a Fellegvárat, a magyar királyok egykori lakhelyét, ahol megtekintheti a Szent Korona másolatát és a középkori fegyverkiállítást. Járja be a Királyi Palota termeit, pihenjen meg a reneszánsz függőkertben a híres Herkules-kút mellett, és tekintse meg a Salamon-torony monumentális falait. Merüljön el a múltban, és élje át a Dunakanyar ezeréves történelmi hangulatát!
-              </p>
-            </div>
-          
-            <div class="image-placeholder" style="aspect-ratio: 16/10;"></div>
-          
-          </div>
+           <div class="fade-in" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
+           
+             <div>
+               <h3 class="serif" style="font-size: 36px; font-weight: 300; margin-bottom: 20px; color: var(--color-accent);">
+                 Időutazás
+               </h3>
+               <p style="font-size: 18px; line-height: 1.8; color: var(--color-secondary); font-weight: 300;">
+                 Lépjen be a középkori Magyarország világába, és fedezze fel Visegrád gazdag történelmi örökségét! Hódítsa meg a Fellegvárat, a magyar királyok egykori lakhelyét, ahol megtekintheti a Szent Korona másolatát és a középkori fegyverkiállítást. Járja be a Királyi Palota termeit, pihenjen meg a reneszánsz függőkertben a híres Herkules-kút mellett, és tekintse meg a Salamon-torony monumentális falait. Merüljön el a múltban, és élje át a Dunakanyar ezeréves történelmi hangulatát!
+               </p>
+             </div>
+           
+             <!-- Fellegvár kép -->
+             <img src="{{ url_for('static', filename='images/kilatopont_2.jpg') }}"
+                  alt="Visegrádi Fellegvár"
+                  loading="lazy"
+                  style="width: 100%; border-radius: 14px; object-fit: cover; aspect-ratio: 16/10;">
+           </div>
+
 
         </div>
       </section>
