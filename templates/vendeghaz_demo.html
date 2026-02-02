@@ -754,7 +754,7 @@
    
        <div class="fade-in" style="max-width: 950px; margin: 0 auto;">
          <p style="font-size: 20px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 28px; font-weight: 300;">
-           <strong style="color: var(--color-text); font-weight: 600;">
+           <strong style="color: var(--color-secondary); font-weight: 600;">
              Nálunk a "kincs" a csend, a kert szépsége, a hegyek látványa és az erdő közelsége.
            </strong>
          </p>
@@ -788,7 +788,7 @@
            Amit kínálunk
          </h3>
    
-         <div class="fade-in" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px;">
+           <div class="fade-in" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px;">
            <!-- 1 -->
            <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
              <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">🌿</div>
@@ -827,7 +827,9 @@
            <!-- 6 (kiemelt) -->
            <div style="background: rgba(74, 93, 78, 0.08); padding: 28px 22px; border: 2px solid var(--color-accent); text-align: center; box-shadow: 0 16px 40px rgba(74, 93, 78, 0.18);">
              <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: var(--color-accent); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-surface);">♻️</div>
-             <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">Zöld kedvezmény visszatérő vendégeinknek ( - 3%)</h4>
+              <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">
+                Zöld kedvezmény visszatérő vendégeinknek <span style="white-space:nowrap;">(-3%)</span>
+              </h4>
              <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Tudatos hulladékkezelésért és házirend szerinti eszközhasználatért</p>
            </div>
    
@@ -859,24 +861,37 @@
              <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">Elektromos autó töltési lehetőség ( térítési díj ellenében)</p>
            </div>
          </div>
-   
+
+        <!-- ÚJ: 6.5 -->
+         <div style="background: var(--color-surface); padding: 28px 22px; border: 1px solid rgba(139, 126, 116, 0.12); text-align: center;">
+           <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 12px; background: rgba(74, 93, 78, 0.12); display:flex; align-items:center; justify-content:center; font-size: 24px; color: var(--color-accent);">
+             🍳
+           </div>
+           <h4 style="font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--color-accent); letter-spacing: 0.3px;">
+             Felszerelt konyha
+           </h4>
+           <p style="font-size: 14px; line-height: 1.7; color: var(--color-secondary); font-weight: 300;">
+             Hűtő, főzőlap, kávéfőző, vízforraló mindkét apartmanban
+           </p>
+         </div>
+        
          <!-- reszponzív tördelés -->
          <style>
-           @media (max-width: 1400px) {
-             #aboutPage section > div[style*="grid-template-columns: repeat(5"] {
-               grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-             }
-           }
-           @media (max-width: 900px) {
-             #aboutPage section > div[style*="grid-template-columns: repeat(5"] {
-               grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-             }
-           }
-           @media (max-width: 520px) {
-             #aboutPage section > div[style*="grid-template-columns: repeat(5"] {
-               grid-template-columns: 1fr !important;
-             }
-           }
+          @media (max-width: 1400px) {
+            #aboutPage section > div[style*="grid-template-columns: repeat(4"] {
+              grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            }
+          }
+          @media (max-width: 900px) {
+            #aboutPage section > div[style*="grid-template-columns: repeat(4"] {
+              grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            }
+          }
+          @media (max-width: 520px) {
+            #aboutPage section > div[style*="grid-template-columns: repeat(4"] {
+              grid-template-columns: 1fr !important;
+            }
+          }
          </style>
        </div>
      </section>
