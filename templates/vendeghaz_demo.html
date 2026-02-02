@@ -1147,76 +1147,83 @@
       }
     </style>
   </section>
-</div><!-- OUTDOOR GALLERY -->
-<div id="galleryOutdoorPage" class="page-container">
-  <section class="outdoor-section">
-    <h2 class="serif fade-in" style="font-size: 56px; font-weight: 300; text-align: center; margin-bottom: 60px; letter-spacing: 2px;">
-      Kültér Galéria
-    </h2>
+<!-- BOTTOM: DYNAMIC GRID (carousel nélkül) -->
+<div class="outdoor-mosaic" style="max-width: 1400px; margin: 0 auto;">
+  <img src="/static/images/teli_kep_a_vendeghazrol.png"
+       alt="Visegrádi Kincseskert Vendégház télen"
+       loading="lazy"
+       class="mosaic-item mosaic-big fade-in"
+       onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.removeAttribute('src');">
 
-    <!-- TOP: CAROUSEL (nagy kép) -->
-    <div class="carousel-container" id="outdoorCarousel" style="max-width: 1400px; margin: 0 auto 28px;">
-      <div class="carousel-track">
-        <img src="/static/images/teli_kep_a_vendeghazrol.png"
-             alt="Visegrádi Kincseskert Vendégház télen"
-             loading="lazy">
-        <img src="/static/images/havas_kasvirag.png"
-             alt="Havas kasvirág a kertben"
-             loading="lazy">
-        <img src="/static/images/kerti_havas_kep_1.jpg"
-             alt="Havas kasvirág a kertben"
-             loading="lazy">
-        <img src="/static/images/kerti_havas_kep_2.jpg"
-             alt="Havas kasvirág a kertben"
-             loading="lazy">
-      </div>
+  <img src="/static/images/havas_kasvirag.png"
+       alt="Havas kasvirág a kertben"
+       loading="lazy"
+       class="mosaic-item fade-in"
+       onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.removeAttribute('src');">
 
-      <button class="carousel-btn prev" type="button">‹</button>
-      <button class="carousel-btn next" type="button">›</button>
+  <img src="/static/images/kerti_havas_kep_1.jpg"
+       alt="Téli kert részlet"
+       loading="lazy"
+       class="mosaic-item mosaic-tall fade-in"
+       onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.removeAttribute('src');">
 
-      <div class="carousel-dots"></div>
-    </div>
+  <img src="/static/images/kerti_havas_kep_2.jpg"
+       alt="Téli kert részlet"
+       loading="lazy"
+       class="mosaic-item fade-in"
+       onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.removeAttribute('src');">
 
-    <!-- BOTTOM: THUMB GRID (kisebb képek megmaradnak) -->
-    <div class="gallery-grid" style="max-width: 1400px; margin: 0 auto;">
-      <img src="/static/images/teli_kep_a_vendeghazrol.png"
-           alt="Visegrádi Kincseskert Vendégház télen"
-           loading="lazy"
-           class="gallery-item fade-in gallery-thumb"
-           data-carousel="outdoorCarousel"
-           data-slide="0"
-           style="aspect-ratio: 4/3; object-fit: cover; width: 100%; cursor: pointer;"
-           onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)';">
-
-      <img src="/static/images/havas_kasvirag.png"
-           alt="Havas kasvirág a kertben"
-           loading="lazy"
-           class="gallery-item fade-in gallery-thumb"
-           data-carousel="outdoorCarousel"
-           data-slide="1"
-           style="aspect-ratio: 4/3; object-fit: cover; width: 100%; cursor: pointer;"
-           onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)';">
-
-     <img src="/static/images/kerti_havas_kep_1.jpg"
-           alt="Havas kasvirág a kertben"
-           loading="lazy"
-           class="gallery-item fade-in gallery-thumb"
-           data-carousel="outdoorCarousel"
-           data-slide="1"
-           style="aspect-ratio: 4/3; object-fit: cover; width: 100%; cursor: pointer;"
-           onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)';">
-     
-      <img src="/static/images/kerti_havas_kep_2.jpg"
-           alt="Havas kasvirág a kertben"
-           loading="lazy"
-           class="gallery-item fade-in gallery-thumb"
-           data-carousel="outdoorCarousel"
-           data-slide="1"
-           style="aspect-ratio: 4/3; object-fit: cover; width: 100%; cursor: pointer;"
-           onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)';">
-    </div>
-  </section>
+  <!-- ha több képed lesz, csak másold ide ugyanígy -->
 </div>
+
+<style>
+  /* === Outdoor mosaic grid: elegáns, térkitöltő, de nem túl nagy === */
+  .outdoor-mosaic{
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 16px;
+    grid-auto-flow: dense;
+    align-items: stretch;
+  }
+
+  /* alap csempe magasság: ne fedje el az oldalt */
+  .mosaic-item{
+    width: 100%;
+    height: clamp(160px, 18vw, 260px); /* <- ez fogja vissza a galéria “méretét” */
+    object-fit: cover;
+    border-radius: 14px;
+    display: block;
+    background: linear-gradient(135deg, #edeae4 0%, #e4e0d8 100%);
+    border: 1px solid rgba(139,126,116,0.14);
+    box-shadow: 0 10px 30px rgba(20,20,20,0.06);
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+
+  .mosaic-item:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px rgba(20,20,20,0.10);
+  }
+
+  /* elrendezés desktopon (12 oszlop) */
+  .mosaic-item{ grid-column: span 4; }       /* 3 elem egy sorban alapból */
+  .mosaic-big{  grid-column: span 6; grid-row: span 2; height: calc(clamp(160px, 18vw, 260px) * 2 + 16px); }
+  .mosaic-tall{ grid-column: span 3; grid-row: span 2; height: calc(clamp(160px, 18vw, 260px) * 2 + 16px); }
+
+  /* tablet */
+  @media (max-width: 1100px){
+    .outdoor-mosaic{ grid-template-columns: repeat(8, minmax(0, 1fr)); }
+    .mosaic-item{ grid-column: span 4; }     /* 2 per sor */
+    .mosaic-big{ grid-column: span 8; }      /* full szélesség */
+    .mosaic-tall{ grid-column: span 4; }
+  }
+
+  /* mobil */
+  @media (max-width: 640px){
+    .outdoor-mosaic{ grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .mosaic-item{ grid-column: span 4; height: 220px; } /* 1 per sor, de nem óriási */
+    .mosaic-big, .mosaic-tall{ grid-row: span 1; height: 220px; }
+  }
+</style>
 
    <!-- INDOOR GALLERY -->
    <div id="galleryIndoorPage" class="page-container">
