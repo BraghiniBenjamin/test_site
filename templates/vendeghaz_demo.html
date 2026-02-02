@@ -658,42 +658,67 @@
 
     <div style="position: relative; z-index: 2; text-align: center; padding: 0 24px;">
       <h2 class="serif fade-in" id="heroTagline" style="font-size: 64px; font-weight: 300; color: var(--color-surface); letter-spacing: 3px; text-shadow: 0 2px 20px rgba(0,0,0,0.3); margin-bottom: 24px;">
-        Ahol a nyugalom találkozik az eleganciával
+        Ahol a természet és a nyugalom összeér
       </h2>
       <p class="fade-in" style="font-size: 16px; color: var(--color-surface); letter-spacing: 2px; text-transform: uppercase; font-weight: 300; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">
-        Minimal Luxury • Slow Living • Nature
+        Nature • Slow tourism
       </p>
     </div>
   </section>
 
   <!-- Content Block 1 -->
-  <section class="content-block" style="display: flex; min-height: 600px; background: var(--color-bg);">
-    <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&amp;q=80"
-         alt="Nature surrounding the guesthouse"
-         loading="lazy"
-         style="width: 50%; min-height: 600px; object-fit: cover;"
-         onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
-    <div style="width: 50%; display: flex; align-items: center; justify-content: center; padding: 80px 64px;">
-      <div class="fade-in" style="max-width: 500px;">
-        <h3 class="serif" id="block1Title" style="font-size: 42px; font-weight: 300; color: var(--color-text); margin-bottom: 24px; letter-spacing: 1px;">Természet</h3>
-        <p id="block1Text" style="font-size: 18px; color: var(--color-secondary); line-height: 1.8; font-weight: 300;">Vannak helyek, ahová egy kis híd vezet át - a Kincseskert Vendégház kapujához érve a patak csobogása rögtön jelzi: magunk mögött hagytuk a város zaját. Napsárga, faborítású házunk egy olyan erdőkert közepén áll, ahol a természet az úr. A ház mögött rögtön a hegyoldal és az erdő magasodik, biztosítva, hogy nálunk csak a friss hegyi levegő és a tökéletes zavartalanság várja.</p>
-      </div>
+  <section class="nature-block" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
+    
+    <!-- Üres vizuális blokk (későbbi kép helye) -->
+    <div class="nature-image-placeholder"
+         style="width: 100%; height: 320px; background: #eae7e2; border-radius: 12px;">
     </div>
+  
+    <!-- Szöveges tartalom -->
+    <div class="nature-text">
+      <h3 style="font-size: 26px; font-weight: 500; margin-bottom: 16px;">
+        Természet
+      </h3>
+  
+      <p style="font-size: 18px; line-height: 1.8; font-weight: 300; margin-bottom: 18px;">
+        Vannak helyek, ahová egy kis híd vezet át – a Kincseskert Vendégház kapujához
+        érve a patak csobogása rögtön jelzi: magunk mögött hagytuk a város zaját.
+      </p>
+  
+      <p style="font-size: 18px; line-height: 1.8; font-weight: 300;">
+        Napsárga, faborítású házunk egy erdőkert közepén áll, ahol a természet az úr.
+        A ház mögött rögtön a hegyoldal és az erdő magasodik, biztosítva, hogy nálunk
+        csak a friss hegyi levegő és a tökéletes zavartalanság várja.
+      </p>
+    </div>
+  
   </section>
+
 
   <!-- Content Block 2 -->
   <section class="content-block" style="display: flex; min-height: 600px; background: var(--color-surface);">
     <div style="width: 50%; display: flex; align-items: center; justify-content: center; padding: 80px 64px;">
       <div class="fade-in" style="max-width: 500px;">
         <h3 class="serif" id="block2Title" style="font-size: 42px; font-weight: 300; color: var(--color-text); margin-bottom: 24px; letter-spacing: 1px;">Slow tourism- Lassulj le nálunk</h3>
-        <p id="block2Text" style="font-size: 18px; color: var(--color-secondary); line-height: 1.8; font-weight: 300;">Itt nem a forgalom, hanem a közeli patak csobogása és a fák susogása adja a napi ritmust. Egy hely, ahol a reggeli kávé mellé madárdal szól, ahol a kert végében már az erdő illatát hozza a szél, és ahol a napsárga falak között Ön is otthon érezheti magát. Legyen szó egy hosszú erdei túráról vagy csak egy békés délutánról a függőágyban – a Kincseskertben minden pillanat egy kis ajándék. Nálunk a "kincs" a csend, a kert szépsége, a hegyek látványa és az erdő közelsége. </p>
+         <p id="block2Text"
+            style="font-size: 18px; color: var(--color-secondary); line-height: 1.8; font-weight: 300; margin-bottom: 20px;">
+           Itt nem a forgalom, hanem a közeli patak csobogása és a fák susogása adja a napi ritmust.
+           Egy hely, ahol a reggeli kávé mellé madárdal szól, ahol a kert végében már az erdő illatát
+           hozza a szél, és ahol a napsárga falak között Ön is otthon érezheti magát.
+         </p>
+         
+         <p style="font-size: 18px; color: var(--color-secondary); line-height: 1.8; font-weight: 300;">
+           Legyen szó egy hosszú erdei túráról vagy csak egy békés délutánról a függőágyban –
+           a Kincseskertben minden pillanat egy kis ajándék.
+           Nálunk a „kincs” a csend, a kert szépsége, a hegyek látványa és az erdő közelsége.
+         </p>
       </div>
     </div>
-    <img src="https://images.unsplash.com/photo-1615873968403-89e068629265?w=1200&amp;q=80"
+    <!-- <img src="https://images.unsplash.com/photo-1615873968403-89e068629265?w=1200&amp;q=80"
          alt="Minimalist interior design"
          loading="lazy"
          style="width: 50%; min-height: 600px; object-fit: cover;"
-         onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+         onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> -->
   </section>
 
   <!-- Content Block 3 -->
