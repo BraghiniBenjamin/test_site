@@ -1349,6 +1349,10 @@
   }
 </style>
 
+<!-- ===============================
+     INDOOR GALLERY + LIGHTBOX (FIXED)
+================================ -->
+
 <!-- INDOOR GALLERY -->
 <section id="galleryIndoorPage" class="page-container indoor-section">
   <div class="indoor-wrap">
@@ -1400,23 +1404,23 @@
 </section>
 
 <!-- LIGHTBOX MODAL -->
-<div id="lightbox" class="lb" aria-hidden="true">
+<div id="indoorLightbox" class="lb" aria-hidden="true">
   <div class="lb-backdrop" data-close></div>
 
-  <div class="lb-dialog">
+  <div class="lb-dialog" role="dialog" aria-modal="true" aria-label="Beltér galéria">
     <button class="lb-close" data-close aria-label="Bezárás">×</button>
 
-    <button class="lb-nav lb-prev" aria-label="Előző">‹</button>
+    <button class="lb-nav lb-prev" type="button" aria-label="Előző">‹</button>
 
     <figure class="lb-figure">
-      <img id="lbImg" class="lb-img" alt="">
+      <img class="lb-img" alt="">
       <figcaption class="lb-caption">
-        <span id="lbCaption"></span>
-        <span id="lbCounter"></span>
+        <span class="lb-caption-text"></span>
+        <span class="lb-caption-counter"></span>
       </figcaption>
     </figure>
 
-    <button class="lb-nav lb-next" aria-label="Következő">›</button>
+    <button class="lb-nav lb-next" type="button" aria-label="Következő">›</button>
   </div>
 </div>
 
@@ -1439,6 +1443,7 @@
 .indoor-block-head{
   border-bottom:1px solid rgba(139,126,116,.14);
   margin-bottom:18px;
+  padding-bottom:14px;
 }
 
 .indoor-grid{
@@ -1453,7 +1458,7 @@
   object-fit:cover;
   border-radius:14px;
   cursor:zoom-in;
-  transition:.25s;
+  transition:transform .25s, box-shadow .25s;
 }
 
 .indoor-img:hover{
@@ -1480,6 +1485,14 @@
   display:grid;
   grid-template-columns:64px 1fr 64px;
   align-items:center;
+  padding:18px;
+}
+
+.lb-figure{
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 
 .lb-img{
@@ -1489,65 +1502,105 @@
 }
 
 .lb-caption{
+  width:min(92vw, 980px);
   display:flex;
   justify-content:space-between;
   color:#fff;
-  opacity:.8;
-  margin-top:8px;
+  opacity:.85;
+  margin-top:10px;
+  font-size:14px;
+}
+
+.lb-close{
+  position:absolute;
+  top:14px;
+  right:14px;
+  width:48px;
+  height:48px;
+  border-radius:999px;
 }
 
 .lb-close,.lb-nav{
   background:rgba(255,255,255,.1);
-  border:none;
+  border:1px solid rgba(255,255,255,.14);
   color:#fff;
   font-size:40px;
   cursor:pointer;
+  display:grid;
+  place-items:center;
+  width:52px;
+  height:52px;
+  border-radius:999px;
+}
+
+.lb-close:hover,.lb-nav:hover{
+  background:rgba(255,255,255,.18);
 }
 </style>
 
 <script>
 (() => {
-  const imgs = [...document.querySelectorAll('.indoor-img')];
-  const lb = document.getElementById('lightbox');
-  const lbImg = document.getElementById('lbImg');
-  const lbCaption = document.getElementById('lbCaption');
-  const lbCounter = document.getElementById('lbCounter');
+  const section = document.getElementById('galleryIndoorPage');
+  const lb = document.getElementById('indoorLightbox');
+  if (!section || !lb) return;
+
+  // csak ebben a szekcióban keresünk képeket
+  const imgs = Array.from(section.querySelectorAll('.indoor-img'));
+  if (!imgs.length) return;
+
+  // mindent a lightboxon belül keresünk (nem dokumentum szinten)
+  const lbImg = lb.querySelector('.lb-img');
+  const captionText = lb.querySelector('.lb-caption-text');
+  const captionCounter = lb.querySelector('.lb-caption-counter');
+  const btnPrev = lb.querySelector('.lb-prev');
+  const btnNext = lb.querySelector('.lb-next');
+  const closers = lb.querySelectorAll('[data-close]');
+
   let i = 0;
 
-  const open = idx => {
+  const render = () => {
+    const img = imgs[i];
+    lbImg.src = img.currentSrc || img.src;
+    lbImg.alt = img.alt || '';
+    captionText.textContent = img.alt || '';
+    captionCounter.textContent = `${i + 1} / ${imgs.length}`;
+  };
+
+  const open = (idx) => {
     i = idx;
     render();
     lb.classList.add('is-open');
+    lb.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
   };
 
   const close = () => {
     lb.classList.remove('is-open');
+    lb.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    lbImg.src = ''; // opcionális: gyors “reset”
   };
 
-  const render = () => {
-    lbImg.src = imgs[i].src;
-    lbCaption.textContent = imgs[i].alt || '';
-    lbCounter.textContent = `${i+1} / ${imgs.length}`;
-  };
+  const prev = () => { i = (i - 1 + imgs.length) % imgs.length; render(); };
+  const next = () => { i = (i + 1) % imgs.length; render(); };
 
-  const prev = () => { i = (i-1+imgs.length)%imgs.length; render(); };
-  const next = () => { i = (i+1)%imgs.length; render(); };
+  imgs.forEach((img, idx) => {
+    img.addEventListener('click', () => open(idx));
+  });
 
-  imgs.forEach((img,idx)=>img.onclick=()=>open(idx));
-  lb.querySelector('.lb-prev').onclick = prev;
-  lb.querySelector('.lb-next').onclick = next;
-  lb.querySelectorAll('[data-close]').forEach(b=>b.onclick=close);
+  btnPrev && btnPrev.addEventListener('click', prev);
+  btnNext && btnNext.addEventListener('click', next);
+  closers.forEach(el => el.addEventListener('click', close));
 
-  window.addEventListener('keydown',e=>{
-    if(!lb.classList.contains('is-open')) return;
-    if(e.key==='Escape') close();
-    if(e.key==='ArrowLeft') prev();
-    if(e.key==='ArrowRight') next();
+  window.addEventListener('keydown', (e) => {
+    if (!lb.classList.contains('is-open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') prev();
+    if (e.key === 'ArrowRight') next();
   });
 })();
 </script>
+
 
    <!-- ATTRACTIONS PAGE -->
     <div id="attractionsPage" class="page-container">
