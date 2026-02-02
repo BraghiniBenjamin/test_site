@@ -1349,11 +1349,10 @@
   }
 </style>
 
-
-   <!-- INDOOR GALLERY -->
-<!-- INDOOR GALLERY (clean layout) -->
+<!-- INDOOR GALLERY -->
 <section id="galleryIndoorPage" class="page-container indoor-section">
   <div class="indoor-wrap">
+
     <header class="indoor-header fade-in">
       <h2 class="indoor-title serif">Beltér Galéria</h2>
       <p class="indoor-subtitle">
@@ -1371,16 +1370,11 @@
       </div>
 
       <div class="indoor-grid">
-        <img class="indoor-img" src="/static/images/belter_1.jpg"  alt="Patak apartman – 1" loading="lazy"
-             onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg,#e8e6e1 0%,#d4d0c8 100%)'; this.removeAttribute('src');">
-        <img class="indoor-img" src="/static/images/belter_2.jpg"  alt="Patak apartman – 2" loading="lazy"
-             onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg,#e8e6e1 0%,#d4d0c8 100%)'; this.removeAttribute('src');">
-        <img class="indoor-img" src="/static/images/belter_3.jpg"  alt="Patak apartman – 3" loading="lazy"
-             onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg,#e8e6e1 0%,#d4d0c8 100%)'; this.removeAttribute('src');">
-        <img class="indoor-img" src="/static/images/belter_4.jpg"  alt="Patak apartman – 4" loading="lazy"
-             onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg,#e8e6e1 0%,#d4d0c8 100%)'; this.removeAttribute('src');">
-        <img class="indoor-img" src="/static/images/belter_5.jpg"  alt="Patak apartman – 5" loading="lazy"
-             onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg,#e8e6e1 0%,#d4d0c8 100%)'; this.removeAttribute('src');">
+        <img class="indoor-img" src="/static/images/belter_1.jpg"  alt="Patak apartman – 1" loading="lazy">
+        <img class="indoor-img" src="/static/images/belter_2.jpg"  alt="Patak apartman – 2" loading="lazy">
+        <img class="indoor-img" src="/static/images/belter_3.jpg"  alt="Patak apartman – 3" loading="lazy">
+        <img class="indoor-img" src="/static/images/belter_4.jpg"  alt="Patak apartman – 4" loading="lazy">
+        <img class="indoor-img" src="/static/images/belter_5.jpg"  alt="Patak apartman – 5" loading="lazy">
       </div>
     </div>
 
@@ -1394,129 +1388,166 @@
       </div>
 
       <div class="indoor-grid">
-        <img class="indoor-img" src="/static/images/belter_6.jpg"  alt="Erdő apartman – 1" loading="lazy"
-             onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg,#e8e6e1 0%,#d4d0c8 100%)'; this.removeAttribute('src');">
-        <img class="indoor-img" src="/static/images/belter_7.jpg"  alt="Erdő apartman – 2" loading="lazy"
-             onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg,#e8e6e1 0%,#d4d0c8 100%)'; this.removeAttribute('src');">
-        <img class="indoor-img" src="/static/images/belter_8.jpg"  alt="Erdő apartman – 3" loading="lazy"
-             onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg,#e8e6e1 0%,#d4d0c8 100%)'; this.removeAttribute('src');">
-        <img class="indoor-img" src="/static/images/belter_9.jpg"  alt="Erdő apartman – 4" loading="lazy"
-             onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg,#e8e6e1 0%,#d4d0c8 100%)'; this.removeAttribute('src');">
-        <img class="indoor-img" src="/static/images/belter_10.jpg" alt="Erdő apartman – 5" loading="lazy"
-             onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg,#e8e6e1 0%,#d4d0c8 100%)'; this.removeAttribute('src');">
+        <img class="indoor-img" src="/static/images/belter_6.jpg"  alt="Erdő apartman – 1" loading="lazy">
+        <img class="indoor-img" src="/static/images/belter_7.jpg"  alt="Erdő apartman – 2" loading="lazy">
+        <img class="indoor-img" src="/static/images/belter_8.jpg"  alt="Erdő apartman – 3" loading="lazy">
+        <img class="indoor-img" src="/static/images/belter_9.jpg"  alt="Erdő apartman – 4" loading="lazy">
+        <img class="indoor-img" src="/static/images/belter_10.jpg" alt="Erdő apartman – 5" loading="lazy">
       </div>
     </div>
 
   </div>
 </section>
 
+<!-- LIGHTBOX MODAL -->
+<div id="lightbox" class="lb" aria-hidden="true">
+  <div class="lb-backdrop" data-close></div>
+
+  <div class="lb-dialog">
+    <button class="lb-close" data-close aria-label="Bezárás">×</button>
+
+    <button class="lb-nav lb-prev" aria-label="Előző">‹</button>
+
+    <figure class="lb-figure">
+      <img id="lbImg" class="lb-img" alt="">
+      <figcaption class="lb-caption">
+        <span id="lbCaption"></span>
+        <span id="lbCounter"></span>
+      </figcaption>
+    </figure>
+
+    <button class="lb-nav lb-next" aria-label="Következő">›</button>
+  </div>
+</div>
+
 <style>
-  /* ===== Indoor gallery layout (minimal luxury) ===== */
-  .indoor-section{
-    padding: 150px 24px 110px;
-  }
+/* ===== Indoor gallery ===== */
+.indoor-section{ padding:150px 24px 110px; }
+.indoor-wrap{ max-width:1200px; margin:0 auto; }
+.indoor-header{ text-align:center; margin-bottom:56px; }
+.indoor-title{ font-size:clamp(34px,4vw,56px); font-weight:300; letter-spacing:2px; }
+.indoor-subtitle{ color:rgba(60,50,45,.75); max-width:760px; margin:0 auto; }
 
-  .indoor-wrap{
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+.indoor-block{
+  background:rgba(255,255,255,.7);
+  border:1px solid rgba(139,126,116,.14);
+  border-radius:18px;
+  padding:26px;
+  margin-bottom:22px;
+}
 
-  .indoor-header{
-    text-align: center;
-    margin-bottom: 56px;
-  }
+.indoor-block-head{
+  border-bottom:1px solid rgba(139,126,116,.14);
+  margin-bottom:18px;
+}
 
-  .indoor-title{
-    font-size: clamp(34px, 4vw, 56px);
-    font-weight: 300;
-    letter-spacing: 2px;
-    margin-bottom: 12px;
-  }
+.indoor-grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:14px;
+}
 
-  .indoor-subtitle{
-    max-width: 760px;
-    margin: 0 auto;
-    color: rgba(60,50,45,0.75);
-    font-size: 16px;
-    line-height: 1.75;
-  }
+.indoor-img{
+  grid-column:span 4;
+  aspect-ratio:4/3;
+  object-fit:cover;
+  border-radius:14px;
+  cursor:zoom-in;
+  transition:.25s;
+}
 
-  /* Blocks (Patak / Erdő) */
-  .indoor-block{
-    background: rgba(255,255,255,0.70);
-    border: 1px solid rgba(139,126,116,0.14);
-    border-radius: 18px;
-    padding: 26px;
-    box-shadow: 0 14px 40px rgba(20,20,20,0.06);
-    margin-bottom: 22px;
-  }
+.indoor-img:hover{
+  transform:translateY(-2px);
+  box-shadow:0 16px 40px rgba(0,0,0,.12);
+}
 
-  .indoor-block:last-child{
-    margin-bottom: 0;
-  }
+@media(max-width:1100px){ .indoor-img{ grid-column:span 6; } }
+@media(max-width:640px){ .indoor-img{ grid-column:span 12; } }
 
-  .indoor-block-head{
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 2px 2px 18px;
-    border-bottom: 1px solid rgba(139,126,116,0.14);
-    margin-bottom: 18px;
-  }
+/* ===== Lightbox ===== */
+.lb{ position:fixed; inset:0; display:none; z-index:9999; }
+.lb.is-open{ display:block; }
 
-  .indoor-block-title{
-    font-size: 28px;
-    font-weight: 300;
-    letter-spacing: 1px;
-    margin: 0 0 6px 0;
-  }
+.lb-backdrop{
+  position:absolute; inset:0;
+  background:rgba(20,16,14,.78);
+  backdrop-filter:blur(6px);
+}
 
-  .indoor-block-desc{
-    margin: 0;
-    color: rgba(60,50,45,0.72);
-    line-height: 1.7;
-  }
+.lb-dialog{
+  position:relative;
+  height:100%;
+  display:grid;
+  grid-template-columns:64px 1fr 64px;
+  align-items:center;
+}
 
-  /* Grid */
-  .indoor-grid{
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 14px;
-  }
+.lb-img{
+  max-width:92vw;
+  max-height:78vh;
+  border-radius:16px;
+}
 
-  .indoor-img{
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    border-radius: 14px;
-    display: block;
-    background: linear-gradient(135deg,#edeae4 0%,#e4e0d8 100%);
-    border: 1px solid rgba(139,126,116,0.14);
-    transition: transform .25s ease, box-shadow .25s ease;
-    grid-column: span 4; /* 3 kép / sor */
-  }
+.lb-caption{
+  display:flex;
+  justify-content:space-between;
+  color:#fff;
+  opacity:.8;
+  margin-top:8px;
+}
 
-  .indoor-img:hover{
-    transform: translateY(-2px);
-    box-shadow: 0 16px 40px rgba(20,20,20,0.10);
-  }
-
-  /* Tablet */
-  @media (max-width: 1100px){
-    .indoor-block{ padding: 22px; }
-    .indoor-img{ grid-column: span 6; } /* 2 / sor */
-  }
-
-  /* Mobile */
-  @media (max-width: 640px){
-    .indoor-section{ padding: 120px 16px 90px; }
-    .indoor-block{ padding: 18px; border-radius: 16px; }
-    .indoor-block-head{ padding-bottom: 14px; }
-    .indoor-block-title{ font-size: 24px; }
-    .indoor-img{ grid-column: span 12; } /* 1 / sor */
-  }
+.lb-close,.lb-nav{
+  background:rgba(255,255,255,.1);
+  border:none;
+  color:#fff;
+  font-size:40px;
+  cursor:pointer;
+}
 </style>
+
+<script>
+(() => {
+  const imgs = [...document.querySelectorAll('.indoor-img')];
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbCaption = document.getElementById('lbCaption');
+  const lbCounter = document.getElementById('lbCounter');
+  let i = 0;
+
+  const open = idx => {
+    i = idx;
+    render();
+    lb.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const close = () => {
+    lb.classList.remove('is-open');
+    document.body.style.overflow = '';
+  };
+
+  const render = () => {
+    lbImg.src = imgs[i].src;
+    lbCaption.textContent = imgs[i].alt || '';
+    lbCounter.textContent = `${i+1} / ${imgs.length}`;
+  };
+
+  const prev = () => { i = (i-1+imgs.length)%imgs.length; render(); };
+  const next = () => { i = (i+1)%imgs.length; render(); };
+
+  imgs.forEach((img,idx)=>img.onclick=()=>open(idx));
+  lb.querySelector('.lb-prev').onclick = prev;
+  lb.querySelector('.lb-next').onclick = next;
+  lb.querySelectorAll('[data-close]').forEach(b=>b.onclick=close);
+
+  window.addEventListener('keydown',e=>{
+    if(!lb.classList.contains('is-open')) return;
+    if(e.key==='Escape') close();
+    if(e.key==='ArrowLeft') prev();
+    if(e.key==='ArrowRight') next();
+  });
+})();
+</script>
 
    <!-- ATTRACTIONS PAGE -->
     <div id="attractionsPage" class="page-container">
