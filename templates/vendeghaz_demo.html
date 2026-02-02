@@ -1148,37 +1148,82 @@
     </style>
   </section>
  </div>
-<!-- BOTTOM: DYNAMIC GRID (carousel nélkül) -->
-<div class="outdoor-mosaic" style="max-width: 1400px; margin: 0 auto;">
-  <img src="/static/images/teli_kep_a_vendeghazrol.png"
-       alt="Visegrádi Kincseskert Vendégház télen"
-       loading="lazy"
-       class="mosaic-item mosaic-big fade-in"
-       onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.removeAttribute('src');">
+<!-- OUTDOOR GALLERY -->
+<section id="galleryOutdoorPage" class="page-container outdoor-section">
+  <div class="outdoor-wrap">
 
-  <img src="/static/images/havas_kasvirag.png"
-       alt="Havas kasvirág a kertben"
-       loading="lazy"
-       class="mosaic-item fade-in"
-       onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.removeAttribute('src');">
+    <header class="outdoor-header fade-in">
+      <h2 class="serif outdoor-title">Kültér Galéria</h2>
+      <p class="outdoor-subtitle">
+        Természetközeli pillanatok – kert, havas részletek, nyugodt visegrádi hangulat.
+      </p>
+    </header>
 
-  <img src="/static/images/kerti_havas_kep_1.jpg"
-       alt="Téli kert részlet"
-       loading="lazy"
-       class="mosaic-item mosaic-tall fade-in"
-       onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.removeAttribute('src');">
+    <!-- Mosaic Grid -->
+    <div class="outdoor-mosaic">
+      <img src="/static/images/teli_kep_a_vendeghazrol.png"
+           alt="Visegrádi Kincseskert Vendégház télen"
+           loading="lazy"
+           class="mosaic-item mosaic-big fade-in"
+           onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.removeAttribute('src');">
 
-  <img src="/static/images/kerti_havas_kep_2.jpg"
-       alt="Téli kert részlet"
-       loading="lazy"
-       class="mosaic-item fade-in"
-       onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.removeAttribute('src');">
+      <img src="/static/images/havas_kasvirag.png"
+           alt="Havas kasvirág a kertben"
+           loading="lazy"
+           class="mosaic-item fade-in"
+           onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.removeAttribute('src');">
 
-  <!-- ha több képed lesz, csak másold ide ugyanígy -->
-</div>
+      <img src="/static/images/kerti_havas_kep_1.jpg"
+           alt="Téli kert részlet"
+           loading="lazy"
+           class="mosaic-item mosaic-tall fade-in"
+           onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.removeAttribute('src');">
+
+      <img src="/static/images/kerti_havas_kep_2.jpg"
+           alt="Téli kert részlet"
+           loading="lazy"
+           class="mosaic-item fade-in"
+           onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.removeAttribute('src');">
+
+      <!-- + új képek ide -->
+      <!-- <img ... class="mosaic-item fade-in"> -->
+    </div>
+
+  </div>
+</section>
 
 <style>
-  /* === Outdoor mosaic grid: elegáns, térkitöltő, de nem túl nagy === */
+  /* ===== Outdoor section layout (külön, izolált) ===== */
+  .outdoor-section{
+    padding: 150px 24px 110px;
+  }
+
+  .outdoor-wrap{
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .outdoor-header{
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .outdoor-title{
+    font-size: clamp(34px, 4vw, 56px);
+    font-weight: 300;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  .outdoor-subtitle{
+    max-width: 780px;
+    margin: 0 auto;
+    color: rgba(60,50,45,0.75);
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  /* ===== Outdoor mosaic grid ===== */
   .outdoor-mosaic{
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -1187,10 +1232,9 @@
     align-items: stretch;
   }
 
-  /* alap csempe magasság: ne fedje el az oldalt */
   .mosaic-item{
     width: 100%;
-    height: clamp(160px, 18vw, 260px); /* <- ez fogja vissza a galéria “méretét” */
+    height: clamp(160px, 18vw, 260px);
     object-fit: cover;
     border-radius: 14px;
     display: block;
@@ -1205,36 +1249,206 @@
     box-shadow: 0 16px 40px rgba(20,20,20,0.10);
   }
 
-  /* elrendezés desktopon (12 oszlop) */
-  .mosaic-item{ grid-column: span 4; }       /* 3 elem egy sorban alapból */
-  .mosaic-big{  grid-column: span 6; grid-row: span 2; height: calc(clamp(160px, 18vw, 260px) * 2 + 16px); }
-  .mosaic-tall{ grid-column: span 3; grid-row: span 2; height: calc(clamp(160px, 18vw, 260px) * 2 + 16px); }
+  /* desktop elrendezés */
+  .mosaic-item{ grid-column: span 4; }
+  .mosaic-big{
+    grid-column: span 6;
+    grid-row: span 2;
+    height: calc(clamp(160px, 18vw, 260px) * 2 + 16px);
+  }
+  .mosaic-tall{
+    grid-column: span 3;
+    grid-row: span 2;
+    height: calc(clamp(160px, 18vw, 260px) * 2 + 16px);
+  }
 
   /* tablet */
   @media (max-width: 1100px){
     .outdoor-mosaic{ grid-template-columns: repeat(8, minmax(0, 1fr)); }
-    .mosaic-item{ grid-column: span 4; }     /* 2 per sor */
-    .mosaic-big{ grid-column: span 8; }      /* full szélesség */
+    .mosaic-item{ grid-column: span 4; }
+    .mosaic-big{ grid-column: span 8; }
     .mosaic-tall{ grid-column: span 4; }
   }
 
   /* mobil */
   @media (max-width: 640px){
+    .outdoor-section{ padding: 120px 16px 90px; }
     .outdoor-mosaic{ grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-    .mosaic-item{ grid-column: span 4; height: 220px; } /* 1 per sor, de nem óriási */
+    .mosaic-item{ grid-column: span 4; height: 220px; }
     .mosaic-big, .mosaic-tall{ grid-row: span 1; height: 220px; }
   }
 </style>
 
+
    <!-- INDOOR GALLERY -->
-   <div id="galleryIndoorPage" class="page-container">
-    <section style="padding: 160px 48px 120px;">
-     <h2 class="serif fade-in" style="font-size: 56px; font-weight: 300; text-align: center; margin-bottom: 80px; letter-spacing: 2px;">Beltér Galéria</h2>
-     <div class="gallery-grid" style="max-width: 1400px; margin: 0 auto;">
-  <!-- <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&amp;q=80" alt="Bathroom details" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="indoor" data-index="2" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600210491369-e753d80a41f3?w=800&amp;q=80" alt="Dining area" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="indoor" data-index="3" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&amp;q=80" alt="Cozy corner" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="indoor" data-index="4" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&amp;q=80" alt="Interior details" loading="lazy" class="gallery-item fade-in" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" data-gallery="indoor" data-index="5" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> -->
-     </div>
-    </section>
-   </div><!-- ATTRACTIONS PAGE -->
+<!-- INDOOR GALLERY (clean layout) -->
+<section id="galleryIndoorPage" class="page-container indoor-section">
+  <div class="indoor-wrap">
+    <header class="indoor-header fade-in">
+      <h2 class="indoor-title serif">Beltér Galéria</h2>
+      <p class="indoor-subtitle">
+        Két hangulat, két apartman – természetes anyagok, nyugalom, minimal luxury.
+      </p>
+    </header>
+
+    <!-- Patak apartman -->
+    <div class="indoor-block fade-in">
+      <div class="indoor-block-head">
+        <div>
+          <h3 class="indoor-block-title serif">Patak apartman</h3>
+          <p class="indoor-block-desc">Fényes terek, letisztult részletek, patakparti hangulat.</p>
+        </div>
+      </div>
+
+      <div class="indoor-grid">
+        <img class="indoor-img" src="/static/images/belter_1.jpg"  alt="Patak apartman – 1" loading="lazy"
+             onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg,#e8e6e1 0%,#d4d0c8 100%)'; this.removeAttribute('src');">
+        <img class="indoor-img" src="/static/images/belter_2.jpg"  alt="Patak apartman – 2" loading="lazy"
+             onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg,#e8e6e1 0%,#d4d0c8 100%)'; this.removeAttribute('src');">
+        <img class="indoor-img" src="/static/images/belter_3.jpg"  alt="Patak apartman – 3" loading="lazy"
+             onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg,#e8e6e1 0%,#d4d0c8 100%)'; this.removeAttribute('src');">
+        <img class="indoor-img" src="/static/images/belter_4.jpg"  alt="Patak apartman – 4" loading="lazy"
+             onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg,#e8e6e1 0%,#d4d0c8 100%)'; this.removeAttribute('src');">
+        <img class="indoor-img" src="/static/images/belter_5.jpg"  alt="Patak apartman – 5" loading="lazy"
+             onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg,#e8e6e1 0%,#d4d0c8 100%)'; this.removeAttribute('src');">
+      </div>
+    </div>
+
+    <!-- Erdő apartman -->
+    <div class="indoor-block fade-in">
+      <div class="indoor-block-head">
+        <div>
+          <h3 class="indoor-block-title serif">Erdő apartman</h3>
+          <p class="indoor-block-desc">Meleg tónusok, fa textúrák, erdei csend.</p>
+        </div>
+      </div>
+
+      <div class="indoor-grid">
+        <img class="indoor-img" src="/static/images/belter_6.jpg"  alt="Erdő apartman – 1" loading="lazy"
+             onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg,#e8e6e1 0%,#d4d0c8 100%)'; this.removeAttribute('src');">
+        <img class="indoor-img" src="/static/images/belter_7.jpg"  alt="Erdő apartman – 2" loading="lazy"
+             onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg,#e8e6e1 0%,#d4d0c8 100%)'; this.removeAttribute('src');">
+        <img class="indoor-img" src="/static/images/belter_8.jpg"  alt="Erdő apartman – 3" loading="lazy"
+             onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg,#e8e6e1 0%,#d4d0c8 100%)'; this.removeAttribute('src');">
+        <img class="indoor-img" src="/static/images/belter_9.jpg"  alt="Erdő apartman – 4" loading="lazy"
+             onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg,#e8e6e1 0%,#d4d0c8 100%)'; this.removeAttribute('src');">
+        <img class="indoor-img" src="/static/images/belter_10.jpg" alt="Erdő apartman – 5" loading="lazy"
+             onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg,#e8e6e1 0%,#d4d0c8 100%)'; this.removeAttribute('src');">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ===== Indoor gallery layout (minimal luxury) ===== */
+  .indoor-section{
+    padding: 150px 24px 110px;
+  }
+
+  .indoor-wrap{
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .indoor-header{
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .indoor-title{
+    font-size: clamp(34px, 4vw, 56px);
+    font-weight: 300;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  .indoor-subtitle{
+    max-width: 760px;
+    margin: 0 auto;
+    color: rgba(60,50,45,0.75);
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  /* Blocks (Patak / Erdő) */
+  .indoor-block{
+    background: rgba(255,255,255,0.70);
+    border: 1px solid rgba(139,126,116,0.14);
+    border-radius: 18px;
+    padding: 26px;
+    box-shadow: 0 14px 40px rgba(20,20,20,0.06);
+    margin-bottom: 22px;
+  }
+
+  .indoor-block:last-child{
+    margin-bottom: 0;
+  }
+
+  .indoor-block-head{
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 2px 2px 18px;
+    border-bottom: 1px solid rgba(139,126,116,0.14);
+    margin-bottom: 18px;
+  }
+
+  .indoor-block-title{
+    font-size: 28px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin: 0 0 6px 0;
+  }
+
+  .indoor-block-desc{
+    margin: 0;
+    color: rgba(60,50,45,0.72);
+    line-height: 1.7;
+  }
+
+  /* Grid */
+  .indoor-grid{
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .indoor-img{
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 14px;
+    display: block;
+    background: linear-gradient(135deg,#edeae4 0%,#e4e0d8 100%);
+    border: 1px solid rgba(139,126,116,0.14);
+    transition: transform .25s ease, box-shadow .25s ease;
+    grid-column: span 4; /* 3 kép / sor */
+  }
+
+  .indoor-img:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px rgba(20,20,20,0.10);
+  }
+
+  /* Tablet */
+  @media (max-width: 1100px){
+    .indoor-block{ padding: 22px; }
+    .indoor-img{ grid-column: span 6; } /* 2 / sor */
+  }
+
+  /* Mobile */
+  @media (max-width: 640px){
+    .indoor-section{ padding: 120px 16px 90px; }
+    .indoor-block{ padding: 18px; border-radius: 16px; }
+    .indoor-block-head{ padding-bottom: 14px; }
+    .indoor-block-title{ font-size: 24px; }
+    .indoor-img{ grid-column: span 12; } /* 1 / sor */
+  }
+</style>
+
+   <!-- ATTRACTIONS PAGE -->
     <div id="attractionsPage" class="page-container">
       <section style="padding: 160px 48px 120px; max-width: 1400px; margin: 0 auto;">
         <h2 class="serif fade-in" style="font-size: 56px; font-weight: 300; text-align: center; margin-bottom: 80px; letter-spacing: 2px;">Látnivalók</h2>
