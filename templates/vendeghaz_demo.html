@@ -1005,118 +1005,228 @@
      </section>
    </div>
  <!-- PRICING PAGE -->
-<!-- ========================= -->
-<!-- VERTIKÁLIS / KÁRTYÁS -->
-<!-- ========================= -->
-<div class="fade-in">
-  <h3 class="serif" style="font-size: 40px; font-weight: 300; color: var(--color-accent); letter-spacing: 1px; margin-bottom: 28px;">
-    Vertikális csomagok
-  </h3>
+<div id="pricingPage" class="page-container">
+  <section style="padding: 160px 48px 120px; max-width: 1200px; margin: 0 auto;">
+    <h2 class="serif fade-in" style="font-size: 56px; font-weight: 300; text-align: center; margin-bottom: 28px; letter-spacing: 2px;">
+      Áraink
+    </h2>
+    <p class="fade-in" style="text-align:center; color: var(--color-secondary); font-weight:300; margin-bottom: 80px;">
+      Két szinten, két külön apartman biztosítja a zavartalan pihenést<br>
+      Válassza ki az Önnek megfelelőt!
+      <br><br>
+      <span style="font-size: 15px; opacity: 0.7;">
+        (Az apartman vagy vendégházunk minimum két éjszakára foglalható.)
+      </span>
+    </p>
 
-  <!-- ERDŐ APARTMAN -->
-  <div style="margin-bottom: 64px;">
-    <div style="display:flex; align-items:baseline; justify-content:space-between; gap: 16px; margin-bottom: 18px;">
-      <h4 class="serif" style="font-size: 28px; font-weight: 400; margin:0; color: var(--color-text);">Erdő apartman</h4>
-      <span style="font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--color-secondary);">2 fő</span>
-    </div>
 
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-      <!-- Erdő – Hétvégi pihenés -->
-      <div class="price-card fade-in">
-        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80"
-             alt="Erdő apartman – Hétvégi pihenés"
-             loading="lazy"
-             class="price-room-image"
-             data-room="apt1-weekend"
-             style="width: 100%; aspect-ratio: 4/3; object-fit: cover; margin-bottom: 24px;">
-        <h3 class="serif" style="font-size: 28px; font-weight: 400; margin-bottom: 12px; color: var(--color-accent);">Hétvégi pihenés</h3>
-        <p style="font-size: 44px; font-weight: 300; margin-bottom: 18px; color: var(--color-text);">35.000 Ft<span style="font-size: 16px; color: var(--color-secondary);"> / éj</span></p>
-        <ul style="list-style: none; color: var(--color-secondary); font-size: 16px; line-height: 2; margin-bottom: 22px; padding: 0;">
-          <li>• 2 fő részére</li>
-          <li>• Wifi</li>
-          <li>• Kert használat</li>
-        </ul>
-        <button class="btn-primary booking-btn" data-room="apt1-weekend" style="width: 100%;">Lefoglalom</button>
+    <!-- ========================= -->
+    <!-- SÁVOS / STRIPE SZEKCIÓ -->
+    <!-- ========================= -->
+    <div class="fade-in" style="margin-bottom: 90px;">
+      <h3 class="serif" style="font-size: 40px; font-weight: 300; color: var(--color-accent); letter-spacing: 1px; margin-bottom: 28px;">
+        Sávos árlista
+      </h3>
+
+      <!-- Apartman 1 -->
+      <div style="margin-bottom: 36px;">
+        <div style="display:flex; align-items:baseline; justify-content:space-between; gap: 16px; margin-bottom: 12px;">
+          <h4 class="serif" style="font-size: 28px; font-weight: 400; margin:0; color: var(--color-text);">Erdő apartman</h4>
+          <span style="font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--color-secondary);">2 fő</span>
+        </div>
+
+        <div style="border: 1px solid rgba(139, 126, 116, 0.18); overflow:hidden;">
+          <!-- row -->
+          <div style="display:grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 16px; padding: 18px 22px; background: var(--color-surface); align-items:center;">
+            <div>
+              <div style="font-weight: 500; color: var(--color-text);">Standard</div>
+              <div style="font-size: 13px; color: var(--color-secondary); font-weight: 300;">1 éj • 2 fő</div>
+            </div>
+            <div style="font-size: 20px; font-weight: 300; color: var(--color-text);">35.000 Ft <span style="font-size: 13px; color: var(--color-secondary);">/ éj</span></div>
+            <div style="text-align:right;">
+              <button class="btn-primary booking-btn" data-room="apt1-weekend" style="padding: 12px 22px;">Lefoglalom</button>
+            </div>
+          </div>
+
+          <!-- row -->
+          <div style="display:grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 16px; padding: 18px 22px; background: rgba(74,93,78,0.06); align-items:center;">
+            <div>
+              <div style="font-weight: 500; color: var(--color-text);">Heti feltöltődés </div>
+              <div style="font-size: 13px; color: var(--color-secondary); font-weight: 300;">3 éj • 2 fő</div>
+            </div>
+            <div style="font-size: 20px; font-weight: 300; color: var(--color-text);">95.000 Ft <span style="font-size: 13px; color: var(--color-secondary);">/ 3 éj</span></div>
+            <div style="text-align:right;">
+              <button class="btn-primary booking-btn" data-room="apt1-long-weekend" style="padding: 12px 22px;">Lefoglalom</button>
+            </div>
+          </div>
+
+          <!-- row -->
+          <!-- <div style="display:grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 16px; padding: 18px 22px; background: var(--color-surface); align-items:center;">
+            <div>
+              <div style="font-weight: 500; color: var(--color-text);">Heti menedék</div>
+              <div style="font-size: 13px; color: var(--color-secondary); font-weight: 300;">7 éj • 2 fő</div>
+            </div>
+            <div style="font-size: 20px; font-weight: 300; color: var(--color-text);">210.000 Ft <span style="font-size: 13px; color: var(--color-secondary);">/ hét</span></div>
+            <div style="text-align:right;">
+              <button class="btn-primary booking-btn" data-room="apt1-weekly" style="padding: 12px 22px;">Lefoglalom</button>
+            </div>
+          </div> -->
+        </div>
       </div>
 
-      <!-- Erdő – Hosszú hétvége -->
-      <div class="price-card fade-in">
-        <img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=800&q=80"
-             alt="Erdő apartman – Hosszú hétvége"
-             loading="lazy"
-             class="price-room-image"
-             data-room="apt1-long-weekend"
-             style="width: 100%; aspect-ratio: 4/3; object-fit: cover; margin-bottom: 24px;">
-        <h3 class="serif" style="font-size: 28px; font-weight: 400; margin-bottom: 12px; color: var(--color-accent);">Hosszú hétvége</h3>
-        <p style="font-size: 44px; font-weight: 300; margin-bottom: 18px; color: var(--color-text);">95.000 Ft<span style="font-size: 16px; color: var(--color-secondary);"> / 3 éj</span></p>
-        <ul style="list-style: none; color: var(--color-secondary); font-size: 16px; line-height: 2; margin-bottom: 22px; padding: 0;">
-          <li>• 2 fő részére</li>
-          <li>• Wifi</li>
-          <li>• Kert használat</li>
-        </ul>
-        <button class="btn-primary booking-btn" data-room="apt1-long-weekend" style="width: 100%;">Lefoglalom</button>
+      <!-- Apartman 2 -->
+      <div>
+        <div style="display:flex; align-items:baseline; justify-content:space-between; gap: 16px; margin-bottom: 12px;">
+          <h4 class="serif" style="font-size: 28px; font-weight: 400; margin:0; color: var(--color-text);">Patak apartman</h4>
+          <span style="font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--color-secondary);">2 fő • reggeli • kert</span>
+        </div>
+
+        <div style="border: 1px solid rgba(139, 126, 116, 0.18); overflow:hidden;">
+          <div style="display:grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 16px; padding: 18px 22px; background: var(--color-surface); align-items:center;">
+            <div>
+              <div style="font-weight: 500; color: var(--color-text);">Standard</div>
+              <div style="font-size: 13px; color: var(--color-secondary); font-weight: 300;">1 éj • 2 fő</div>
+            </div>
+            <div style="font-size: 20px; font-weight: 300; color: var(--color-text);">35.000 Ft <span style="font-size: 13px; color: var(--color-secondary);">/ éj</span></div>
+            <div style="text-align:right;">
+              <button class="btn-primary booking-btn" data-room="apt2-weekend" style="padding: 12px 22px;">Lefoglalom</button>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 16px; padding: 18px 22px; background: rgba(74,93,78,0.06); align-items:center;">
+            <div>
+              <div style="font-weight: 500; color: var(--color-text);">Heti feltöltődés</div>
+              <div style="font-size: 13px; color: var(--color-secondary); font-weight: 300;">3 éj • 2 fő</div>
+            </div>
+            <div style="font-size: 20px; font-weight: 300; color: var(--color-text);">95.000 Ft <span style="font-size: 13px; color: var(--color-secondary);">/ 3 éj</span></div>
+            <div style="text-align:right;">
+              <button class="btn-primary booking-btn" data-room="apt2-long-weekend" style="padding: 12px 22px;">Lefoglalom</button>
+            </div>
+          </div>
+
+          <!-- <div style="display:grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 16px; padding: 18px 22px; background: var(--color-surface); align-items:center;">
+            <div>
+              <div style="font-weight: 500; color: var(--color-text);">Heti menedék</div>
+              <div style="font-size: 13px; color: var(--color-secondary); font-weight: 300;">7 éj • 2 fő</div>
+            </div>
+            <div style="font-size: 20px; font-weight: 300; color: var(--color-text);">210.000 Ft <span style="font-size: 13px; color: var(--color-secondary);">/ hét</span></div>
+            <div style="text-align:right;">
+              <button class="btn-primary booking-btn" data-room="apt2-weekly" style="padding: 12px 22px;">Lefoglalom</button>
+            </div>
+          </div> -->
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- PATAK APARTMAN -->
-  <div>
-    <div style="display:flex; align-items:baseline; justify-content:space-between; gap: 16px; margin-bottom: 18px;">
-      <h4 class="serif" style="font-size: 28px; font-weight: 400; margin:0; color: var(--color-text);">Patak apartman</h4>
-      <span style="font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--color-secondary);">2 fő • reggeli • kert</span>
-    </div>
+    <!-- ========================= -->
+    <!-- VERTIKÁLIS / KÁRTYÁS -->
+    <!-- ========================= -->
+    <div class="fade-in">
+      <h3 class="serif" style="font-size: 40px; font-weight: 300; color: var(--color-accent); letter-spacing: 1px; margin-bottom: 28px;">
+        Vertikális csomagok
+      </h3>
 
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-      <!-- Patak – Hétvégi pihenés -->
-      <div class="price-card fade-in">
-        <img src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800&q=80"
-             alt="Patak apartman – Hétvégi pihenés"
-             loading="lazy"
-             class="price-room-image"
-             data-room="apt2-weekend"
-             style="width: 100%; aspect-ratio: 4/3; object-fit: cover; margin-bottom: 24px;">
-        <h3 class="serif" style="font-size: 28px; font-weight: 400; margin-bottom: 12px; color: var(--color-accent);">Hétvégi pihenés</h3>
-        <p style="font-size: 44px; font-weight: 300; margin-bottom: 18px; color: var(--color-text);">35.000 Ft<span style="font-size: 16px; color: var(--color-secondary);"> / éj</span></p>
-        <ul style="list-style: none; color: var(--color-secondary); font-size: 16px; line-height: 2; margin-bottom: 22px; padding: 0;">
-          <li>• 2 fő részére</li>
-          <li>• Reggeli</li>
-          <li>• Wifi</li>
-          <li>• Kert használat</li>
-        </ul>
-        <button class="btn-primary booking-btn" data-room="apt2-weekend" style="width: 100%;">Lefoglalom</button>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+        <!-- Apartman 1 oszlop -->
+        <div>
+          <h4 class="serif" style="font-size: 28px; font-weight: 400; margin: 0 0 18px; color: var(--color-text);">Apartman 1</h4>
+
+          <div style="display:grid; gap: 24px;">
+            <div class="price-card fade-in">
+              <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80"
+                   alt="Apartman 1 – Hétvégi pihenés"
+                   loading="lazy"
+                   class="price-room-image"
+                   data-room="apt1-weekend"
+                   style="width: 100%; aspect-ratio: 4/3; object-fit: cover; margin-bottom: 24px;">
+              <h3 class="serif" style="font-size: 28px; font-weight: 400; margin-bottom: 12px; color: var(--color-accent);">Hétvégi pihenés</h3>
+              <p style="font-size: 44px; font-weight: 300; margin-bottom: 18px; color: var(--color-text);">35.000 Ft<span style="font-size: 16px; color: var(--color-secondary);"> / éj</span></p>
+              <ul style="list-style: none; color: var(--color-secondary); font-size: 16px; line-height: 2; margin-bottom: 22px;">
+                <li>• 2 fő részére</li>
+                <li>• Reggeli</li>
+                <li>• Kert használat</li>
+                <li>• Wifi</li>
+              </ul>
+              <button class="btn-primary booking-btn" data-room="apt1-weekend" style="width: 100%;">Lefoglalom</button>
+            </div>
+
+            <div class="price-card fade-in">
+              <img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=800&q=80"
+                   alt="Apartman 1 – Hosszú hétvége"
+                   loading="lazy"
+                   class="price-room-image"
+                   data-room="apt1-long-weekend"
+                   style="width: 100%; aspect-ratio: 4/3; object-fit: cover; margin-bottom: 24px;">
+              <h3 class="serif" style="font-size: 28px; font-weight: 400; margin-bottom: 12px; color: var(--color-accent);">Hosszú hétvége</h3>
+              <p style="font-size: 44px; font-weight: 300; margin-bottom: 18px; color: var(--color-text);">95.000 Ft<span style="font-size: 16px; color: var(--color-secondary);"> / 3 éj</span></p>
+              <ul style="list-style: none; color: var(--color-secondary); font-size: 16px; line-height: 2; margin-bottom: 22px;">
+                <li>• 2 fő részére</li>
+                <li>• Reggelik</li>
+                <li>• Kert használat</li>
+                <li>• Wifi</li>
+              </ul>
+              <button class="btn-primary booking-btn" data-room="apt1-long-weekend" style="width: 100%;">Lefoglalom</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Apartman 2 oszlop -->
+        <div>
+          <h4 class="serif" style="font-size: 28px; font-weight: 400; margin: 0 0 18px; color: var(--color-text);">Apartman 2</h4>
+
+          <div style="display:grid; gap: 24px;">
+            <div class="price-card fade-in">
+              <img src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800&q=80"
+                   alt="Apartman 2 – Hétvégi pihenés"
+                   loading="lazy"
+                   class="price-room-image"
+                   data-room="apt2-weekend"
+                   style="width: 100%; aspect-ratio: 4/3; object-fit: cover; margin-bottom: 24px;">
+              <h3 class="serif" style="font-size: 28px; font-weight: 400; margin-bottom: 12px; color: var(--color-accent);">Hétvégi pihenés</h3>
+              <p style="font-size: 44px; font-weight: 300; margin-bottom: 18px; color: var(--color-text);">35.000 Ft<span style="font-size: 16px; color: var(--color-secondary);"> / éj</span></p>
+              <ul style="list-style: none; color: var(--color-secondary); font-size: 16px; line-height: 2; margin-bottom: 22px;">
+                <li>• 2 fő részére</li>
+                <li>• Reggeli</li>
+                <li>• Kert használat</li>
+                <li>• Wifi</li>
+              </ul>
+              <button class="btn-primary booking-btn" data-room="apt2-weekend" style="width: 100%;">Lefoglalom</button>
+            </div>
+
+            <div class="price-card fade-in">
+              <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80"
+                   alt="Apartman 2 – Hosszú hétvége"
+                   loading="lazy"
+                   class="price-room-image"
+                   data-room="apt2-long-weekend"
+                   style="width: 100%; aspect-ratio: 4/3; object-fit: cover; margin-bottom: 24px;">
+              <h3 class="serif" style="font-size: 28px; font-weight: 400; margin-bottom: 12px; color: var(--color-accent);">Hosszú hétvége</h3>
+              <p style="font-size: 44px; font-weight: 300; margin-bottom: 18px; color: var(--color-text);">95.000 Ft<span style="font-size: 16px; color: var(--color-secondary);"> / 3 éj</span></p>
+              <ul style="list-style: none; color: var(--color-secondary); font-size: 16px; line-height: 2; margin-bottom: 22px;">
+                <li>• 2 fő részére</li>
+                <li>• Reggelik</li>
+                <li>• Kert használat</li>
+                <li>• Wifi</li>
+              </ul>
+              <button class="btn-primary booking-btn" data-room="apt2-long-weekend" style="width: 100%;">Lefoglalom</button>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Patak – Hosszú hétvége -->
-      <div class="price-card fade-in">
-        <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80"
-             alt="Patak apartman – Hosszú hétvége"
-             loading="lazy"
-             class="price-room-image"
-             data-room="apt2-long-weekend"
-             style="width: 100%; aspect-ratio: 4/3; object-fit: cover; margin-bottom: 24px;">
-        <h3 class="serif" style="font-size: 28px; font-weight: 400; margin-bottom: 12px; color: var(--color-accent);">Hosszú hétvége</h3>
-        <p style="font-size: 44px; font-weight: 300; margin-bottom: 18px; color: var(--color-text);">95.000 Ft<span style="font-size: 16px; color: var(--color-secondary);"> / 3 éj</span></p>
-        <ul style="list-style: none; color: var(--color-secondary); font-size: 16px; line-height: 2; margin-bottom: 22px; padding: 0;">
-          <li>• 2 fő részére</li>
-          <li>• Reggeli</li>
-          <li>• Wifi</li>
-          <li>• Kert használat</li>
-        </ul>
-        <button class="btn-primary booking-btn" data-room="apt2-long-weekend" style="width: 100%;">Lefoglalom</button>
-      </div>
+      <!-- Heti csomagok (opcionális) – ha akarod kártyában is, ide könnyen betehető -->
     </div>
-  </div>
 
-  <!-- reszponzív: 2->1 oszlop -->
-  <style>
-    @media (max-width: 992px) {
-      #pricingPage div[style*="grid-template-columns: 1fr 1fr"] {
-        grid-template-columns: 1fr !important;
+    <!-- reszponzív a 2 oszlophoz -->
+    <style>
+      @media (max-width: 992px) {
+        #pricingPage section > div[style*="grid-template-columns: 1fr 1fr"] {
+          grid-template-columns: 1fr !important;
+        }
       }
-    }
-  </style>
-</div>
-
+    </style>
+  </section>
+ </div>
 <!-- OUTDOOR GALLERY -->
 <section id="galleryOutdoorPage" class="page-container outdoor-section">
   <div class="outdoor-wrap">
