@@ -1351,6 +1351,7 @@
 
 <!-- ===============================
      INDOOR GALLERY (USES GLOBAL LIGHTBOX)
+     - Patak és Erdő külön lapozható (külön data-gallery)
 ================================ -->
 
 <section id="galleryIndoorPage" class="page-container indoor-section">
@@ -1373,15 +1374,15 @@
       </div>
 
       <div class="indoor-grid">
-        <img class="indoor-img gallery-item" data-gallery="indoor"
+        <img class="indoor-img gallery-item" data-gallery="indoor-patak"
              src="/static/images/belter_1.jpg" alt="Patak apartman – 1" loading="lazy">
-        <img class="indoor-img gallery-item" data-gallery="indoor"
+        <img class="indoor-img gallery-item" data-gallery="indoor-patak"
              src="/static/images/belter_2.jpg" alt="Patak apartman – 2" loading="lazy">
-        <img class="indoor-img gallery-item" data-gallery="indoor"
+        <img class="indoor-img gallery-item" data-gallery="indoor-patak"
              src="/static/images/belter_3.jpg" alt="Patak apartman – 3" loading="lazy">
-        <img class="indoor-img gallery-item" data-gallery="indoor"
+        <img class="indoor-img gallery-item" data-gallery="indoor-patak"
              src="/static/images/belter_4.jpg" alt="Patak apartman – 4" loading="lazy">
-        <img class="indoor-img gallery-item" data-gallery="indoor"
+        <img class="indoor-img gallery-item" data-gallery="indoor-patak"
              src="/static/images/belter_5.jpg" alt="Patak apartman – 5" loading="lazy">
       </div>
     </div>
@@ -1396,15 +1397,15 @@
       </div>
 
       <div class="indoor-grid">
-        <img class="indoor-img gallery-item" data-gallery="indoor"
+        <img class="indoor-img gallery-item" data-gallery="indoor-erdo"
              src="/static/images/belter_6.jpg" alt="Erdő apartman – 1" loading="lazy">
-        <img class="indoor-img gallery-item" data-gallery="indoor"
+        <img class="indoor-img gallery-item" data-gallery="indoor-erdo"
              src="/static/images/belter_7.jpg" alt="Erdő apartman – 2" loading="lazy">
-        <img class="indoor-img gallery-item" data-gallery="indoor"
+        <img class="indoor-img gallery-item" data-gallery="indoor-erdo"
              src="/static/images/belter_8.jpg" alt="Erdő apartman – 3" loading="lazy">
-        <img class="indoor-img gallery-item" data-gallery="indoor"
+        <img class="indoor-img gallery-item" data-gallery="indoor-erdo"
              src="/static/images/belter_9.jpg" alt="Erdő apartman – 4" loading="lazy">
-        <img class="indoor-img gallery-item" data-gallery="indoor"
+        <img class="indoor-img gallery-item" data-gallery="indoor-erdo"
              src="/static/images/belter_10.jpg" alt="Erdő apartman – 5" loading="lazy">
       </div>
     </div>
@@ -1460,12 +1461,13 @@
 
 <script>
 /**
- * INDOOR → GLOBAL LIGHTBOX BRIDGE
+ * INDOOR → GLOBAL LIGHTBOX BRIDGE (GROUPED BY data-gallery)
  * - Nem hoz létre saját modalt
- * - Csak biztosítja, hogy a beltéri képek "gallery-item" + data-gallery="indoor" formában legyenek
- * - Ha az áraknál használt lightbox JS már a .gallery-item-et kezeli, akkor ez a script akár el is hagyható.
+ * - Patak és Erdő külön lapozható: data-gallery="indoor-patak" / "indoor-erdo"
  *
- * Ha mégsem kezeli: ez a bridge egy minimál kompatibilis fallback, ami a meglévő #lightbox elemet próbálja meghajtani.
+ * Megjegyzés:
+ * Ha az áraknál használt globális lightbox JS már eleve kezeli a .gallery-item-eket
+ * és figyelembe veszi a data-gallery-t, akkor ez a script akár el is hagyható.
  */
 (() => {
   const globalLb =
@@ -1473,17 +1475,20 @@
     document.getElementById('pricingLightbox') ||
     document.querySelector('.lb');
 
-  // Ha nincs globális lightbox, akkor ne csináljunk semmit.
   if (!globalLb) return;
 
-  const imgs = Array.from(document.querySelectorAll('.gallery-item[data-gallery="indoor"]'));
-  if (!imgs.length) return;
+  const section = document.getElementById('galleryIndoorPage');
+  if (!section) return;
 
-  // Ha a globális JS már rá van kötve a .gallery-item clickre, akkor ez nem szükséges.
-  // Biztonság: csak akkor kötünk rá, ha NINCS jel, hogy már kezeli (data-bound).
+  // Beltér szekció összes gallery-item-je
+  const allItems = Array.from(section.querySelectorAll('.gallery-item[data-gallery]'));
+  if (!allItems.length) return;
+
+  // Ha a globális lightbox JS már "megkötötte" a lightboxot, ne duplázzunk.
+  // (Ha biztosan a bridge-et akarod használni, ezt a sort ki lehet venni.)
   if (globalLb.dataset.bound === '1') return;
 
-  // --- Próbáljuk meg felderíteni a globális lightbox belső elemeit ---
+  // --- Megpróbáljuk megtalálni a globális lightbox elemeit (az áraknál használt markuphoz igazodva) ---
   const lbImg =
     globalLb.querySelector('#lbImg') ||
     globalLb.querySelector('#lightboxImage') ||
@@ -1510,20 +1515,31 @@
 
   const closers = globalLb.querySelectorAll('[data-close], .lb-close');
 
+  let items = [];
   let i = 0;
 
   const render = () => {
-    const img = imgs[i];
+    const img = items[i];
+    if (!img) return;
+
     if (lbImg) {
       lbImg.src = img.currentSrc || img.src;
       lbImg.alt = img.alt || '';
     }
     if (lbCaption) lbCaption.textContent = img.alt || '';
-    if (lbCounter) lbCounter.textContent = `${i + 1} / ${imgs.length}`;
+    if (lbCounter) lbCounter.textContent = `${i + 1} / ${items.length}`;
   };
 
-  const open = (idx) => {
-    i = idx;
+  const open = (clickedEl) => {
+    const g = clickedEl.dataset.gallery;
+
+    // csak az aktuális galéria elemei
+    items = allItems.filter(x => x.dataset.gallery === g);
+
+    // index az aktuális galérián belül
+    i = items.indexOf(clickedEl);
+    if (i < 0) i = 0;
+
     render();
     globalLb.classList.add('is-open');
     globalLb.classList.add('open');
@@ -1538,17 +1554,27 @@
     document.body.style.overflow = '';
   };
 
-  const prev = () => { i = (i - 1 + imgs.length) % imgs.length; render(); };
-  const next = () => { i = (i + 1) % imgs.length; render(); };
+  const prev = () => {
+    if (!items.length) return;
+    i = (i - 1 + items.length) % items.length;
+    render();
+  };
 
-  // Click-ek a beltéri képekre → globális lightbox
-  imgs.forEach((img, idx) => img.addEventListener('click', () => open(idx)));
+  const next = () => {
+    if (!items.length) return;
+    i = (i + 1) % items.length;
+    render();
+  };
 
-  // Globális gombokra ráakaszkodunk (ha vannak)
+  // beltéri képek click → globális lightbox megnyitás
+  allItems.forEach(el => el.addEventListener('click', () => open(el)));
+
+  // globális gombok
   if (btnPrev) btnPrev.addEventListener('click', prev);
   if (btnNext) btnNext.addEventListener('click', next);
   closers.forEach(el => el.addEventListener('click', close));
 
+  // billentyűk
   window.addEventListener('keydown', (e) => {
     const isOpen = globalLb.classList.contains('is-open') || globalLb.classList.contains('open');
     if (!isOpen) return;
