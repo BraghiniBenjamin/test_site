@@ -753,19 +753,60 @@
 
   <div id="aboutPage" class="page-container">
      <!-- ✅ Rólunk header: külön blokk, nem a hero-height -->
-     <div class="about-hero-image">
+     <!-- ABOUT HERO (főoldal stílusban) -->
+     <section class="hero-height" style="position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+     
        <img
          src="{{ url_for('static', filename='images/Fooldalkep.jpg') }}"
          alt="Rólunk fejléc"
          loading="lazy"
+         style="
+           position: absolute;
+           inset: 0;
+           width: 100%;
+           height: 100%;
+           object-fit: cover;
+           object-position: 70% center;
+           filter: brightness(0.72);
+           transform: scale(1.02);
+         "
+         onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"
        >
-     </div>
-     <!-- 2) Történetünk -->
-     <section style="padding: 40px 48px 40px; max-width: 1100px; margin: 0 auto;">
-       <h2 class="serif fade-in" style="font-size: 56px; font-weight: 300; text-align: center; margin-bottom: 48px; letter-spacing: 2px;">
-         Történetünk
-       </h2>
-   
+     
+       <!-- Finom overlay (opcionális, még prémiumabb kontraszt) -->
+       <div style="
+         position:absolute;
+         inset:0;
+         background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.18) 100%);
+         z-index:1;
+       "></div>
+     
+       <div style="position: relative; z-index: 2; text-align: center; padding: 0 24px;">
+         <h2 class="serif fade-in" style="
+           font-size: 64px;
+           font-weight: 300;
+           color: var(--color-surface);
+           letter-spacing: 3px;
+           text-shadow: 0 2px 20px rgba(0,0,0,0.35);
+           margin-bottom: 22px;
+         ">
+           Történetünk
+         </h2>
+     
+         <p class="fade-in" style="
+           font-size: 16px;
+           color: var(--color-surface);
+           letter-spacing: 2px;
+           text-transform: uppercase;
+           font-weight: 300;
+           text-shadow: 0 2px 10px rgba(0,0,0,0.35);
+         ">
+           Minimal Luxury • Slow Living • Nature
+         </p>
+       </div>
+     </section>
+
+      <section style="padding: 40px 48px 40px; max-width: 1100px; margin: 0 auto;">
        <div class="fade-in" style="max-width: 950px; margin: 0 auto;">
          <p style="font-size: 20px; line-height: 1.9; color: var(--color-secondary); margin-bottom: 28px; font-weight: 300;">
            <strong style="color: var(--color-secondary); font-weight: 600;">
