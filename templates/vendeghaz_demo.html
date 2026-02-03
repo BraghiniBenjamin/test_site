@@ -1506,6 +1506,61 @@
 @media(max-width:1100px){ .indoor-img{ grid-column:span 6; } }
 @media(max-width:640px){ .indoor-img{ grid-column:span 12; } }
 </style>
+<script>
+/* ===============================
+   INDOOR + OUTDOOR GALLERY
+   → ugyanaz a lapozható modal
+================================ */
+
+const galleryGroups = {};
+
+document.querySelectorAll('.gallery-item').forEach((img, index) => {
+  const group = img.dataset.gallery;
+  if (!group) return;
+
+  if (!galleryGroups[group]) galleryGroups[group] = [];
+
+  galleryGroups[group].push({
+    src: img.src,
+    alt: img.alt || ''
+  });
+
+  img.addEventListener('click', () => {
+    openGenericGallery(group, galleryGroups[group].findIndex(i => i.src === img.src));
+  });
+});
+
+let activeGallery = [];
+let activeIndex = 0;
+
+function openGenericGallery(group, startIndex = 0){
+  activeGallery = galleryGroups[group];
+  activeIndex = startIndex;
+  updateGenericModal();
+  modalGallery.classList.add('active');
+}
+
+function updateGenericModal(){
+  if (!activeGallery.length) return;
+
+  modalImage.src = activeGallery[activeIndex].src;
+  modalImage.alt = activeGallery[activeIndex].alt;
+  modalCounter.textContent = `${activeIndex + 1} / ${activeGallery.length}`;
+}
+
+function navigateGeneric(direction){
+  activeIndex += direction;
+  if (activeIndex < 0) activeIndex = activeGallery.length - 1;
+  if (activeIndex >= activeGallery.length) activeIndex = 0;
+  updateGenericModal();
+}
+
+/* felülírjuk a meglévő gombokat */
+modalPrev.onclick = () => navigateGeneric(-1);
+modalNext.onclick = () => navigateGeneric(1);
+modalClose.onclick = closeModalGallery;
+
+</script>
 
    <!-- ATTRACTIONS PAGE -->
     <div id="attractionsPage" class="page-container">
@@ -1883,15 +1938,15 @@
     const lightboxImage = document.getElementById('lightboxImage');
     const closeLightbox = document.getElementById('closeLightbox');
 
-    document.querySelectorAll('.gallery-item').forEach(item => {
-      item.addEventListener('click', () => {
-        const imgSrc = item.getAttribute('src');
-        const imgAlt = item.getAttribute('alt');
-        lightboxImage.src = imgSrc;
-        lightboxImage.alt = imgAlt;
-        lightbox.classList.add('active');
-      });
-    });
+    // document.querySelectorAll('.gallery-item').forEach(item => {
+    //   item.addEventListener('click', () => {
+    //     const imgSrc = item.getAttribute('src');
+    //     const imgAlt = item.getAttribute('alt');
+    //     lightboxImage.src = imgSrc;
+    //     lightboxImage.alt = imgAlt;
+    //     lightbox.classList.add('active');
+    //   });
+    // });
 
     closeLightbox.addEventListener('click', () => {
       lightbox.classList.remove('active');
