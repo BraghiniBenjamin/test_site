@@ -1228,45 +1228,62 @@
     </style>
   </section>
  </div>
-<!-- OUTDOOR GALLERY -->
-<section id="galleryOutdoorPage" class="page-container outdoor-section">
-  <div class="outdoor-wrap">
+<!-- ===============================
+     OUTDOOR GALLERY (SAME STYLE AS INDOOR)
+================================ -->
 
-    <header class="outdoor-header fade-in">
-      <h2 class="serif outdoor-title">Kültér Galéria</h2>
-      <p class="outdoor-subtitle">
-        Természetközeli pillanatok – kert, havas részletek, nyugodt visegrádi hangulat.
+<section id="galleryOutdoorPage" class="page-container indoor-section">
+  <div class="indoor-wrap">
+
+    <header class="indoor-header fade-in">
+      <h2 class="indoor-title serif">Kültér Galéria</h2>
+      <p class="indoor-subtitle">
+        Természetközeli környezet, kert, terasz és a környező erdők nyugalma.
       </p>
     </header>
 
-    <!-- Mosaic Grid -->
-    <div class="outdoor-mosaic">
-      <img src="/static/images/teli_kep_a_vendeghazrol.png"
-           alt="Visegrádi Kincseskert Vendégház télen"
-           loading="lazy"
-           class="mosaic-item mosaic-big fade-in"
-           onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.removeAttribute('src');">
+    <!-- Kültér blokk -->
+    <div class="indoor-block fade-in">
+      <div class="indoor-block-head">
+        <div>
+          <h3 class="indoor-block-title serif">Kert & környezet</h3>
+          <p class="indoor-block-desc">
+            Zöld környezet, évszakok hangulata, szabadtéri pihenés.
+          </p>
+        </div>
+      </div>
 
-      <img src="/static/images/havas_kasvirag.png"
-           alt="Havas kasvirág a kertben"
-           loading="lazy"
-           class="mosaic-item fade-in"
-           onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.removeAttribute('src');">
+      <div class="indoor-grid">
+        <img class="indoor-img gallery-item"
+             data-gallery="outdoor"
+             src="/static/images/teli_kep_a_vendeghazrol.png"
+             alt="Vendégház télen"
+             loading="lazy">
 
-      <img src="/static/images/kerti_havas_kep_1.jpg"
-           alt="Téli kert részlet"
-           loading="lazy"
-           class="mosaic-item mosaic-tall fade-in"
-           onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.removeAttribute('src');">
+        <img class="indoor-img gallery-item"
+             data-gallery="outdoor"
+             src="/static/images/havas_kasvirag.png"
+             alt="Havas kasvirág a kertben"
+             loading="lazy">
 
-      <img src="/static/images/kerti_havas_kep_2.jpg"
-           alt="Téli kert részlet"
-           loading="lazy"
-           class="mosaic-item fade-in"
-           onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.removeAttribute('src');">
+        <img class="indoor-img gallery-item"
+             data-gallery="outdoor"
+             src="/static/images/erdoreszlet.png"
+             alt="Erdőrészlet a vendégház közelében"
+             loading="lazy">
 
-      <!-- + új képek ide -->
-      <!-- <img ... class="mosaic-item fade-in"> -->
+        <img class="indoor-img gallery-item"
+             data-gallery="outdoor"
+             src="/static/images/kerti_reszlet.png"
+             alt="Kerti részlet"
+             loading="lazy">
+
+        <img class="indoor-img gallery-item"
+             data-gallery="outdoor"
+             src="/static/images/terasz.png"
+             alt="Terasz és pihenőrész"
+             loading="lazy">
+      </div>
     </div>
 
   </div>
