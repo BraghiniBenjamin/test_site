@@ -1723,9 +1723,23 @@ modalClose.onclick = closeModalGallery;
     <div style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;"><a href="#" class="footer-link" data-policy="gdpr" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease;">GDPR</a> <a href="#" class="footer-link" data-policy="aszf" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease;">ÁSZF</a> <a href="#" class="footer-link" data-policy="adatkezeles" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease;">Adatkezelési szabályzat</a>
     </div>
    </footer><!-- Lightbox -->
-   <div id="lightbox" class="lightbox"><span class="lightbox-close" id="closeLightbox">×</span>
-    <div class="lightbox-content"><img id="lightboxImage" src="" alt="Gallery image" loading="lazy" style="max-width: 90vw; max-height: 90vh; object-fit: contain;" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
-    </div>
+   <div id="lightbox" class="lightbox" aria-hidden="true">
+     <button class="lightbox-close" id="closeLightbox" aria-label="Bezárás">×</button>
+   
+     <button class="modal-nav-btn prev" id="lightPrev" aria-label="Előző">‹</button>
+   
+     <div class="lightbox-content">
+       <img id="lightboxImage"
+            src=""
+            alt="Gallery image"
+            loading="lazy"
+            style="max-width: 90vw; max-height: 90vh; object-fit: contain;"
+            onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';">
+       <div class="modal-counter" id="lightboxCounter">1 / 1</div>
+     </div>
+   
+     <button class="modal-nav-btn next" id="lightNext" aria-label="Következő">›</button>
+   </div>
    </div><!-- Modal Gallery for Rooms -->
    <div id="modalGallery" class="modal-gallery">
     <div class="modal-gallery-content"><span class="modal-close" id="modalClose">×</span> <button class="modal-nav-btn prev" id="modalPrev">‹</button> <img id="modalImage" src="" alt="Room image" loading="lazy" class="modal-gallery-image" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #e8e6e1 0%, #d4d0c8 100%)'; this.alt='Image unavailable';"> <button class="modal-nav-btn next" id="modalNext">›</button>
