@@ -2216,144 +2216,415 @@ modalClose.onclick = closeModalGallery;
       }
     });
 
-    // Policy notification content
-    const policyContent = {
-      gdpr: {
-        title: 'GDPR - Általános adatvédelmi rendelet',
-        content: `
-          <h3 class="serif" style="font-size: 32px; font-weight: 400; margin-bottom: 24px; color: var(--color-accent);">GDPR Tájékoztató</h3>
-          <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
-            A Visegrádi Kincseskert Vendégház elkötelezett az Ön személyes adatainak védelme iránt. Az Európai Unió Általános Adatvédelmi Rendelete (GDPR) szerint jogai vannak az adatkezelés tekintetében.
-          </p>
-          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">Az Ön jogai:</h4>
-          <ul style="list-style: disc; padding-left: 24px; color: var(--color-secondary); font-size: 16px; line-height: 2;">
-            <li>Joga van hozzáférni a kezelt személyes adataihoz</li>
-            <li>Joga van kérni adatai helyesbítését vagy törlését</li>
-            <li>Joga van az adatkezelés korlátozását kérni</li>
-            <li>Joga van tiltakozni az adatkezelés ellen</li>
-            <li>Joga van az adathordozhatósághoz</li>
-          </ul>
-          <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-top: 24px;">
-            <strong>Kapcsolat:</strong> info@visegradikincseskertvendeghaz.hu<br>
-            <strong>Adatvédelmi tisztviselő:</strong> +36 30 632 0382
-          </p>
-        `
-      },
-      aszf: {
-        title: 'Által��nos Szerződési Feltételek',
-        content: `
-          <h3 class="serif" style="font-size: 32px; font-weight: 400; margin-bottom: 24px; color: var(--color-accent);">Általános Szerződési Feltételek</h3>
-          
-          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">1. Általános rendelkezések</h4>
-          // <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
-          //   Jelen általános szerződési feltételek (a továbbiakban: ÁSZF) tartalmazzák a Visegrádi Kincseskert Vendégház által nyújtott szálláshely-szolgáltatás igénybevételének feltételeit.
-          // </p>
+// =========================
+// Policy notification content (INTEGRÁLVA, MÁSOLHATÓ)
+// =========================
+const policyContent = {
+  gdpr: {
+    title: 'GDPR - Általános adatvédelmi rendelet',
+    content: `
+      <h3 class="serif" style="font-size: 32px; font-weight: 400; margin-bottom: 24px; color: var(--color-accent);">
+        GDPR Tájékoztató
+      </h3>
 
-          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">2. Foglalás és lemondás</h4>
-          // <ul style="list-style: disc; padding-left: 24px; color: var(--color-secondary); font-size: 16px; line-height: 2; margin-bottom: 20px;">
-          //   <li>A foglalás az el��leg befizetésével válik érvényessé</li>
-          //   <li>Lemondás esetén 30 nappal az érkezés előtt teljes visszatérítés</li>
-          //   <li>14-30 nap között 50% visszatérítés</li>
-          //   <li>14 napon belüli lemondás esetén nincs visszatérítés</li>
-          // </ul>
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+        A Visegrádi Kincseskert Vendégház elkötelezett az Ön személyes adatainak védelme iránt.
+        Az Európai Unió Általános Adatvédelmi Rendelete (GDPR) szerint jogai vannak az adatkezelés tekintetében.
+      </p>
 
-          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">3. Érkezés és távozás</h4>
-          // <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
-          //   <strong>Check-in:</strong> 14:00<br>
-          //   <strong>Check-out:</strong> 11:00
-          // </p>
+      <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">
+        Az Ön jogai:
+      </h4>
 
-          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">4. Háziállatok</h4>
-          // <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
-          //   Háziállatok csak előzetes egyeztetés alapján hozhatók. Pótdíj 5.000 Ft/éj.
-          // </p>
+      <ul style="list-style: disc; padding-left: 24px; color: var(--color-secondary); font-size: 16px; line-height: 2; margin-bottom: 20px;">
+        <li>Joga van hozzáférni a kezelt személyes adataihoz</li>
+        <li>Joga van kérni adatai helyesbítését vagy törlését</li>
+        <li>Joga van az adatkezelés korlátozását kérni</li>
+        <li>Joga van tiltakozni az adatkezelés ellen</li>
+        <li>Joga van az adathordozhatósághoz</li>
+      </ul>
 
-          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">5. Felelősség</h4>
-          // <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary);">
-          //   A vendégek felelősek a szálláshely és berendezési tárgyak épségéért. Károkozás esetén teljes kártérítési kötelezettség áll fenn.
-          // </p>
-        `
-      },
-      adatkezeles: {
-        title: 'Adatkezelési Szabályzat',
-        content: `
-          <h3 class="serif" style="font-size: 32px; font-weight: 400; margin-bottom: 24px; color: var(--color-accent);">Adatkezelési Szabályzat</h3>
-          
-          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">1. Adatkezelő adatai</h4>
-          // <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
-          //   <strong>Név:</strong> Visegrádi Kincseskert Vendégház<br>
-          //   <strong>Cím:</strong> 2500 Visegrád, Mátyás király utca 68.<br>
-          //   <strong>Email:</strong> info@visegradikincseskertvendeghaz.hu<br>
-          //   <strong>Telefon:</strong> +36 30 632 0382
-          // </p>
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-top: 24px;">
+        <strong>Kapcsolat:</strong> info@visegradikincseskertvendeghaz.hu<br>
+        <strong>Telefon:</strong> +36 30 632 0382
+      </p>
+    `
+  },
 
-          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">2. Kezelt adatok köre</h4>
-          // <ul style="list-style: disc; padding-left: 24px; color: var(--color-secondary); font-size: 16px; line-height: 2; margin-bottom: 20px;">
-          //   <li>Név</li>
-          //   <li>Email cím</li>
-          //   <li>Telefonszám</li>
-          //   <li>Címadatok</li>
-          //   <li>Foglalási adatok</li>
-          // </ul>
+  aszf: {
+    title: 'Általános Szerződési Feltételek',
+    content: `
+      <h3 class="serif" style="font-size: 32px; font-weight: 400; margin-bottom: 24px; color: var(--color-accent);">
+        Általános Szerződési Feltételek
+      </h3>
 
-          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">3. Adatkezelés célja</h4>
-          // <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
-          //   Az adatkezelés kizárólag a szállásfoglalás lebonyolítása, a vendégkapcsolat fenntartása és a jogszabályi kötelezettségek teljesítése céljából történik.
-          // </p>
+      <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">
+        1. A Szolgáltató adatai
+      </h4>
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+        <strong>Üzemeltető neve:</strong> Albert Tímea EV<br>
+        <strong>Székhely/Cím:</strong> 2500 Esztergom, Dobogókői út 22.<br>
+        <strong>A szálláshely neve:</strong> Visegrádi Kincseskert Vendégház<br>
+        <strong>A szálláshely címe:</strong> 2025 Visegrád, Mátyás király utca 68.<br>
+        <strong>NTAK regisztrációs szám:</strong> MA26121506<br>
+        <strong>Adószám:</strong> 91381707-1-31<br><br>
+        <strong>Elérhetőség:</strong><br>
+        <strong>E-mail:</strong> info@visegradikincseskertvendeghaz.hu<br>
+        <strong>Tel.:</strong> +36 30/632 0382
+      </p>
 
-          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">4. Adatkezelés időtartama</h4>
-          // <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
-          //   Személyes adatait a szolgáltatás teljesítését követő 5 évig őrizzük meg számviteli és adózási kötelezettségek teljesítése céljából.
-          // </p>
+      <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">
+        2. A szolgáltatás igénybevétele
+      </h4>
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+        Jelen általános szerződési feltételek (a továbbiakban: ÁSZF) tartalmazzák a Visegrádi Kincseskert Vendégház
+        (mint magánszálláshely) által nyújtott szálláshely-szolgáltatás igénybevételének feltételeit.
+      </p>
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+        A szálláshely-szolgáltatási szerződés a foglalás visszaigazolásával és az előleg befizetésével jön létre.
+      </p>
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+        A vendég bejelentkezéskor köteles átadni a személyazonosító okmányait (érvényes személyi igazolvány/jogosítvány
+        vagy útlevél és lakcímkártya) az elektronikus adatszolgáltatáshoz (VIZA rendszer). Fontos, hogy a 10 év feletti
+        gyermeknek is szükséges érvényes fényképes igazolvány.
+      </p>
 
-          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">5. Adatbiztonság</h4>
-          // <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
-          //   Megfelelő technikai és szervezési intézkedéseket alkalmazunk az adatok védelme érdekében. Az adatokat nem adjuk át harmadik félnek marketingcélokra.
-          // </p>
+      <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">
+        3. Fizetési és lemondási feltételek
+      </h4>
 
-          <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">6. Cookie-k használata</h4>
-          // <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary);">
-          //   Weboldalunk alapvető működési cookie-kat használ. Harmadik féltől származó cookie-kat nem alkalmazunk.
-          // </p>
-        `
-      }
-    };
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 12px;">
+        <strong>Kapacitás:</strong><br>
+        A vendégház maximum 6 fő részére foglalható (két külön szinten, szobánként 2+1 pótágy elosztással).
+      </p>
 
-    // Policy notification functionality
-    const policyOverlay = document.getElementById('policyOverlay');
-    const policyNotification = document.getElementById('policyNotification');
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 12px;">
+        <strong>Minimum tartózkodás:</strong><br>
+        Apartman vagy vendégház minimum 2 éjszakára foglalható.
+      </p>
 
-    function openPolicyNotification(policyType) {
-      const policy = policyContent[policyType];
-      if (!policy) return;
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 12px;">
+        <strong>Foglalás menete:</strong>
+      </p>
+      <ul style="list-style: disc; padding-left: 24px; color: var(--color-secondary); font-size: 16px; line-height: 2; margin-bottom: 20px;">
+        <li>A foglalás a Szállás.hu felületén történik. A vendég a foglalással elfogadja a Szállás.hu és a Szolgáltató jelen ÁSZF-jét is.</li>
+        <li>A foglalás a visszaigazolást követő 24 órán belül befizetett előleggel válik érvényessé.</li>
+        <li>A szabad időpontok lekérdezése és a foglalás kizárólag a Szállás.hu rendszerén keresztül történik. Telefonon vagy e-mailben nem áll módunkban foglalást rögzíteni vagy szabad helyekről tájékoztatást adni a valós idejű adatszinkronizálás biztosítása érdekében.</li>
+      </ul>
 
-      policyNotification.innerHTML = `
-        ${policy.content}
-        <button id="closePolicyBtn" class="btn-primary" style="width: 100%; margin-top: 32px;">Rendben</button>
-      `;
-      
-      policyOverlay.style.display = 'block';
-      policyNotification.style.display = 'block';
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 12px;">
+        <strong>Előleg:</strong><br>
+        A foglalás 50% előleg befizetésével válik véglegessé banki átutalás által. Az átutaláshoz szükséges adatok a
+        visszaigazoló e-mailben kerülnek kiküldésre a vendég felé. A szállásdíj fennmaradó része a távozás napján
+        utalással vagy készpénzben fizetendő, továbbá az Idegenforgalmi adó (IFA) is ekkor fizetendő.
+      </p>
 
-      const closeBtn = document.getElementById('closePolicyBtn');
-      closeBtn.addEventListener('click', closePolicyNotification);
-    }
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 12px;">
+        <strong>IFA:</strong><br>
+        Az IFA mértéke 2026-ban Visegrád tekintetében 820 Ft/fő/éj vagy a mindenkor hatályos önkormányzati rendelet szerinti összeg
+        (18 év feletti vendégeink számára).
+      </p>
 
-    function closePolicyNotification() {
-      policyOverlay.style.display = 'none';
-      policyNotification.style.display = 'none';
-    }
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 12px;">
+        <strong>Lemondás:</strong>
+      </p>
+      <ul style="list-style: disc; padding-left: 24px; color: var(--color-secondary); font-size: 16px; line-height: 2; margin-bottom: 20px;">
+        <li>A foglalás az érkezést megelőző 14. napig ingyenesen lemondható, ebben az esetben a befizetett összeg teljes egészében visszajár.</li>
+        <li>14 napon belüli lemondás, vagy meg nem jelenés esetén a befizetett összeg kötbérként a szálláshelynél marad, visszatérítésre nincs lehetőség.</li>
+      </ul>
 
-    // Footer policy links
-    document.querySelectorAll('.footer-link').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const policyType = link.getAttribute('data-policy');
-        openPolicyNotification(policyType);
-      });
-    });
+      <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">
+        4. A felek jogai és kötelezettségei
+      </h4>
 
-    policyOverlay.addEventListener('click', closePolicyNotification);
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 12px;">
+        <strong>Érkezés / Távozás:</strong><br>
+        Bejelentkezés (Check-in) 15:00-tól, kijelentkezés (Check-out) 10:00-ig.
+      </p>
+
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 12px;">
+        <strong>Felelősség:</strong><br>
+        A vendég által okozott károkért a vendég (vagy annak törvényes képviselője) anyagi felelősséggel tartozik.<br>
+        A szolgáltató a vendég területen hagyott értéktárgyaiért és az esetleges balesetekért felelősséget nem vállal.
+      </p>
+
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 12px;">
+        <strong>GDPR:</strong><br>
+        A vendég személyes adatainak kezeléséről szóló részletes tájékoztató (Adatkezelési Tájékoztató) a szálláshely honlapján érhető el.
+      </p>
+
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 12px;">
+        <strong>Dohányzás:</strong><br>
+        A vendégházban dohányozni szigorúan tilos! Dohányzásra kizárólag az udvaron, a kijelölt helyen van lehetőség.
+      </p>
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+        A vendégház belső tereiben történő dohányzás esetén a szolgáltató jogosult extra takarítási és szagtalanítási díjat felszámítani,
+        melynek mértéke 40&nbsp;000 Ft, és a vendég távozásakor azonnal esedékes.
+      </p>
+
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 12px;">
+        <strong>Parkolás:</strong><br>
+        A szállóvendégek részére zárt, nem őrzött parkolót biztosítunk ingyenesen. A parkolóban a KRESZ szabályai érvényesek;
+        az ott elhelyezett gépjárművekért és a bennük hagyott értéktárgyakért a szálláshely felelősséget nem vállal.
+      </p>
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+        Az elektromos autó töltése 5000 Ft/alkalom díj ellenében, kizárólag a tulajdonossal történt előzetes egyeztetés után vehető igénybe.
+        A töltés díja legkésőbb távozáskor fizetendő. A töltő nem rendeltetésszerű használatából eredő károkért a vendég anyagi felelősséggel tartozik.
+      </p>
+
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 12px;">
+        <strong>Gyermek:</strong><br>
+        A vendégház és a kert adottságait figyelembe véve (meredek lépcsősor, terepviszonyok) a szálláshely csak 10 évesnél idősebb gyermeket tud fogadni,
+        akire a teljes házirend vonatkozik.
+      </p>
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 12px;">
+        A szálláshely építészeti adottsága az Erdő apartmanhoz vezető meredek lépcsősor. A vendég a foglalással tudomásul veszi,
+        hogy a lépcső használata fokozott figyelmet igényel. Az ebből eredő, a nem rendeltetésszerű használatból vagy figyelmetlenségből származó balesetekért
+        a szolgáltató felelősséget nem vállal.
+      </p>
+
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 12px;">
+        A vendég tudomásul veszi és be is tartja az alábbi két irányelvet:
+      </p>
+      <ul style="list-style: disc; padding-left: 24px; color: var(--color-secondary); font-size: 16px; line-height: 2; margin-bottom: 20px;">
+        <li><strong>Lépcsőhasználat:</strong> A lépcsőn futni, azon csúszós zokniban közlekedni, vagy a korlát használata nélkül közlekedni tilos és életveszélyes.</li>
+        <li><strong>Gyermekfelügyelet:</strong> 10–14 év közötti gyermekek a lépcsőt kizárólag szülői felügyelet vagy előzetes szülői instrukció mellett használhatják.</li>
+      </ul>
+
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+        <strong>Háziállatok:</strong><br>
+        Háziállatot vagy kisállatot a szálláshely nem tud fogadni.
+      </p>
+
+      <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">
+        5. Szerződés felmondása
+      </h4>
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+        A szolgáltató azonnali hatállyal felmondhatja a szerződést, ha a vendég fertőző beteg, kábítószer befolyása alatt áll
+        vagy közösségellenes magatartást tanúsít.
+      </p>
+
+      <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">
+        6. Jogviták és panaszkezelés
+      </h4>
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 12px;">
+        Irányadó jog a magyar Polgári Törvénykönyv (2013. évi V. törvény).
+      </p>
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+        Panasz esetén a vendég a helyszínen jegyzőkönyvet vetethet fel vagy a fogyasztóvédelmi hatósághoz fordulhat.
+      </p>
+
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 24px;">
+        <strong>Házirend:</strong><br>
+        Az ÁSZF mellékletét képezi, betartása kötelező.
+      </p>
+
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 0;">
+        <strong>Kelt:</strong> Esztergom, 2026. március 1.<br>
+        <strong>Érvényes:</strong> visszavonásig vagy módosításig.<br><br>
+        Albert Tímea EV<br>
+        <em>Szolgáltató</em>
+      </p>
+    `
+  },
+
+  adatkezeles: {
+    title: 'Adatkezelési Tájékoztató',
+    content: `
+      <h3 class="serif" style="font-size: 32px; font-weight: 400; margin-bottom: 24px; color: var(--color-accent);">
+        Adatkezelési Tájékoztató
+      </h3>
+
+      <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">
+        1. Az Adatkezelő adatai
+      </h4>
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+        <strong>Név:</strong> Albert Tímea EV<br>
+        <strong>Székhely címe:</strong> 2500 Esztergom, Dobogókői út 22.<br>
+        <strong>A szálláshely neve:</strong> Visegrádi Kincseskert Vendégház<br>
+        <strong>A szálláshely címe:</strong> 2025 Visegrád, Mátyás király utca 68.<br>
+        <strong>NTAK regisztrációs szám:</strong> MA26121506<br>
+        <strong>Adószám:</strong> 91381707-1-31<br>
+        <strong>E-mail cím:</strong> info@visegradikincseskertvendeghaz.hu<br>
+        <strong>Telefonszám:</strong> +36 30 632 0382
+      </p>
+
+      <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">
+        2. A kezelt adatok köre, célja és jogalapja
+      </h4>
+
+      <div style="margin-bottom: 20px; overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.7; color: var(--color-secondary);">
+          <thead>
+            <tr>
+              <th style="text-align:left; padding: 12px 10px; border-bottom: 1px solid rgba(139,126,116,0.22); color: var(--color-accent); font-weight: 500;">
+                Adatok köre
+              </th>
+              <th style="text-align:left; padding: 12px 10px; border-bottom: 1px solid rgba(139,126,116,0.22); color: var(--color-accent); font-weight: 500;">
+                Az adatkezelés célja
+              </th>
+              <th style="text-align:left; padding: 12px 10px; border-bottom: 1px solid rgba(139,126,116,0.22); color: var(--color-accent); font-weight: 500;">
+                Jogalap
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="vertical-align: top; padding: 12px 10px; border-bottom: 1px solid rgba(139,126,116,0.12);">
+                <strong>A) Kapcsolatfelvétel</strong><br>
+                Név, e-mail, telefonszám
+              </td>
+              <td style="vertical-align: top; padding: 12px 10px; border-bottom: 1px solid rgba(139,126,116,0.12);">
+                Ajánlatadás, tájékoztatás, vendég kéréseinek megválaszolása.
+              </td>
+              <td style="vertical-align: top; padding: 12px 10px; border-bottom: 1px solid rgba(139,126,116,0.12);">
+                Az érintett önkéntes hozzájárulása.
+              </td>
+            </tr>
+
+            <tr>
+              <td style="vertical-align: top; padding: 12px 10px; border-bottom: 1px solid rgba(139,126,116,0.12);">
+                <strong>B) Szállásfoglalás</strong><br>
+                Név, cím, e-mail, tel., foglalási adatok
+              </td>
+              <td style="vertical-align: top; padding: 12px 10px; border-bottom: 1px solid rgba(139,126,116,0.12);">
+                Szerződés létrejötte, a szálláshely-szolgáltatás teljesítése.
+              </td>
+              <td style="vertical-align: top; padding: 12px 10px; border-bottom: 1px solid rgba(139,126,116,0.12);">
+                Szerződés teljesítése.
+              </td>
+            </tr>
+
+            <tr>
+              <td style="vertical-align: top; padding: 12px 10px; border-bottom: 1px solid rgba(139,126,116,0.12);">
+                <strong>C) Számlázás</strong><br>
+                Név, lakcím (cégnél adószám is)
+              </td>
+              <td style="vertical-align: top; padding: 12px 10px; border-bottom: 1px solid rgba(139,126,116,0.12);">
+                Számviteli kötelezettség teljesítése, bizonylatkiállítás.
+              </td>
+              <td style="vertical-align: top; padding: 12px 10px; border-bottom: 1px solid rgba(139,126,116,0.12);">
+                Jogi kötelezettség (Sztv. és Áfa tv.).
+              </td>
+            </tr>
+
+            <tr>
+              <td style="vertical-align: top; padding: 12px 10px; border-bottom: 1px solid rgba(139,126,116,0.12);">
+                <strong>D) Okmányolvasás (VIZA)</strong><br>
+                Okmány adatai
+              </td>
+              <td style="vertical-align: top; padding: 12px 10px; border-bottom: 1px solid rgba(139,126,116,0.12);">
+                Kötelező digitális okmányolvasás bűnmegelőzési célból.
+              </td>
+              <td style="vertical-align: top; padding: 12px 10px; border-bottom: 1px solid rgba(139,126,116,0.12);">
+                Jogi kötelezettség (2016. évi CLVI. tv.).
+              </td>
+            </tr>
+
+            <tr>
+              <td style="vertical-align: top; padding: 12px 10px;">
+                <strong>E) NTAK adatok</strong><br>
+                Statisztikai adatok
+              </td>
+              <td style="vertical-align: top; padding: 12px 10px;">
+                Turisztikai statisztikai adatszolgáltatás.
+              </td>
+              <td style="vertical-align: top; padding: 12px 10px;">
+                Jogi kötelezettség (235/2019. Korm. rend.).
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">
+        3. Az adatok forrása
+      </h4>
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+        A Szállás.hu felületén történő foglalás esetén az Adatkezelő a foglalás során megadott adatokat a platformtól veszi át.
+      </p>
+
+      <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">
+        4. Az adatkezelés időtartama
+      </h4>
+      <ul style="list-style: disc; padding-left: 24px; color: var(--color-secondary); font-size: 16px; line-height: 2; margin-bottom: 20px;">
+        <li><strong>Számlázási adatok:</strong> jogszabályi előírás alapján 8 év.</li>
+        <li><strong>Kapcsolattartási adatok:</strong> a szerződés teljesítésétől számított 5 év (polgári jogi elévülés).</li>
+        <li><strong>Zöld kedvezmény adatai:</strong> az adott naptári év végéig, vagy a hozzájárulás visszavonásáig.</li>
+      </ul>
+
+      <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">
+        5. Adatfeldolgozók és adattovábbítás
+      </h4>
+      <ul style="list-style: disc; padding-left: 24px; color: var(--color-secondary); font-size: 16px; line-height: 2; margin-bottom: 20px;">
+        <li><strong>Szálláshelykezelő és okmányolvasó szoftver:</strong> Vendégem (Magyar Turisztikai Ügynökség Zrt.).</li>
+        <li><strong>Számlázás:</strong> Számlázz.hu (KBOSS.hu Kft.).</li>
+        <li><strong>Könyvelés:</strong> Mészárosné Misznéder Edit (2500 Esztergom, Regiomontanus utca 3.).</li>
+        <li><strong>Hivatalos szervek:</strong> NAV, MTÜ (NTAK), VIZA rendszer / Rendőrség.</li>
+        <li><strong>Tárhely és E-mail:</strong> Websupport Magyarország Kft.</li>
+      </ul>
+
+      <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">
+        6. Az érintett jogai és jogorvoslat
+      </h4>
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+        Ön bármikor kérheti adatai helyesbítését, tájékoztatást kérhet az adatok kezeléséről az info@visegradikincseskertvendeghaz.hu címen.
+        Jogorvoslatért a NAIH-hoz fordulhat.
+      </p>
+
+      <h4 style="font-size: 20px; font-weight: 400; margin: 24px 0 12px; color: var(--color-accent);">
+        7. Cookie-k (Sütik) használata
+      </h4>
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 20px;">
+        Weboldalunk kizárólag a technikai működéshez elengedhetetlen, úgynevezett alapvető működési cookie-kat használ.
+        Ezek a sütik nem gyűjtenek személyes adatokat és nem alkalmasak a látogató beazonosítására.
+        Harmadik féltől származó (marketing vagy analitikai) cookie-kat nem alkalmazunk.
+      </p>
+
+      <p style="font-size: 16px; line-height: 1.8; color: var(--color-secondary); margin-bottom: 0;">
+        <strong>Érvényes:</strong> 2026. március 1-től visszavonásig.
+      </p>
+    `
+  }
+};
+
+// =========================
+// Policy notification functionality
+// =========================
+const policyOverlay = document.getElementById('policyOverlay');
+const policyNotification = document.getElementById('policyNotification');
+
+function openPolicyNotification(policyType) {
+  const policy = policyContent[policyType];
+  if (!policy) return;
+
+  policyNotification.innerHTML = `
+    ${policy.content}
+    <button id="closePolicyBtn" class="btn-primary" style="width: 100%; margin-top: 32px;">Rendben</button>
+  `;
+
+  policyOverlay.style.display = 'block';
+  policyNotification.style.display = 'block';
+
+  const closeBtn = document.getElementById('closePolicyBtn');
+  closeBtn.addEventListener('click', closePolicyNotification);
+}
+
+function closePolicyNotification() {
+  policyOverlay.style.display = 'none';
+  policyNotification.style.display = 'none';
+}
+
+// Footer policy links (data-policy="gdpr" | "aszf" | "adatkezeles")
+document.querySelectorAll('.footer-link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const policyType = link.getAttribute('data-policy');
+    openPolicyNotification(policyType);
+  });
+});
+
+policyOverlay.addEventListener('click', closePolicyNotification);
   </script>
   
   <script>
