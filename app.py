@@ -304,6 +304,9 @@ def web_development():
 def contact():
     return render_template("contact_us.html")
 
+@app.get("/scrollable")
+def contact():
+    return render_template("scrollable.html")
 
 # ==================================================
 # EXTRA ALIASOK / TEMPLATE-ALIAS
