@@ -1,46 +1,82 @@
-<section class="scrolly">
+<section class="scrolly" id="scrolly">
   <div class="sticky">
-    <video id="heroVid" preload="auto" muted playsinline>
-      <source src="/static/landing.mp4" type="video/mp4">
+    <video id="heroVid" preload="metadata" muted playsinline>
+      <source src="{{ url_for('static', filename='landing.mp4') }}" type="video/mp4">
     </video>
     <div class="overlay">
-      <h1>Prémium landing</h1>
-      <p>Görgetésre “lejátszódik”</p>
+      <h1>Landing</h1>
+      <p>Ha a videó nem tölt, a konzolban látod miért.</p>
     </div>
   </div>
 </section>
 
 <style>
   body { margin:0; }
-  .scrolly { height: 300vh; }              /* ennyi scroll “idő” legyen */
-  .sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; }
-  video { width: 100%; height: 100%; object-fit: cover; display:block; }
-  .overlay { position:absolute; inset:0; display:grid; place-content:center;
-             color:white; text-align:center; pointer-events:none; }
-  .sticky { position: sticky; top:0; }
-  .sticky { background:#000; }
+  .scrolly { height: 300vh; background:#000; }
+  .sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; background:#000; }
+  #heroVid { width: 100%; height: 100%; object-fit: cover; display:block; }
+  .overlay {
+    position:absolute; inset:0;
+    display:grid; place-content:center;
+    color:#fff; text-align:center;
+    pointer-events:none;
+    text-shadow: 0 10px 30px rgba(0,0,0,.6);
+  }
 </style>
 
 <script>
   const vid = document.getElementById('heroVid');
-  const scrolly = document.querySelector('.scrolly');
+  const scrolly = document.getElementById('scrolly');
 
-  // iOS/Safari barátság: töltsön be, legyen “inline”
-  vid.addEventListener('loadedmetadata', () => {
-    const dur = vid.duration;
+  const log = (...a) => console.log('[scrolly]', ...a);
 
-    const onScroll = () => {
-      const r = scrolly.getBoundingClientRect();
-      const total = r.height - window.innerHeight;     // scrolly “út”
-      const passed = Math.min(Math.max(-r.top, 0), total);
-      const progress = total > 0 ? passed / total : 0;
-
-      // kis ráhagyás: ne menjen teljesen a végére (néha megakad)
-      const t = progress * (dur - 0.05);
-      if (Number.isFinite(t)) vid.currentTime = t;
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+  // Hibák logolása (ha codec/404/cors gond van, itt kiderül)
+  vid.addEventListener('error', () => {
+    log('VIDEO ERROR:', vid.error);
   });
+
+  // Biztos betöltési kérés
+  vid.load();
+
+  // iOS/Safari: sokszor csak user-gesture után hajlandó rendesen “életre kelni”
+  const prime = async () => {
+    try {
+      // muted -> elvileg engedélyezett az autoplay, de biztos ami biztos
+      await vid.play();
+      vid.pause();
+      log('primed OK');
+    } catch (e) {
+      log('prime failed (ok iOS-en):', e);
+    }
+    window.removeEventListener('pointerdown', prime);
+    window.removeEventListener('touchstart', prime);
+    window.removeEventListener('wheel', prime);
+    window.removeEventListener('scroll', prime);
+  };
+  window.addEventListener('pointerdown', prime, { once:true });
+  window.addEventListener('touchstart', prime, { once:true });
+  window.addEventListener('wheel', prime, { once:true });
+  window.addEventListener('scroll', prime, { once:true });
+
+  function scrub() {
+    const r = scrolly.getBoundingClientRect();
+    const total = r.height - window.innerHeight;
+    const passed = Math.min(Math.max(-r.top, 0), total);
+    const progress = total > 0 ? passed / total : 0;
+
+    const dur = vid.duration;
+    if (!Number.isFinite(dur) || dur <= 0) return; // még nincs metadata
+
+    const t = Math.min(Math.max(progress * (dur - 0.05), 0), dur - 0.05);
+    // csak ha tényleg változott, különben rángathat
+    if (Math.abs(vid.currentTime - t) > 0.03) vid.currentTime = t;
+  }
+
+  vid.addEventListener('loadedmetadata', () => {
+    log('metadata loaded. duration:', vid.duration);
+    scrub();
+  });
+
+  window.addEventListener('scroll', scrub, { passive: true });
+  window.addEventListener('resize', scrub);
 </script>
