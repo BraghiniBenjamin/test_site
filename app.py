@@ -305,7 +305,7 @@ def contact():
     return render_template("contact_us.html")
 
 @app.get("/scrollable")
-def contact():
+def scrollable():
     return render_template("scrollable.html")
 
 # ==================================================
