@@ -1,0 +1,46 @@
+<section class="scrolly">
+  <div class="sticky">
+    <video id="heroVid" preload="auto" muted playsinline>
+      <source src="/static/landing.mp4" type="video/mp4">
+    </video>
+    <div class="overlay">
+      <h1>Prémium landing</h1>
+      <p>Görgetésre “lejátszódik”</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  body { margin:0; }
+  .scrolly { height: 300vh; }              /* ennyi scroll “idő” legyen */
+  .sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+  video { width: 100%; height: 100%; object-fit: cover; display:block; }
+  .overlay { position:absolute; inset:0; display:grid; place-content:center;
+             color:white; text-align:center; pointer-events:none; }
+  .sticky { position: sticky; top:0; }
+  .sticky { background:#000; }
+</style>
+
+<script>
+  const vid = document.getElementById('heroVid');
+  const scrolly = document.querySelector('.scrolly');
+
+  // iOS/Safari barátság: töltsön be, legyen “inline”
+  vid.addEventListener('loadedmetadata', () => {
+    const dur = vid.duration;
+
+    const onScroll = () => {
+      const r = scrolly.getBoundingClientRect();
+      const total = r.height - window.innerHeight;     // scrolly “út”
+      const passed = Math.min(Math.max(-r.top, 0), total);
+      const progress = total > 0 ? passed / total : 0;
+
+      // kis ráhagyás: ne menjen teljesen a végére (néha megakad)
+      const t = progress * (dur - 0.05);
+      if (Number.isFinite(t)) vid.currentTime = t;
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  });
+</script>
