@@ -32,10 +32,6 @@ app.secret_key = (os.environ.get("FLASK_SECRET_KEY") or "dev-secret-change-me").
 # DATABASE (Render: ENV DATABASE_URL)
 # ==================================================
 def _db_url() -> str:
-    """
-    Render/Heroku kompat: néha 'postgres://', azt SQLAlchemy 'postgresql+psycopg://' formában szereti.
-    A te esetedben 'postgresql://' is OK.
-    """
     url = (os.environ.get("DATABASE_URL") or "").strip()
     if url.startswith("postgres://"):
         url = "postgresql+psycopg://" + url[len("postgres://") :]
@@ -409,15 +405,111 @@ def api_contact():
             f"Üzenet:\n{message}\n"
         )
 
+        lead_title = s_company or s_name
+        admin_company_row = (
+            f"""
+                          <tr>
+                            <td style="padding:11px 0;color:#6b7280;font-size:14px;border-bottom:1px solid #edf0ef;">Cég</td>
+                            <td style="padding:11px 0;color:#2a2c28;font-size:14px;font-weight:800;text-align:right;border-bottom:1px solid #edf0ef;">{s_company}</td>
+                          </tr>"""
+            if s_company
+            else ""
+        )
+        admin_phone_row = (
+            f"""
+                          <tr>
+                            <td style="padding:11px 0;color:#6b7280;font-size:14px;border-bottom:1px solid #edf0ef;">Telefon</td>
+                            <td style="padding:11px 0;color:#2a2c28;font-size:14px;font-weight:800;text-align:right;border-bottom:1px solid #edf0ef;">{s_phone}</td>
+                          </tr>"""
+            if s_phone
+            else ""
+        )
+
         admin_html = f"""<!DOCTYPE html>
-<html lang="hu"><head><meta charset="UTF-8"></head>
-<body>
-  <h2>Új kapcsolatfelvétel</h2>
-  <p><b>Név:</b> {s_name}<br><b>Email:</b> {s_email}<br><b>Cég:</b> {s_company or "-"}<br>
-  <b>Telefon:</b> {s_phone or "-"}<br><b>Érdeklődési terület:</b> {s_service or "-"}<br><b>Forrás:</b> {s_page or "-"}<br></p>
-  <pre style="white-space:pre-wrap">{s_msg}</pre>
-  <p><a href="mailto:{s_email}">Válasz írása</a></p>
-</body></html>"""
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Új kapcsolatfelvétel – CyberCare</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f7f5;font-family:Arial,Helvetica,sans-serif;color:#2a2c28;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f4f7f5;margin:0;padding:28px 12px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:680px;background:#ffffff;border-radius:24px;overflow:hidden;box-shadow:0 24px 70px rgba(42,44,40,0.12);">
+          <tr>
+            <td style="background:#2a2c28;padding:30px 34px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td>
+                    <div style="font-size:24px;line-height:1;font-weight:900;color:#ffffff;letter-spacing:-0.5px;">CyberCare</div>
+                    <div style="font-size:11px;line-height:1.8;color:#a8b8ae;text-transform:uppercase;letter-spacing:2px;margin-top:6px;">New business inquiry</div>
+                  </td>
+                  <td align="right">
+                    <div style="display:inline-block;background:#0b7b4a;color:#ffffff;border-radius:14px;padding:10px 14px;font-size:13px;font-weight:800;">Új megkeresés</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:34px;">
+              <div style="display:inline-block;background:#e8f5ee;color:#0b7b4a;border-radius:999px;padding:8px 13px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:18px;">Kapcsolatfelvételi űrlap</div>
+              <h1 style="margin:0 0 10px 0;color:#2a2c28;font-size:29px;line-height:1.18;font-weight:900;">Új érdeklődő érkezett</h1>
+              <p style="margin:0 0 24px 0;color:#5d665f;font-size:16px;line-height:1.7;">
+                A weboldalon keresztül új megkeresés érkezett. Az érdeklődő: <strong style="color:#2a2c28;">{lead_title}</strong>.
+              </p>
+
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f8fbf9;border:1px solid #edf0ef;border-radius:18px;padding:8px 18px;margin:24px 0;">
+                <tr>
+                  <td>
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td style="padding:11px 0;color:#6b7280;font-size:14px;border-bottom:1px solid #edf0ef;">Név</td>
+                        <td style="padding:11px 0;color:#2a2c28;font-size:14px;font-weight:800;text-align:right;border-bottom:1px solid #edf0ef;">{s_name}</td>
+                      </tr>{admin_company_row}
+                      <tr>
+                        <td style="padding:11px 0;color:#6b7280;font-size:14px;border-bottom:1px solid #edf0ef;">Email</td>
+                        <td style="padding:11px 0;color:#2a2c28;font-size:14px;font-weight:800;text-align:right;border-bottom:1px solid #edf0ef;"><a href="mailto:{s_email}" style="color:#0b7b4a;text-decoration:none;">{s_email}</a></td>
+                      </tr>{admin_phone_row}
+                      <tr>
+                        <td style="padding:11px 0;color:#6b7280;font-size:14px;border-bottom:1px solid #edf0ef;">Érdeklődési terület</td>
+                        <td style="padding:11px 0;color:#2a2c28;font-size:14px;font-weight:800;text-align:right;border-bottom:1px solid #edf0ef;">{s_service or '-'}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:11px 0;color:#6b7280;font-size:14px;">Forrás</td>
+                        <td style="padding:11px 0;color:#2a2c28;font-size:13px;font-weight:700;text-align:right;">{s_page or '-'}</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <div style="border-left:4px solid #0b7b4a;background:#ffffff;padding:18px 0 18px 20px;margin:28px 0;border-radius:0 16px 16px 0;">
+                <p style="margin:0 0 10px 0;color:#2a2c28;font-size:16px;line-height:1.5;font-weight:900;">Üzenet</p>
+                <div style="color:#4b554f;font-size:15px;line-height:1.75;white-space:pre-wrap;">{s_msg}</div>
+              </div>
+
+              <table role="presentation" cellspacing="0" cellpadding="0" style="margin:28px 0 0 0;">
+                <tr>
+                  <td style="background:#0b7b4a;border-radius:16px;">
+                    <a href="mailto:{s_email}?subject=Re:%20CyberCare%20megkeres%C3%A9s" style="display:inline-block;padding:14px 22px;color:#ffffff;text-decoration:none;font-size:15px;font-weight:900;">Válasz írása</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="background:#f8fbf9;padding:18px 34px;color:#7a837d;font-size:12px;line-height:1.6;text-align:center;">
+              Ez az email a CyberCare kapcsolatfelvételi űrlapjáról érkezett. A válasz gomb az érdeklődő email címére mutat.
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>"""
 
         send_email(
             to_email=admin_email,
