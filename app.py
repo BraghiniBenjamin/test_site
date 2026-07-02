@@ -1,9 +1,10 @@
 import os
 import html as html_escape
-import requests
 import pathlib
 import hashlib
 import time
+import smtplib
+from email.message import EmailMessage
 from datetime import datetime, timezone
 
 from flask import (
@@ -60,7 +61,6 @@ def _code_hash(code: str) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
-
 # Light rate-limit in-memory (Render egy példányon belül működik)
 _PREVIEW_FAILS = {}  # ip -> (count, first_ts)
 
@@ -86,8 +86,6 @@ def _rate_limit_hit(ip: str):
 # ==================================================
 # DB INIT + SEED (AUTOMATIKUS)
 # ==================================================
-from sqlalchemy import text
-
 def _ensure_preview_tables_and_seed():
     """
     - Létrehozza a preview táblákat, ha nem léteznek
@@ -128,7 +126,7 @@ def _ensure_preview_tables_and_seed():
         {
             "page_key": "Visegrádi Kincseskert Vendégház",
             "template_name": "vendeghaz_demo.html",
-            "raw_code": "FDxTdbeyenFs0prF",  # <-- ide írj egy új kulcsot
+            "raw_code": "FDxTdbeyenFs0prF",
         },
     ]
 
@@ -177,42 +175,59 @@ except Exception as e:
     print(f"[WARN] Preview DB init/seed failed: {e}")
 
 
-
 # ==================================================
-# BREVO TRANSACTIONAL EMAIL
+# SMTP TRANSACTIONAL EMAIL
 # ==================================================
-def send_email(to_email: str, subject: str, html: str, text_msg: str | None = None):
-    api_key = (os.environ.get("BREVO_API_KEY") or "").strip()
-    from_email = (os.environ.get("MAIL_FROM") or "").strip()
-    from_name = (os.environ.get("MAIL_FROM_NAME") or "CyberCare").strip()
+def _smtp_port() -> int:
+    raw = (os.environ.get("SMTP_PORT") or "465").strip()
+    try:
+        return int(raw)
+    except ValueError:
+        raise RuntimeError(f"Invalid SMTP_PORT: {raw}")
 
-    if not api_key:
-        raise RuntimeError("Missing BREVO_API_KEY")
+
+def send_email(
+    to_email: str,
+    subject: str,
+    html: str,
+    text_msg: str | None = None,
+    reply_to: str | None = None,
+):
+    host = (os.environ.get("SMTP_HOST") or "").strip()
+    port = _smtp_port()
+    user = (os.environ.get("SMTP_USER") or "").strip()
+    password = (os.environ.get("SMTP_PASSWORD") or "").strip()
+    from_email = (os.environ.get("SMTP_FROM") or os.environ.get("MAIL_FROM") or user).strip()
+    from_name = (os.environ.get("SMTP_FROM_NAME") or os.environ.get("MAIL_FROM_NAME") or "CyberCare").strip()
+
+    if not host:
+        raise RuntimeError("Missing SMTP_HOST")
+    if not user:
+        raise RuntimeError("Missing SMTP_USER")
+    if not password:
+        raise RuntimeError("Missing SMTP_PASSWORD")
     if not from_email:
-        raise RuntimeError("Missing MAIL_FROM")
+        raise RuntimeError("Missing SMTP_FROM")
 
-    payload = {
-        "sender": {"name": from_name, "email": from_email},
-        "to": [{"email": to_email}],
-        "subject": subject,
-        "htmlContent": html,
-    }
-    if text_msg:
-        payload["textContent"] = text_msg
+    msg = EmailMessage()
+    msg["Subject"] = subject
+    msg["From"] = f"{from_name} <{from_email}>"
+    msg["To"] = to_email
+    if reply_to:
+        msg["Reply-To"] = reply_to
 
-    resp = requests.post(
-        "https://api.brevo.com/v3/smtp/email",
-        headers={
-            "api-key": api_key,
-            "accept": "application/json",
-            "content-type": "application/json",
-        },
-        json=payload,
-        timeout=20,
-    )
+    msg.set_content(text_msg or "Az email HTML tartalommal érkezett.")
+    msg.add_alternative(html, subtype="html")
 
-    if resp.status_code not in (200, 201, 202):
-        raise RuntimeError(f"Brevo error {resp.status_code}: {resp.text}")
+    if port == 465:
+        with smtplib.SMTP_SSL(host, port, timeout=20) as smtp:
+            smtp.login(user, password)
+            smtp.send_message(msg)
+    else:
+        with smtplib.SMTP(host, port, timeout=20) as smtp:
+            smtp.starttls()
+            smtp.login(user, password)
+            smtp.send_message(msg)
 
 
 # ==================================================
@@ -304,9 +319,11 @@ def web_development():
 def contact():
     return render_template("contact_us.html")
 
+
 @app.get("/scrollable")
 def scrollable():
     return render_template("scrollable.html")
+
 
 # ==================================================
 # EXTRA ALIASOK / TEMPLATE-ALIAS
@@ -368,9 +385,15 @@ def api_contact():
     if not name or not email or not message:
         return _response_err("Minden mező kötelező: név, email, üzenet.", 400)
 
-    admin_email = (os.environ.get("MAIL_TO") or os.environ.get("MAIL_FROM") or "").strip()
+    admin_email = (
+        os.environ.get("MAIL_TO")
+        or os.environ.get("SMTP_TO")
+        or os.environ.get("SMTP_FROM")
+        or os.environ.get("MAIL_FROM")
+        or ""
+    ).strip()
     if not admin_email:
-        return _response_err("Admin email nincs beállítva (MAIL_TO vagy MAIL_FROM).", 500)
+        return _response_err("Admin email nincs beállítva (MAIL_TO vagy SMTP_FROM).", 500)
 
     try:
         s_name = _safe(name)
@@ -407,6 +430,7 @@ def api_contact():
             subject="Új kapcsolatfelvétel – CyberCare",
             text_msg=admin_text,
             html=admin_html,
+            reply_to=email,
         )
 
         user_html = f"""<!DOCTYPE html>
