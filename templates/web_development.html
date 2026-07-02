@@ -1,488 +1,185 @@
-{# templates/web_development.html #}
 {% extends "base.html" %}
 
-{% block title %}CyberCare - Egyedi webfejlesztés{% endblock %}
-
-{% block head_extra %}
-<style>
-  /* Page-only: smooth scroll (ha kell külön) */
-  .scroll-smooth { scroll-behavior: smooth; }
-
-  /* A base.html már tartalmaz hero-bg + pulse + cyber-title fontot.
-     Itt csak azt adjuk hozzá, ami ehhez az oldalhoz specifikus. */
-
-  .cyber-title {
-    /* base-ben a font megvan, itt a glow animáció + shadow */
-    text-shadow: 0 0 20px rgba(0, 163, 85, 0.5), 0 0 40px rgba(0, 163, 85, 0.3);
-    animation: titleGlow 3s ease-in-out infinite alternate;
-  }
-  @keyframes titleGlow {
-    0% { text-shadow: 0 0 20px rgba(0, 163, 85, 0.5), 0 0 40px rgba(0, 163, 85, 0.3); }
-    100% { text-shadow: 0 0 30px rgba(0, 163, 85, 0.8), 0 0 60px rgba(0, 163, 85, 0.5); }
-  }
-
-  .service-card { transition: all .3s ease; }
-  .service-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0, 163, 85, 0.1); }
-</style>
-{% endblock %}
+{% block title %}Webappok és belső rendszerek – CyberCare{% endblock %}
 
 {% block content %}
-<!-- Hero -->
-<section class="hero-bg min-h-[60vh] flex items-center relative">
+
+<section class="hero-bg min-h-[62vh] flex items-center relative">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 py-16">
-    <h1 class="cyber-title text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
-      Egyedi <span class="text-cyber-green">webfejlesztés</span>
+    <p class="section-kicker text-cyber-green-light">Belső webappok</p>
+    <h1 class="cyber-title text-4xl sm:text-5xl md:text-6xl font-black text-white mt-4 mb-6">
+      Webfejlesztés, ami nem csak bemutat – <span class="text-cyber-green-light">működtet.</span>
     </h1>
     <p class="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
-      Modern, gyors és bővíthető weboldalak és webappok — pontosan a te igényeidre szabva.
+      Céges weboldalakat is készítünk, de a CyberCare fő erőssége az olyan webapp, ami napi munkát vált ki: admin felület, adatbázis, riport, jogosultság, folyamatkezelés és automatizálás.
     </p>
-
     <div class="flex flex-col sm:flex-row gap-4 justify-center mt-10">
-      <a href="#packages"
-         class="bg-cyber-green text-white px-8 py-4 rounded-lg font-bold hover:bg-green-600 transition-all duration-300 transform hover:scale-105 shadow-2xl">
-        Megoldások megnézése
-      </a>
-      <a href="{{ url_for('services') }}"
-         class="border-2 border-cyber-green text-cyber-green px-8 py-4 rounded-lg font-semibold hover:bg-cyber-green hover:text-white transition-all duration-300 bg-white/5 backdrop-blur-sm">
-        Vissza a szolgáltatásokhoz
-      </a>
+      <a href="{{ url_for('contact') }}#contactForm" class="bg-cyber-green text-white px-8 py-4 rounded-2xl font-black hover:opacity-95 transition-all duration-300 transform hover:scale-[1.02] shadow-green">Webappot szeretnék</a>
+      <a href="#examples" class="border border-white/25 text-white px-8 py-4 rounded-2xl font-bold hover:bg-white hover:text-cyber-dark transition-all duration-300 bg-white/5 backdrop-blur-sm">Példák</a>
     </div>
   </div>
 </section>
 
-<!-- Content -->
 <section class="py-20 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-    <!-- Highlights -->
-    <div class="grid md:grid-cols-3 gap-8 mb-16">
-      <div class="service-card bg-white p-8 rounded-xl shadow-lg border border-gray-100">
-        <h3 class="text-xl font-bold text-cyber-dark mb-3">Weboldalak</h3>
-        <p class="text-gray-600 leading-relaxed">
-          Céges weboldal, landing page, portfólió — reszponzív, gyors, SEO-barát felépítéssel.
-        </p>
-      </div>
-
-      <div class="service-card bg-white p-8 rounded-xl shadow-lg border border-gray-100">
-        <h3 class="text-xl font-bold text-cyber-dark mb-3">Webappok</h3>
-        <p class="text-gray-600 leading-relaxed">
-          Ügyfélportál, belső admin felület, foglaló rendszer, dashboard — a folyamatokra tervezve.
-        </p>
-      </div>
-
-      <div class="service-card bg-white p-8 rounded-xl shadow-lg border border-gray-100">
-        <h3 class="text-xl font-bold text-cyber-dark mb-3">Karbantartás + továbbfejlesztés</h3>
-        <p class="text-gray-600 leading-relaxed">
-          Biztonsági frissítések, új funkciók, integrációk — hogy a rendszered hosszú távon is stabil maradjon.
-        </p>
-      </div>
+    <div class="text-center max-w-3xl mx-auto mb-14">
+      <p class="section-kicker">Mikor érdemes webappban gondolkodni?</p>
+      <h2 class="text-3xl sm:text-5xl font-black text-cyber-dark mt-3 mb-5">Amikor a weboldal kevés, az Excel pedig már fáj.</h2>
+      <p class="text-lg text-gray-600">Egy belső webapp nem marketing anyag, hanem napi munkafelület. Olyan, mint egy cégedre szabott mini vállalatirányítási rendszer – csak felesleges bonyolítás nélkül.</p>
     </div>
 
-    <!-- Packages -->
-    <div id="packages" class="text-center mb-12 scroll-smooth">
-      <h2 class="text-4xl font-bold text-cyber-dark mb-4">Mit tudunk elkészíteni?</h2>
-      <div class="w-16 h-1 bg-cyber-green mx-auto"></div>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="card-hover bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+        <h3 class="text-2xl font-black text-cyber-dark mb-3">Admin felület</h3>
+        <p class="text-gray-600 leading-relaxed">Űrlapok, státuszok, listák, keresés, szűrés, jogosultság és auditálható módosítások.</p>
+      </div>
+      <div class="card-hover bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+        <h3 class="text-2xl font-black text-cyber-dark mb-3">Adatbázis + riport</h3>
+        <p class="text-gray-600 leading-relaxed">A cég adatai ne külön fájlokban éljenek: legyenek visszakereshetők, exportálhatók és mérhetők.</p>
+      </div>
+      <div class="card-hover bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+        <h3 class="text-2xl font-black text-cyber-dark mb-3">Automatizálás</h3>
+        <p class="text-gray-600 leading-relaxed">Email értesítések, automatikus riportok, figyelmeztetések, jóváhagyási folyamatok és integrációk.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="examples" class="py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mb-12">
+      <p class="section-kicker">Webapp irányok</p>
+      <h2 class="text-3xl sm:text-5xl font-black text-cyber-dark mt-3 mb-5">Példák, amikből gyorsan lehet üzleti érték.</h2>
     </div>
 
     <div class="grid lg:grid-cols-3 gap-8">
-      <div class="service-card bg-gray-50 p-8 rounded-xl border border-gray-100">
-        <h3 class="text-2xl font-bold text-cyber-dark mb-2">Landing / Céges oldal</h3>
-        <p class="text-gray-600 mb-6">Gyors indulás, profi megjelenés, konverzióra optimalizálva.</p>
-        <ul class="space-y-2 text-gray-700 mb-8">
-          <li>✅ Reszponzív design</li>
-          <li>✅ SEO alapok</li>
-          <li>✅ Kapcsolat / CTA blokkok</li>
-          <li>✅ Analitika bekötés igény szerint</li>
+      <div class="rounded-3xl bg-white p-8 border border-gray-100 shadow-sm">
+        <div class="w-14 h-14 rounded-2xl bg-cyber-green-light text-cyber-green flex items-center justify-center font-black mb-6">01</div>
+        <h3 class="text-2xl font-black text-cyber-dark mb-4">Raktár / csomagkezelő rendszer</h3>
+        <p class="text-gray-600 leading-relaxed mb-6">Bevételezés, kiadás, rendelés, helykezelés, QR kód, jogosultságok és naplózás.</p>
+        <ul class="space-y-2 text-gray-700">
+          <li>• több szerepkör</li>
+          <li>• kereshető csomag/adat lista</li>
+          <li>• export és dokumentáció</li>
         </ul>
-        <a href="{{ url_for('contact') }}"
-           class="inline-flex w-full justify-center items-center gap-2 bg-cyber-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition">
-          Kérek ajánlatot
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-          </svg>
-        </a>
       </div>
 
-      <div class="service-card bg-white p-8 rounded-xl shadow-lg border border-cyber-green/20 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-cyber-green/10 to-transparent -translate-x-full hover:translate-x-full transition-transform duration-700"></div>
-        <div class="relative z-10">
-          <h3 class="text-2xl font-bold text-cyber-dark mb-2">Egyedi webapp</h3>
-          <p class="text-gray-600 mb-6">Komplexebb üzleti igényekre: folyamat, jogosultság, adatkezelés.</p>
-          <ul class="space-y-2 text-gray-700 mb-8">
-            <li>✅ Admin felület</li>
-            <li>✅ Jogosultság / szerepkörök</li>
-            <li>✅ Adatbázis + API</li>
-            <li>✅ Integrációk (email, export, stb.)</li>
-          </ul>
-          <a href="{{ url_for('contact') }}"
-             class="inline-flex w-full justify-center items-center gap-2 bg-cyber-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition">
-            Beszéljünk a webappról
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-            </svg>
-          </a>
-        </div>
+      <div class="rounded-3xl bg-white p-8 border border-gray-100 shadow-sm">
+        <div class="w-14 h-14 rounded-2xl bg-cyber-green-light text-cyber-green flex items-center justify-center font-black mb-6">02</div>
+        <h3 class="text-2xl font-black text-cyber-dark mb-4">Karbantartási / hibabejelentő felület</h3>
+        <p class="text-gray-600 leading-relaxed mb-6">Bejelentés, státuszkezelés, felelős, határidő, fotó, email értesítés és riport.</p>
+        <ul class="space-y-2 text-gray-700">
+          <li>• workflow és jóváhagyás</li>
+          <li>• jogosultságok</li>
+          <li>• visszakereshető előzmények</li>
+        </ul>
       </div>
 
-      <div class="service-card bg-gray-50 p-8 rounded-xl border border-gray-100">
-        <h3 class="text-2xl font-bold text-cyber-dark mb-2">Modernizálás / újratervezés</h3>
-        <p class="text-gray-600 mb-6">Ha van már weboldalad, de lassú, elavult vagy nehezen bővíthető.</p>
-        <ul class="space-y-2 text-gray-700 mb-8">
-          <li>✅ UX/UI frissítés</li>
-          <li>✅ Sebesség optimalizálás</li>
-          <li>✅ Biztonsági javítások</li>
-          <li>✅ Strukturált bővítés</li>
+      <div class="rounded-3xl bg-white p-8 border border-gray-100 shadow-sm">
+        <div class="w-14 h-14 rounded-2xl bg-cyber-green-light text-cyber-green flex items-center justify-center font-black mb-6">03</div>
+        <h3 class="text-2xl font-black text-cyber-dark mb-4">Riportáló és dashboard rendszer</h3>
+        <p class="text-gray-600 leading-relaxed mb-6">Adatok lekérdezése, kritikus eltérések kiemelése, grafikonok és automatikus email összefoglalók.</p>
+        <ul class="space-y-2 text-gray-700">
+          <li>• napi/heti riport</li>
+          <li>• grafikonok és KPI-ok</li>
+          <li>• Excel/PDF export igény szerint</li>
         </ul>
-        <a href="{{ url_for('contact') }}"
-           class="inline-flex w-full justify-center items-center gap-2 bg-cyber-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition">
-          Nézzük meg együtt
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-          </svg>
-        </a>
       </div>
     </div>
-
-    <!-- CTA -->
-    <div class="text-center mt-16">
-      <div class="bg-cyber-green/5 inline-block px-8 py-6 rounded-xl">
-        <p class="text-xl font-semibold text-cyber-dark mb-3">
-          Szeretnél egy weboldalt/webappot, ami tényleg dolgozik helyetted?
-        </p>
-        <a href="{{ url_for('contact') }}"
-           class="inline-flex items-center gap-2 bg-cyber-green text-white px-8 py-4 rounded-lg font-bold hover:bg-green-600 transition transform hover:scale-105 shadow-lg">
-          Indítsuk el a projektet
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-          </svg>
-        </a>
-      </div>
-    </div>
-
   </div>
 </section>
 
-<!-- Demo oldalak -->
+<section class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-[1fr_1fr] gap-12 items-start">
+      <div>
+        <p class="section-kicker">Technikai alap</p>
+        <h2 class="text-3xl sm:text-5xl font-black text-cyber-dark mt-3 mb-6">Egyszerűen kezelhető, később bővíthető alapokra építve.</h2>
+        <p class="text-lg text-gray-600 leading-relaxed mb-8">A cél nem az, hogy a lehető legdivatosabb technológiai stack legyen, hanem hogy stabilan működjön, könnyen lehessen továbbfejleszteni, és a felhasználók tényleg tudják használni.</p>
+        <a href="{{ url_for('contact') }}#contactForm" class="inline-flex rounded-2xl bg-cyber-green px-7 py-4 text-white font-black hover:opacity-90 transition shadow-green">Átbeszélem a projektem</a>
+      </div>
+
+      <div class="rounded-[2rem] bg-gray-50 p-8 border border-gray-100">
+        <div class="space-y-5">
+          <div class="flex gap-4 items-start">
+            <span class="w-10 h-10 rounded-xl bg-cyber-green text-white flex items-center justify-center font-bold">✓</span>
+            <div>
+              <h3 class="font-black text-cyber-dark">Backend és adatbázis</h3>
+              <p class="text-gray-600">Python / Flask alapú megoldások, SQL adatbázis, strukturált API.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 items-start">
+            <span class="w-10 h-10 rounded-xl bg-cyber-green text-white flex items-center justify-center font-bold">✓</span>
+            <div>
+              <h3 class="font-black text-cyber-dark">Jogosultság és naplózás</h3>
+              <p class="text-gray-600">Felhasználói szerepkörök, védett funkciók, módosítási előzmények.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 items-start">
+            <span class="w-10 h-10 rounded-xl bg-cyber-green text-white flex items-center justify-center font-bold">✓</span>
+            <div>
+              <h3 class="font-black text-cyber-dark">Felhasználóbarát UI</h3>
+              <p class="text-gray-600">Nem fejlesztőknek készül: tiszta menük, érthető gombok, reszponzív nézet.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 items-start">
+            <span class="w-10 h-10 rounded-xl bg-cyber-green text-white flex items-center justify-center font-bold">✓</span>
+            <div>
+              <h3 class="font-black text-cyber-dark">Dokumentáció és továbbfejlesztés</h3>
+              <p class="text-gray-600">Átadás után is érthető legyen, mi hogyan működik.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="demo" class="py-20 bg-gray-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
     <div class="text-center mb-12">
-      <h2 class="text-4xl font-bold text-cyber-dark mb-4">Demo oldalaink</h2>
-      <p class="text-gray-600 max-w-3xl mx-auto">
-        Tekintsd meg a demo projektjeinket. Vidd rá az egeret, és élesedik – kattintásra megnyílik.
-      </p>
-      <div class="w-16 h-1 bg-cyber-green mx-auto mt-4"></div>
+      <p class="section-kicker">Demo irányok</p>
+      <h2 class="text-3xl sm:text-5xl font-black text-cyber-dark mt-3 mb-5">Látványos weboldal-demo oldalak</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto">Ezek a demók inkább a vizuális webes irányt mutatják. A CyberCare fő fókusza emellett a belső üzleti webapp és automatizálás.</p>
     </div>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-      <!-- DEMO 1 -->
-      <a href="/demo/elegant_etlap"
-         class="group block rounded-2xl overflow-hidden border border-gray-200 shadow-lg bg-white hover:shadow-2xl transition-all duration-300">
+      <a href="/demo/elegant_etlap" class="group block rounded-3xl overflow-hidden border border-gray-200 shadow-sm bg-white hover:shadow-soft transition-all duration-300">
         <div class="relative aspect-[16/10] overflow-hidden">
-          <img src="/demo_assets/elegant_etlap_kep.png"
-               alt="Demo 1"
-               class="w-full h-full object-cover scale-105 blur-md brightness-75 group-hover:blur-0 group-hover:brightness-100 group-hover:scale-100 transition-all duration-500" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent"></div>
-          <div class="absolute bottom-4 left-4 right-4">
-            <h3 class="text-white text-xl font-bold">Demo 1</h3>
-            <p class="text-gray-200 text-sm">Modern, Elegáns Étlap</p>
-          </div>
+          <img src="/demo_assets/elegant_etlap_kep.png" alt="Modern étlap demo" class="w-full h-full object-cover scale-105 blur-sm brightness-75 group-hover:blur-0 group-hover:brightness-100 group-hover:scale-100 transition-all duration-500" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 right-4"><h3 class="text-white text-xl font-black">Étterem demo</h3><p class="text-gray-200 text-sm">Modern, elegáns étlap</p></div>
         </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between">
-            <span class="text-cyber-green font-semibold">Megnyitás</span>
-            <svg class="w-5 h-5 text-cyber-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-            </svg>
-          </div>
-        </div>
+        <div class="p-5 flex items-center justify-between"><span class="text-cyber-green font-bold">Megnyitás</span><span class="text-cyber-green">→</span></div>
       </a>
 
-      <!-- DEMO 2 -->
-      <a href="/demo/kozmetikum_landing"
-         class="group block rounded-2xl overflow-hidden border border-gray-200 shadow-lg bg-white hover:shadow-2xl transition-all duration-300">
+      <a href="/demo/kozmetikum_landing" class="group block rounded-3xl overflow-hidden border border-gray-200 shadow-sm bg-white hover:shadow-soft transition-all duration-300">
         <div class="relative aspect-[16/10] overflow-hidden">
-          <img src="/demo_assets/kozmetikum_landing_kep.png"
-               alt="Demo 2"
-               class="w-full h-full object-cover scale-105 blur-md brightness-75 group-hover:blur-0 group-hover:brightness-100 group-hover:scale-100 transition-all duration-500" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent"></div>
-          <div class="absolute bottom-4 left-4 right-4">
-            <h3 class="text-white text-xl font-bold">Demo 2</h3>
-            <p class="text-gray-200 text-sm">Kozmetikum</p>
-          </div>
+          <img src="/demo_assets/kozmetikum_landing_kep.png" alt="Kozmetikum demo" class="w-full h-full object-cover scale-105 blur-sm brightness-75 group-hover:blur-0 group-hover:brightness-100 group-hover:scale-100 transition-all duration-500" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent"></div>
+          <div class="absolute bottom-4 left-4 right-4"><h3 class="text-white text-xl font-black">Kozmetikum demo</h3><p class="text-gray-200 text-sm">Landing page irány</p></div>
         </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between">
-            <span class="text-cyber-green font-semibold">Megnyitás</span>
-            <svg class="w-5 h-5 text-cyber-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-            </svg>
-          </div>
-        </div>
+        <div class="p-5 flex items-center justify-between"><span class="text-cyber-green font-bold">Megnyitás</span><span class="text-cyber-green">→</span></div>
       </a>
 
-      <!-- DEMO 3 -->
-      <a href="/demo/edzoterem_weboldal"
-         class="group block rounded-2xl overflow-hidden border border-gray-200 shadow-lg bg-white hover:shadow-2xl transition-all duration-300">
-        <div class="relative aspect-[16/10] overflow-hidden">
-          <img src="/demo_assets/edzoterem_weboldal_kep.png"
-               alt="Demo 3"
-               class="w-full h-full object-cover scale-105 blur-md brightness-75 group-hover:blur-0 group-hover:brightness-100 group-hover:scale-100 transition-all duration-500" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent"></div>
-          <div class="absolute bottom-4 left-4 right-4">
-            <h3 class="text-white text-xl font-bold">Demo 3</h3>
-            <p class="text-gray-200 text-sm">Edzőterem</p>
-          </div>
+      <a href="/demo/vendeghaz_demo" class="group block rounded-3xl overflow-hidden border border-gray-200 shadow-sm bg-white hover:shadow-soft transition-all duration-300">
+        <div class="relative aspect-[16/10] overflow-hidden bg-cyber-dark flex items-center justify-center">
+          <div class="absolute inset-0 bg-gradient-to-br from-cyber-green/30 to-cyber-dark"></div>
+          <div class="relative text-center px-6"><h3 class="text-white text-2xl font-black">Vendégház demo</h3><p class="text-gray-200 mt-2">Szállás / szolgáltatás bemutató</p></div>
         </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between">
-            <span class="text-cyber-green font-semibold">Megnyitás</span>
-            <svg class="w-5 h-5 text-cyber-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-            </svg>
-          </div>
-        </div>
+        <div class="p-5 flex items-center justify-between"><span class="text-cyber-green font-bold">Megnyitás</span><span class="text-cyber-green">→</span></div>
       </a>
-
-      <!-- DEMO 4 -->
-      <a href="/demo/mez_kereskedes"
-         class="group block rounded-2xl overflow-hidden border border-gray-200 shadow-lg bg-white hover:shadow-2xl transition-all duration-300">
-        <div class="relative aspect-[16/10] overflow-hidden">
-          <img src="/demo_assets/mez_kereskedes.png"
-               alt="Demo 4"
-               class="w-full h-full object-cover scale-105 blur-md brightness-75 group-hover:blur-0 group-hover:brightness-100 group-hover:scale-100 transition-all duration-500" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent"></div>
-          <div class="absolute bottom-4 left-4 right-4">
-            <h3 class="text-white text-xl font-bold">Demo 4</h3>
-            <p class="text-gray-200 text-sm">Méz kereskedés</p>
-          </div>
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between">
-            <span class="text-cyber-green font-semibold">Megnyitás</span>
-            <svg class="w-5 h-5 text-cyber-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-            </svg>
-          </div>
-        </div>
-      </a>
-
-      <!-- DEMO 5 -->
-      <a href="/demo/szallitmanyozas"
-         class="group block rounded-2xl overflow-hidden border border-gray-200 shadow-lg bg-white hover:shadow-2xl transition-all duration-300">
-        <div class="relative aspect-[16/10] overflow-hidden">
-          <img src="/demo_assets/szallitmanyozas.png"
-               alt="Demo 5"
-               class="w-full h-full object-cover scale-105 blur-md brightness-75 group-hover:blur-0 group-hover:brightness-100 group-hover:scale-100 transition-all duration-500" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent"></div>
-          <div class="absolute bottom-4 left-4 right-4">
-            <h3 class="text-white text-xl font-bold">Demo 5</h3>
-            <p class="text-gray-200 text-sm">Szállítmányozás</p>
-          </div>
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between">
-            <span class="text-cyber-green font-semibold">Megnyitás</span>
-            <svg class="w-5 h-5 text-cyber-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-            </svg>
-          </div>
-        </div>
-      </a>
-
-      <!-- DEMO 6 -->
-      <a href="/demo/caffe"
-         class="group block rounded-2xl overflow-hidden border border-gray-200 shadow-lg bg-white hover:shadow-2xl transition-all duration-300">
-        <div class="relative aspect-[16/10] overflow-hidden">
-          <img src="/demo_assets/caffe.png"
-               alt="Demo 6"
-               class="w-full h-full object-cover scale-105 blur-md brightness-75 group-hover:blur-0 group-hover:brightness-100 group-hover:scale-100 transition-all duration-500" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent"></div>
-          <div class="absolute bottom-4 left-4 right-4">
-            <h3 class="text-white text-xl font-bold">Demo 6</h3>
-            <p class="text-gray-200 text-sm">Kávé ház</p>
-          </div>
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between">
-            <span class="text-cyber-green font-semibold">Megnyitás</span>
-            <svg class="w-5 h-5 text-cyber-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-            </svg>
-          </div>
-        </div>
-      </a>
-
     </div>
   </div>
 </section>
 
-<!-- Funkcionális rendszerek demói -->
-<!-- <section id="functional-demos" class="py-20 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-    <div class="text-center mb-12">
-      <h2 class="text-4xl font-bold text-cyber-dark mb-4">Funkcionális rendszerek demói</h2>
-      <p class="text-gray-600 max-w-3xl mx-auto">
-        Itt olyan működő, “rendszer jellegű” demókat találsz, mint adatvizualizáció, raktárkezelés és adatvalidáció.
-        Vidd rá az egeret, és élesedik – kattintásra megnyílik.
-      </p>
-      <div class="w-16 h-1 bg-cyber-green mx-auto mt-4"></div>
-    </div>
-
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-      <!-- FUNK DEMO 1: Adatvizualizáció -->
-      <!-- <a href="/demo/data_viz_dashboard"
-         class="group block rounded-2xl overflow-hidden border border-gray-200 shadow-lg bg-white hover:shadow-2xl transition-all duration-300">
-        <div class="relative aspect-[16/10] overflow-hidden">
-          <img src="/demo_assets/data_viz_dashboard.png"
-               alt="Adatvizualizáció Dashboard"
-               class="w-full h-full object-cover scale-105 blur-md brightness-75 group-hover:blur-0 group-hover:brightness-100 group-hover:scale-100 transition-all duration-500" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent"></div>
-          <div class="absolute bottom-4 left-4 right-4">
-            <h3 class="text-white text-xl font-bold">Adatvizualizáció</h3>
-            <p class="text-gray-200 text-sm">Dashboard / statisztikák / KPI</p>
-          </div>
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between">
-            <span class="text-cyber-green font-semibold">Megnyitás</span>
-            <svg class="w-5 h-5 text-cyber-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-            </svg>
-          </div>
-        </div>
-      </a> -->
-
-      <!-- FUNK DEMO 2: Raktár program -->
-      <!-- <a href="/demo/raktar_management"
-         class="group block rounded-2xl overflow-hidden border border-gray-200 shadow-lg bg-white hover:shadow-2xl transition-all duration-300">
-        <div class="relative aspect-[16/10] overflow-hidden">
-          <img src="/demo_assets/raktar_management.png"
-               alt="Raktár program"
-               class="w-full h-full object-cover scale-105 blur-md brightness-75 group-hover:blur-0 group-hover:brightness-100 group-hover:scale-100 transition-all duration-500" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent"></div>
-          <div class="absolute bottom-4 left-4 right-4">
-            <h3 class="text-white text-xl font-bold">Raktár program</h3>
-            <p class="text-gray-200 text-sm">Készlet / mozgások / státuszok</p>
-          </div>
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between">
-            <span class="text-cyber-green font-semibold">Megnyitás</span>
-            <svg class="w-5 h-5 text-cyber-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-            </svg>
-          </div>
-        </div>
-      </a> -->
-
-      <!-- FUNK DEMO 3: Adatvalidáció -->
-      <!-- <a href="/demo/adat_validacio"
-         class="group block rounded-2xl overflow-hidden border border-gray-200 shadow-lg bg-white hover:shadow-2xl transition-all duration-300">
-        <div class="relative aspect-[16/10] overflow-hidden">
-          <img src="/demo_assets/adat_validacio.png"
-               alt="Adatvalidáció"
-               class="w-full h-full object-cover scale-105 blur-md brightness-75 group-hover:blur-0 group-hover:brightness-100 group-hover:scale-100 transition-all duration-500" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent"></div>
-          <div class="absolute bottom-4 left-4 right-4">
-            <h3 class="text-white text-xl font-bold">Adatvalidáció</h3>
-            <p class="text-gray-200 text-sm">Hibakeresés / szabályok / riport</p>
-          </div>
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between">
-            <span class="text-cyber-green font-semibold">Megnyitás</span>
-            <svg class="w-5 h-5 text-cyber-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-            </svg>
-          </div>
-        </div>
-      </a> -->
-
-      <!-- FUNK DEMO 4: Workflow / jóváhagyás -->
-      <!-- <a href="/demo/workflow_approval"
-         class="group block rounded-2xl overflow-hidden border border-gray-200 shadow-lg bg-white hover:shadow-2xl transition-all duration-300">
-        <div class="relative aspect-[16/10] overflow-hidden">
-          <img src="/demo_assets/workflow_approval.png"
-               alt="Workflow / Jóváhagyás"
-               class="w-full h-full object-cover scale-105 blur-md brightness-75 group-hover:blur-0 group-hover:brightness-100 group-hover:scale-100 transition-all duration-500" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent"></div>
-          <div class="absolute bottom-4 left-4 right-4">
-            <h3 class="text-white text-xl font-bold">Workflow</h3>
-            <p class="text-gray-200 text-sm">Jóváhagyás / napló / státusz</p>
-          </div>
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between">
-            <span class="text-cyber-green font-semibold">Megnyitás</span>
-            <svg class="w-5 h-5 text-cyber-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-            </svg>
-          </div>
-        </div>
-      </a> -->
-
-      <!-- FUNK DEMO 5: Integrációk / API -->
-      <!-- <a href="/demo/api_integraciok"
-         class="group block rounded-2xl overflow-hidden border border-gray-200 shadow-lg bg-white hover:shadow-2xl transition-all duration-300">
-        <div class="relative aspect-[16/10] overflow-hidden">
-          <img src="/demo_assets/api_integraciok.png"
-               alt="API integrációk"
-               class="w-full h-full object-cover scale-105 blur-md brightness-75 group-hover:blur-0 group-hover:brightness-100 group-hover:scale-100 transition-all duration-500" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent"></div>
-          <div class="absolute bottom-4 left-4 right-4">
-            <h3 class="text-white text-xl font-bold">API integrációk</h3>
-            <p class="text-gray-200 text-sm">Külső rendszerek / automatizálás</p>
-          </div>
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between">
-            <span class="text-cyber-green font-semibold">Megnyitás</span>
-            <svg class="w-5 h-5 text-cyber-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-            </svg>
-          </div>
-        </div>
-      </a> -->
-
-      <!-- FUNK DEMO 6: Monitoring / alert -->
-      <!-- <a href="/demo/monitoring_alerts"
-         class="group block rounded-2xl overflow-hidden border border-gray-200 shadow-lg bg-white hover:shadow-2xl transition-all duration-300">
-        <div class="relative aspect-[16/10] overflow-hidden">
-          <img src="/demo_assets/monitoring_alerts.png"
-               alt="Monitoring és riasztások"
-               class="w-full h-full object-cover scale-105 blur-md brightness-75 group-hover:blur-0 group-hover:brightness-100 group-hover:scale-100 transition-all duration-500" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent"></div>
-          <div class="absolute bottom-4 left-4 right-4">
-            <h3 class="text-white text-xl font-bold">Monitoring</h3>
-            <p class="text-gray-200 text-sm">Értesítés / események / log</p>
-          </div>
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between">
-            <span class="text-cyber-green font-semibold">Megnyitás</span>
-            <svg class="w-5 h-5 text-cyber-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-            </svg>
-          </div>
-        </div>
-      </a> -->
-
-    <!-- </div>
+<section class="py-20 bg-cyber-dark">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <p class="section-kicker text-cyber-green-light">Indulás</p>
+    <h2 class="text-3xl sm:text-5xl font-black text-white mt-3 mb-6">Van egy belső folyamat, amit webappal ki lehetne váltani?</h2>
+    <p class="text-xl text-gray-300 mb-8">Írd le, mit csináltok ma Excelben, emailben vagy papíron. Megnézzük, lehet-e belőle gyors, használható első verzió.</p>
+    <a href="{{ url_for('contact') }}#contactForm" class="inline-flex bg-cyber-green text-white px-9 py-4 rounded-2xl font-black hover:opacity-95 transition shadow-green">Projekt egyeztetés</a>
   </div>
-</section> -->
+</section>
 
-{% endblock %}
-
-{% block scripts %}
-<script>
-  // Ha szeretnéd, hogy a #packages/#demo anchorra kattintáskor szépen görgessen:
-  // (Tailwind "scroll-smooth" osztályt a body-ra a base nem teszi, itt JS nélkül is ok a modern böngészőkben.)
-  // Semmi extra JS nem kell, mert:
-  // - mobile menü script base-ben van
-  // - modal script base-ben van
-</script>
 {% endblock %}

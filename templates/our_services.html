@@ -1,417 +1,190 @@
 {% extends "base.html" %}
 
-{% block title %}Szolgáltatásaink - CyberCare{% endblock %}
+{% block title %}Megoldások – CyberCare{% endblock %}
 
 {% block content %}
 
-<!-- Hero: Szolgáltatások -->
-<section class="hero-bg pt-16 min-h-[60vh] flex items-center relative">
-  <div class="circuit-pattern opacity-30"></div>
-
+<section class="hero-bg min-h-[62vh] flex items-center relative">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 py-16">
-    <h1 class="cyber-title text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
-      Mit <span class="text-cyber-green">nyújtunk</span>?
+    <p class="section-kicker text-cyber-green-light">CyberCare megoldások</p>
+    <h1 class="cyber-title text-4xl sm:text-5xl md:text-6xl font-black text-white mt-4 mb-6">
+      IT, ami nem csak működik – <span class="text-cyber-green-light">dolgozik is helyetted.</span>
     </h1>
-
     <p class="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
-      Egyedi fejlesztések, rendszerintegrációk és modern digitális megoldások
-      vállalkozások és magánszemélyek számára.
+      Konzultáció, belső webappok, raktárkezelés, riportok és automatizálás olyan cégeknek, ahol már túl sok időt visz el a kézi adminisztráció.
     </p>
-
     <div class="flex flex-col sm:flex-row gap-4 justify-center mt-10">
-      <a href="#services"
-         class="bg-cyber-green text-white px-8 py-4 rounded-lg font-bold hover:bg-green-600 transition-all duration-300 transform hover:scale-105 shadow-2xl">
-        Megoldások
-      </a>
-
-      <a href="{{ url_for('web_development') }}"
-         class="border-2 border-cyber-green text-cyber-green px-8 py-4 rounded-lg font-semibold hover:bg-cyber-green hover:text-white transition-all duration-300 bg-white/5 backdrop-blur-sm">
-        Webfejlesztés
-      </a>
+      <a href="{{ url_for('contact') }}#contactForm" class="bg-cyber-green text-white px-8 py-4 rounded-2xl font-black hover:opacity-95 transition-all duration-300 transform hover:scale-[1.02] shadow-green">Kérek konzultációt</a>
+      <a href="#solutions" class="border border-white/25 text-white px-8 py-4 rounded-2xl font-bold hover:bg-white hover:text-cyber-dark transition-all duration-300 bg-white/5 backdrop-blur-sm">Megoldások</a>
     </div>
   </div>
 </section>
 
-<!-- Services Overview -->
-<section id="services" class="py-20 bg-white">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <h2 class="text-4xl font-bold text-cyber-dark mb-8">Miért válassza a CyberCare-t?</h2>
-    <div class="w-16 h-1 bg-cyber-green mx-auto mb-12"></div>
-    <p class="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
-      Szolgáltatásaink célja, hogy vállalkozása digitális átalakulását teljes körűen támogassuk.
-      A logisztikai rendszerektől az AI-integrációig minden területen szakértői segítséget nyújtunk.
-    </p>
-  </div>
-</section>
-
-<!-- Detailed Services -->
-<section class="py-20 bg-gray-50">
+<section class="py-20 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-    <div class="grid lg:grid-cols-2 gap-8 items-start">
-
-      <!-- Card 1 -->
-      <div class="bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden">
-        <button type="button"
-          class="w-full text-left p-8 flex items-start gap-5 hover:bg-gray-50 transition"
-          data-toggle="service"
-          data-target="svc1">
-          <div class="w-12 h-12 rounded-xl bg-cyber-green/10 flex items-center justify-center flex-shrink-0">
-            <svg class="w-6 h-6 text-cyber-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16" />
-            </svg>
-          </div>
-          <div class="flex-1">
-            <h3 class="text-xl font-bold text-cyber-dark">Egyedi szoftverfejlesztés</h3>
-            <p class="text-gray-600 mt-1">Belső rendszerek, automatizmusok, webes felületek – igényre szabva.</p>
-          </div>
-          <div class="mt-1">
-            <svg id="svc1_icon" class="w-6 h-6 text-gray-400 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </button>
-
-        <div id="svc1" class="service-panel max-h-0 opacity-0 overflow-hidden px-8 transition-all duration-300 ease-in-out">
-          <div class="pb-8 pt-2 text-gray-700 leading-relaxed">
-            <ul class="list-disc list-inside space-y-2">
-              <li>Flask/Django alapú backend, modern frontend (Tailwind/Bootstrap)</li>
-              <li>Admin felületek, jogosultságkezelés, workflow-k</li>
-              <li>Integráció gyártási/logisztikai rendszerekkel</li>
-            </ul>
-
-            <div class="mt-6 flex flex-col sm:flex-row gap-3">
-              <a href="{{ url_for('contact') }}"
-                 class="inline-flex justify-center bg-cyber-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition">
-                Ajánlatot kérek
-              </a>
-              <a href="{{ url_for('web_fejlesztes') }}"
-                 class="inline-flex justify-center border-2 border-cyber-green text-cyber-green px-6 py-3 rounded-lg font-semibold hover:bg-cyber-green hover:text-white transition">
-                Részletek
-              </a>
-            </div>
-          </div>
+    <div class="grid lg:grid-cols-[.9fr_1.1fr] gap-12 items-center">
+      <div>
+        <p class="section-kicker">Pozicionálás</p>
+        <h2 class="text-3xl sm:text-5xl font-black text-cyber-dark mt-3 mb-6">Nem “IT szolgáltatáslistát” adunk, hanem működési problémákat oldunk meg.</h2>
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">
+          A CyberCare akkor hasznos, amikor egy cég érzi, hogy valami már nem skálázódik: Excel táblák, kézi másolgatás, hiányzó riportok, nehéz visszakeresés, lassú adminisztráció vagy elavult belső rendszer.
+        </p>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          Ilyenkor az első lépés nem feltétlenül egy nagy fejlesztés, hanem egy tiszta felmérés: mi fáj, mi térül meg, és miből legyen első működő verzió.
+        </p>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-5">
+        <div class="rounded-3xl bg-cyber-green-light p-6 border border-cyber-green/10">
+          <p class="text-4xl font-black text-cyber-green mb-2">01</p>
+          <h3 class="font-black text-xl mb-2">Felmérés</h3>
+          <p class="text-gray-700">Megértjük a folyamatot, nem csak a kért funkciót.</p>
+        </div>
+        <div class="rounded-3xl bg-gray-50 p-6 border border-gray-100">
+          <p class="text-4xl font-black text-cyber-green mb-2">02</p>
+          <h3 class="font-black text-xl mb-2">Prioritás</h3>
+          <p class="text-gray-700">Az első fejlesztés ott kezdődik, ahol a legtöbb idő vagy hiba keletkezik.</p>
+        </div>
+        <div class="rounded-3xl bg-gray-50 p-6 border border-gray-100">
+          <p class="text-4xl font-black text-cyber-green mb-2">03</p>
+          <h3 class="font-black text-xl mb-2">MVP</h3>
+          <p class="text-gray-700">Gyors, használható első verzió, amit valós működés alapján bővítünk.</p>
+        </div>
+        <div class="rounded-3xl bg-cyber-dark p-6 text-white">
+          <p class="text-4xl font-black text-cyber-green-light mb-2">04</p>
+          <h3 class="font-black text-xl mb-2">Támogatás</h3>
+          <p class="text-gray-300">Átadás után sem hagyjuk magára a rendszert.</p>
         </div>
       </div>
-
-      <!-- Card 2 -->
-      <div class="bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden">
-        <button type="button"
-          class="w-full text-left p-8 flex items-start gap-5 hover:bg-gray-50 transition"
-          data-toggle="service"
-          data-target="svc2">
-          <div class="w-12 h-12 rounded-xl bg-cyber-green/10 flex items-center justify-center flex-shrink-0">
-            <svg class="w-6 h-6 text-cyber-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18h18" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M7 14l3-3 3 2 5-6" />
-            </svg>
-          </div>
-          <div class="flex-1">
-            <h3 class="text-xl font-bold text-cyber-dark">Adatvizualizáció & dashboardok</h3>
-            <p class="text-gray-600 mt-1">Riportok, KPI-k, valós idejű monitorozás vezetői nézetben.</p>
-          </div>
-          <div class="mt-1">
-            <svg id="svc2_icon" class="w-6 h-6 text-gray-400 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </button>
-
-        <div id="svc2" class="service-panel max-h-0 opacity-0 overflow-hidden px-8 transition-all duration-300 ease-in-out">
-          <div class="pb-8 pt-2 text-gray-700 leading-relaxed">
-            <ul class="list-disc list-inside space-y-2">
-              <li>Chart.js / táblázatos nézetek / export (CSV, Excel)</li>
-              <li>SQL Server / MySQL / PostgreSQL adatforrások</li>
-              <li>Jogosultság és audit naplózás</li>
-            </ul>
-            <div class="mt-6">
-              <a href="{{ url_for('contact') }}"
-                 class="inline-flex justify-center bg-cyber-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition">
-                Egyeztessünk
-              </a>
-              <a href="{{ url_for('web_fejlesztes') }}"
-                 class="inline-flex justify-center border-2 border-cyber-green text-cyber-green px-6 py-3 rounded-lg font-semibold hover:bg-cyber-green hover:text-white transition">
-                Részletek
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden">
-        <button type="button"
-          class="w-full text-left p-8 flex items-start gap-5 hover:bg-gray-50 transition"
-          data-toggle="service"
-          data-target="svc3">
-          <div class="w-12 h-12 rounded-xl bg-cyber-green/10 flex items-center justify-center flex-shrink-0">
-            <svg class="w-6 h-6 text-cyber-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a4 4 0 100 8 4 4 0 000-8z" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 22a8 8 0 0116 0" />
-            </svg>
-          </div>
-          <div class="flex-1">
-            <h3 class="text-xl font-bold text-cyber-dark">AI integráció & automatizálás</h3>
-            <p class="text-gray-600 mt-1">Folyamatok gyorsítása: szöveg, kép, riasztások, döntéstámogatás.</p>
-          </div>
-          <div class="mt-1">
-            <svg id="svc3_icon" class="w-6 h-6 text-gray-400 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </button>
-
-        <div id="svc3" class="service-panel max-h-0 opacity-0 overflow-hidden px-8 transition-all duration-300 ease-in-out">
-          <div class="pb-8 pt-2 text-gray-700 leading-relaxed">
-            <ul class="list-disc list-inside space-y-2">
-              <li>AI-alapú asszisztensek, belső tudásbázisok, support automatizálás</li>
-              <li>Értesítések (email/webhook), eseményfeldolgozás, log-analitika</li>
-              <li>Biztonságos integráció: jogosultság, naplózás, kontrollált hozzáférés</li>
-            </ul>
-            <div class="mt-6">
-              <a href="{{ url_for('contact') }}"
-                 class="inline-flex justify-center bg-cyber-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition">
-                Kérek konzultációt
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden">
-        <button type="button"
-          class="w-full text-left p-8 flex items-start gap-5 hover:bg-gray-50 transition"
-          data-toggle="service"
-          data-target="svc4">
-          <div class="w-12 h-12 rounded-xl bg-cyber-green/10 flex items-center justify-center flex-shrink-0">
-            <svg class="w-6 h-6 text-cyber-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <div class="flex-1">
-            <h3 class="text-xl font-bold text-cyber-dark">Rendszer modernizáció</h3>
-            <p class="text-gray-600 mt-1">Régi rendszerek rendbetétele, teljesítmény, stabilitás és UX.</p>
-          </div>
-          <div class="mt-1">
-            <svg id="svc4_icon" class="w-6 h-6 text-gray-400 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </button>
-
-        <div id="svc4" class="service-panel max-h-0 opacity-0 overflow-hidden px-8 transition-all duration-300 ease-in-out">
-          <div class="pb-8 pt-2 text-gray-700 leading-relaxed">
-            <ul class="list-disc list-inside space-y-2">
-              <li>Refaktorálás, modularizálás, sebesség optimalizálás</li>
-              <li>Biztonsági alapok: input validáció, audit, jogosultságok</li>
-              <li>CI/CD alapok, deploy támogatás</li>
-            </ul>
-            <div class="mt-6">
-              <a href="{{ url_for('contact') }}"
-                 class="inline-flex justify-center bg-cyber-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition">
-                Auditot kérek
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 5 -->
-      <div class="bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden">
-        <button type="button"
-          class="w-full text-left p-8 flex items-start gap-5 hover:bg-gray-50 transition"
-          data-toggle="service"
-          data-target="svc5">
-          <div class="w-12 h-12 rounded-xl bg-cyber-green/10 flex items-center justify-center flex-shrink-0">
-            <svg class="w-6 h-6 text-cyber-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 2l7 4v4c0 5.25-3.5 9.75-7 11-3.5-1.25-7-5.75-7-11V6l7-4z" />
-            </svg>
-          </div>
-          <div class="flex-1">
-            <h3 class="text-xl font-bold text-cyber-dark">IT karbantartás & támogatás</h3>
-            <p class="text-gray-600 mt-1">Magánszemélyeknek és cégeknek: gyors, korrekt, érthető segítség.</p>
-          </div>
-          <div class="mt-1">
-            <svg id="svc5_icon" class="w-6 h-6 text-gray-400 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </button>
-
-        <div id="svc5" class="service-panel max-h-0 opacity-0 overflow-hidden px-8 transition-all duration-300 ease-in-out">
-          <div class="pb-8 pt-2 text-gray-700 leading-relaxed">
-            <ul class="list-disc list-inside space-y-2">
-              <li>PC/laptop hibák, optimalizálás, telepítés, adatmentés</li>
-              <li>Vállalati géppark karbantartás, monitoring, automatizálás</li>
-              <li>Gyors reakció, tiszta kommunikáció</li>
-            </ul>
-            <div class="mt-6">
-              <a href="{{ url_for('contact') }}"
-                 class="inline-flex justify-center bg-cyber-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition">
-                Segítséget kérek
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 6 -->
-      <div class="bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden">
-        <button type="button"
-          class="w-full text-left p-8 flex items-start gap-5 hover:bg-gray-50 transition"
-          data-toggle="service"
-          data-target="svc6">
-          <div class="w-12 h-12 rounded-xl bg-cyber-green/10 flex items-center justify-center flex-shrink-0">
-            <svg class="w-6 h-6 text-cyber-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 7h18M3 12h18M3 17h18" />
-            </svg>
-          </div>
-          <div class="flex-1">
-            <h3 class="text-xl font-bold text-cyber-dark">Egyedi webfejlesztés</h3>
-            <p class="text-gray-600 mt-1">Gyors, reszponzív, modern weboldalak és webappok – üzleti célra optimalizálva.</p>
-          </div>
-          <div class="mt-1">
-            <svg id="svc6_icon" class="w-6 h-6 text-gray-400 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </button>
-
-        <div id="svc6" class="service-panel max-h-0 opacity-0 overflow-hidden px-8 transition-all duration-300 ease-in-out">
-          <div class="pb-8 pt-2 text-gray-700 leading-relaxed">
-            <ul class="list-disc list-inside space-y-2">
-              <li>Landing page / céges weboldal / portfólió / foglaló rendszer</li>
-              <li>SEO alapok, gyors betöltés, mobil-first kialakítás</li>
-              <li>Admin felület, űrlapok, email értesítések, integrációk</li>
-              <li>Igény szerint: többnyelvűség, blog, fizetés (Stripe), időpontfoglalás</li>
-            </ul>
-
-            <div class="mt-6 flex flex-col sm:flex-row gap-3">
-              <a href="{{ url_for('web_development') }}"
-                 class="inline-flex justify-center bg-cyber-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition">
-                Webfejlesztés részletek
-              </a>
-              <a href="{{ url_for('web_fejlesztes') }}"
-                 class="inline-flex justify-center border-2 border-cyber-green text-cyber-green px-6 py-3 rounded-lg font-semibold hover:bg-cyber-green hover:text-white transition">
-                Részletek
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
-
   </div>
 </section>
 
-<!-- Process Section -->
-<section class="py-12 sm:py-16 md:py-20 bg-white">
+<section id="solutions" class="py-20 bg-gray-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-8 sm:mb-12 md:mb-16">
-      <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-cyber-dark mb-4 sm:mb-6 md:mb-8">Hogyan dolgozunk?</h2>
-      <div class="w-12 sm:w-16 h-1 bg-cyber-green mx-auto"></div>
+    <div class="text-center max-w-3xl mx-auto mb-14">
+      <p class="section-kicker">Szolgáltatási fókusz</p>
+      <h2 class="text-3xl sm:text-5xl font-black text-cyber-dark mt-3 mb-5">Miben tudunk segíteni?</h2>
+      <p class="text-lg text-gray-600">A lenti területek külön-külön is kérhetők, de a legtöbb cégnek ezek kombinációja ad igazán erős megoldást.</p>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
-      <div class="text-center">
-        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-cyber-green rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 text-white font-bold text-lg sm:text-xl">1</div>
-        <h3 class="text-sm sm:text-lg md:text-xl font-bold text-cyber-dark mb-1 sm:mb-2">Konzultáció</h3>
-        <p class="text-xs sm:text-sm md:text-gray-600">Megismerjük az Ön igényeit és kihívásait</p>
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="card-hover bg-white rounded-3xl border border-gray-100 shadow-sm p-8">
+        <div class="w-14 h-14 rounded-2xl bg-cyber-green text-white flex items-center justify-center font-black mb-6">IT</div>
+        <h3 class="text-2xl font-black text-cyber-dark mb-3">IT konzultáció és folyamatfelmérés</h3>
+        <p class="text-gray-600 leading-relaxed mb-6">Ha tudod, hogy valamit modernizálni kellene, de még nem tiszta, mivel érdemes kezdeni.</p>
+        <ul class="space-y-3 text-gray-700">
+          <li>• folyamatok feltérképezése</li>
+          <li>• fejlesztési prioritási lista</li>
+          <li>• technológiai javaslat laikus nyelven</li>
+          <li>• kockázatok, adatbiztonság, üzemeltetés</li>
+        </ul>
       </div>
-      <div class="text-center">
-        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-cyber-green rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 text-white font-bold text-lg sm:text-xl">2</div>
-        <h3 class="text-sm sm:text-lg md:text-xl font-bold text-cyber-dark mb-1 sm:mb-2">Tervezés</h3>
-        <p class="text-xs sm:text-sm md:text-gray-600">Részletes tervet készítünk a megoldásról</p>
+
+      <div class="card-hover bg-white rounded-3xl border border-gray-100 shadow-sm p-8">
+        <div class="w-14 h-14 rounded-2xl bg-cyber-green text-white flex items-center justify-center font-black mb-6">APP</div>
+        <h3 class="text-2xl font-black text-cyber-dark mb-3">Egyedi belső webappok</h3>
+        <p class="text-gray-600 leading-relaxed mb-6">Admin felületek, jogosultságok, státuszok, űrlapok, keresések, exportok és belső munkafolyamatok.</p>
+        <ul class="space-y-3 text-gray-700">
+          <li>• Flask / Python alapú webappok</li>
+          <li>• adatbázis, jogosultság, naplózás</li>
+          <li>• email értesítés, export, dashboard</li>
+          <li>• reszponzív, felhasználóbarát UI</li>
+        </ul>
       </div>
-      <div class="text-center">
-        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-cyber-green rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 text-white font-bold text-lg sm:text-xl">3</div>
-        <h3 class="text-sm sm:text-lg md:text-xl font-bold text-cyber-dark mb-1 sm:mb-2">Fejlesztés</h3>
-        <p class="text-xs sm:text-sm md:text-gray-600">Agilis módszerekkel valósítjuk meg a rendszert</p>
+
+      <div class="card-hover bg-white rounded-3xl border border-gray-100 shadow-sm p-8">
+        <div class="w-14 h-14 rounded-2xl bg-cyber-green text-white flex items-center justify-center font-black mb-6">WMS</div>
+        <h3 class="text-2xl font-black text-cyber-dark mb-3">Raktár és logisztikai rendszerek</h3>
+        <p class="text-gray-600 leading-relaxed mb-6">Csomagok, eszközök vagy alkatrészek mozgásának követése QR kódokkal és egyszerű kezelőfelülettel.</p>
+        <ul class="space-y-3 text-gray-700">
+          <li>• bevétel, kiadás, áthelyezés, rendelés</li>
+          <li>• QR / vonalkód alapú azonosítás</li>
+          <li>• készletmozgás napló és riport</li>
+          <li>• felhasználói és admin nézetek</li>
+        </ul>
       </div>
-      <div class="text-center">
-        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-cyber-green rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 text-white font-bold text-lg sm:text-xl">4</div>
-        <h3 class="text-sm sm:text-lg md:text-xl font-bold text-cyber-dark mb-1 sm:mb-2">Támogatás</h3>
-        <p class="text-xs sm:text-sm md:text-gray-600">Folyamatos karbantartás és fejlesztés</p>
+
+      <div class="card-hover bg-white rounded-3xl border border-gray-100 shadow-sm p-8">
+        <div class="w-14 h-14 rounded-2xl bg-cyber-green text-white flex items-center justify-center font-black mb-6">KPI</div>
+        <h3 class="text-2xl font-black text-cyber-dark mb-3">Riportok, dashboardok és adatvizualizáció</h3>
+        <p class="text-gray-600 leading-relaxed mb-6">Automatikus összefoglalók, hibák kiemelése, KPI nézetek és döntéstámogató táblázatok.</p>
+        <ul class="space-y-3 text-gray-700">
+          <li>• heti / napi email riportok</li>
+          <li>• grafikonok és vezetői nézetek</li>
+          <li>• Excel export és adatellenőrzés</li>
+          <li>• kritikus értékek automatikus kiemelése</li>
+        </ul>
+      </div>
+
+      <div class="card-hover bg-white rounded-3xl border border-gray-100 shadow-sm p-8">
+        <div class="w-14 h-14 rounded-2xl bg-cyber-green text-white flex items-center justify-center font-black mb-6">AI</div>
+        <h3 class="text-2xl font-black text-cyber-dark mb-3">AI segéd, keresés és automatizálás</h3>
+        <p class="text-gray-600 leading-relaxed mb-6">Nem látvány-AI, hanem gyakorlati asszisztens: súgó, keresés, adatok kitöltése, ismétlődő feladatok gyorsítása.</p>
+        <ul class="space-y-3 text-gray-700">
+          <li>• belső súgó / chatbot irány</li>
+          <li>• természetes nyelvű keresés</li>
+          <li>• űrlapok előkitöltése</li>
+          <li>• később lokális modellre kapcsolható felépítés</li>
+        </ul>
+      </div>
+
+      <div class="card-hover bg-white rounded-3xl border border-gray-100 shadow-sm p-8">
+        <div class="w-14 h-14 rounded-2xl bg-cyber-green text-white flex items-center justify-center font-black mb-6">UX</div>
+        <h3 class="text-2xl font-black text-cyber-dark mb-3">Meglévő rendszerek modernizálása</h3>
+        <p class="text-gray-600 leading-relaxed mb-6">Ha a rendszer működik, de lassú, nehezen kezelhető, túl sok benne a hard code vagy nem skálázható.</p>
+        <ul class="space-y-3 text-gray-700">
+          <li>• kódrendezés, modularizálás</li>
+          <li>• teljesítmény és jogosultság javítás</li>
+          <li>• UI/UX frissítés</li>
+          <li>• telepíthetőség, dokumentáció, támogatás</li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA Section -->
-<section class="py-12 sm:py-16 md:py-20 bg-cyber-dark">
+<section class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-14">
+      <p class="section-kicker">Munkamenet</p>
+      <h2 class="text-3xl sm:text-5xl font-black text-cyber-dark mt-3 mb-5">Hogyan indul egy projekt?</h2>
+    </div>
+
+    <div class="grid md:grid-cols-4 gap-6">
+      <div class="rounded-3xl bg-gray-50 p-7 border border-gray-100">
+        <div class="w-12 h-12 rounded-2xl bg-cyber-green text-white flex items-center justify-center font-black mb-5">1</div>
+        <h3 class="text-xl font-black text-cyber-dark mb-3">Beszélgetés</h3>
+        <p class="text-gray-600">Mi a gond, kik használják, milyen adatok vannak, és mi lenne az ideális állapot?</p>
+      </div>
+      <div class="rounded-3xl bg-gray-50 p-7 border border-gray-100">
+        <div class="w-12 h-12 rounded-2xl bg-cyber-green text-white flex items-center justify-center font-black mb-5">2</div>
+        <h3 class="text-xl font-black text-cyber-dark mb-3">Javaslat</h3>
+        <p class="text-gray-600">Kapsz egy érthető irányt: mi legyen az első verzió, és mit nem érdemes még túlbonyolítani.</p>
+      </div>
+      <div class="rounded-3xl bg-gray-50 p-7 border border-gray-100">
+        <div class="w-12 h-12 rounded-2xl bg-cyber-green text-white flex items-center justify-center font-black mb-5">3</div>
+        <h3 class="text-xl font-black text-cyber-dark mb-3">Fejlesztés</h3>
+        <p class="text-gray-600">Rövid iterációk, tesztelhető képernyők, folyamatos visszajelzés.</p>
+      </div>
+      <div class="rounded-3xl bg-gray-50 p-7 border border-gray-100">
+        <div class="w-12 h-12 rounded-2xl bg-cyber-green text-white flex items-center justify-center font-black mb-5">4</div>
+        <h3 class="text-xl font-black text-cyber-dark mb-3">Átadás + támogatás</h3>
+        <p class="text-gray-600">Dokumentáció, bevezetés, hibajavítás és továbbfejlesztési terv.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-20 bg-cyber-dark">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 sm:mb-8">Alkossuk meg együtt cége legújabb alkalmazottját</h2>
-    <p class="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
-      💚 CyberCare – Informatikai gondoskodás mindenkinek
-    </p>
-    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-      <a href="{{ url_for('contact') }}" class="bg-cyber-green text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg text-sm sm:text-base">
-        Kapcsolatfelvétel!
-      </a>
-      <a href="{{ url_for('about') }}" class="border-2 border-cyber-green text-cyber-green px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-cyber-green hover:text-white transition-all duration-300 text-sm sm:text-base">
-        Tudjon meg többet rólunk
-      </a>
+    <p class="section-kicker text-cyber-green-light">Következő lépés</p>
+    <h2 class="text-3xl sm:text-5xl font-black text-white mt-3 mb-6">Nem biztos, hogy fejlesztés kell. Lehet, hogy először csak egy jó IT konzultáció.</h2>
+    <p class="text-xl text-gray-300 mb-8">Írd meg röviden a problémát, és megnézzük, mi lenne a legésszerűbb első lépés.</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="{{ url_for('contact') }}#contactForm" class="bg-cyber-green text-white px-8 py-4 rounded-2xl font-black hover:opacity-95 transition shadow-green">Konzultációt kérek</a>
+      <a href="{{ url_for('web_development') }}" class="border border-cyber-green text-cyber-green px-8 py-4 rounded-2xl font-bold hover:bg-cyber-green hover:text-white transition">Webapp részletek</a>
     </div>
   </div>
 </section>
 
-{% endblock %}
-
-{% block scripts %}
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const buttons = document.querySelectorAll('[data-toggle="service"]');
-    const ids = ['svc1','svc2','svc3','svc4','svc5','svc6'];
-
-    function closePanel(id) {
-      const panel = document.getElementById(id);
-      const icon  = document.getElementById(id + "_icon");
-      if (!panel) return;
-
-      panel.classList.remove("max-h-[600px]", "opacity-100");
-      panel.classList.add("max-h-0", "opacity-0");
-
-      if (icon) icon.classList.remove("rotate-180");
-    }
-
-    function openPanel(id) {
-      const panel = document.getElementById(id);
-      const icon  = document.getElementById(id + "_icon");
-      if (!panel) return;
-
-      panel.classList.remove("max-h-0", "opacity-0");
-      panel.classList.add("max-h-[600px]", "opacity-100");
-
-      if (icon) icon.classList.add("rotate-180");
-    }
-
-    function closeAll(exceptId = null) {
-      ids.forEach(id => {
-        if (id === exceptId) return;
-        closePanel(id);
-      });
-    }
-
-    buttons.forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        const id = btn.getAttribute("data-target");
-        const panel = document.getElementById(id);
-        if (!panel) return;
-
-        const isClosed = panel.classList.contains("max-h-0");
-
-        // csak 1 legyen nyitva
-        closeAll(isClosed ? id : null);
-
-        if (isClosed) openPanel(id);
-        else closePanel(id);
-      });
-    });
-  });
-</script>
 {% endblock %}

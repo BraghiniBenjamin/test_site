@@ -1,300 +1,166 @@
 {% extends "base.html" %}
 
-{% block title %}Kapcsolat - CyberCare{% endblock %}
-
-{% block head_extra %}
-<style>
-  /* Csak az oldal-specifikus részek */
-  .contact-card { transition: all 0.3s ease; }
-  .contact-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 163, 85, 0.1);
-  }
-</style>
-{% endblock %}
+{% block title %}Kapcsolat – CyberCare{% endblock %}
 
 {% block content %}
 
-<!-- Hero: Kapcsolat -->
-<section class="hero-bg min-h-[60vh] flex items-center relative">
+<section class="hero-bg min-h-[58vh] flex items-center relative">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 py-16">
-    <h1 class="cyber-title text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
-      Vegyük fel a <span class="text-cyber-green">kapcsolatot</span>
+    <p class="section-kicker text-cyber-green-light">Kapcsolat</p>
+    <h1 class="cyber-title text-4xl sm:text-5xl md:text-6xl font-black text-white mt-4 mb-6">
+      Írd le a problémát. <span class="text-cyber-green-light">Megnézzük, mi lenne az első jó lépés.</span>
     </h1>
-
     <p class="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
-      Írd meg, miben segíthetünk — gyorsan reagálunk,
-      érthetően és felesleges körök nélkül.
+      Nem kell kész specifikáció. Elég, ha leírod, milyen folyamat lassú, kézi, hibás vagy nehezen átlátható.
     </p>
-
     <div class="flex flex-col sm:flex-row gap-4 justify-center mt-10">
-      <a href="#contactForm"
-         class="bg-cyber-green text-white px-8 py-4 rounded-lg font-bold hover:bg-green-600 transition-all duration-300 transform hover:scale-105 shadow-2xl">
-        Üzenet küldése
-      </a>
-
-      <a href="{{ url_for('services') }}"
-         class="border-2 border-cyber-green text-cyber-green px-8 py-4 rounded-lg font-semibold hover:bg-cyber-green hover:text-white transition-all duration-300 bg-white/5 backdrop-blur-sm">
-        Szolgáltatások
-      </a>
+      <a href="#contactForm" class="bg-cyber-green text-white px-8 py-4 rounded-2xl font-black hover:opacity-95 transition-all duration-300 transform hover:scale-[1.02] shadow-green">Üzenet küldése</a>
+      <a href="{{ url_for('services') }}" class="border border-white/25 text-white px-8 py-4 rounded-2xl font-bold hover:bg-white hover:text-cyber-dark transition-all duration-300 bg-white/5 backdrop-blur-sm">Megoldások</a>
     </div>
   </div>
 </section>
 
-<!-- Contact Information -->
 <section class="py-20 bg-gray-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-16">
-      <h2 class="text-4xl font-bold text-cyber-dark mb-8">Elérhetőségek</h2>
-      <div class="w-16 h-1 bg-cyber-green mx-auto"></div>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-8 mb-16">
-      <!-- Phone -->
-      <div class="contact-card bg-white p-8 rounded-xl shadow-lg text-center">
-        <div class="w-16 h-16 bg-cyber-green/10 rounded-lg flex items-center justify-center mx-auto mb-6">
-          <svg class="w-8 h-8 text-cyber-green" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold text-cyber-dark mb-4">Telefon</h3>
-        <p class="text-gray-600 mb-2">+36 70 398 9611</p>
-        <p class="text-sm text-gray-500">Hétfő - Péntek: 8:00 - 18:00</p>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="card-hover bg-white p-8 rounded-3xl shadow-sm border border-gray-100 text-center">
+        <div class="w-14 h-14 bg-cyber-green-light rounded-2xl flex items-center justify-center mx-auto mb-5 text-cyber-green font-black">TEL</div>
+        <h3 class="text-xl font-black text-cyber-dark mb-3">Telefon</h3>
+        <p class="text-gray-700 font-semibold mb-1"><a href="tel:+36703989611" class="hover:text-cyber-green">+36 70 398 9611</a></p>
+        <p class="text-sm text-gray-500">Hétfő–Péntek, egyeztetés alapján</p>
       </div>
 
-      <!-- Email -->
-      <div class="contact-card bg-white p-8 rounded-xl shadow-lg text-center">
-        <div class="w-16 h-16 bg-cyber-green/10 rounded-lg flex items-center justify-center mx-auto mb-6">
-          <svg class="w-8 h-8 text-cyber-green" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold text-cyber-dark mb-4">Email</h3>
-        <p class="text-gray-600 mb-2">info@cybercare.hu</p>
-        <p class="text-sm text-gray-500">24 órán belül válaszolunk</p>
+      <div class="card-hover bg-white p-8 rounded-3xl shadow-sm border border-gray-100 text-center">
+        <div class="w-14 h-14 bg-cyber-green-light rounded-2xl flex items-center justify-center mx-auto mb-5 text-cyber-green font-black">@</div>
+        <h3 class="text-xl font-black text-cyber-dark mb-3">Email</h3>
+        <p class="text-gray-700 font-semibold mb-1"><a href="mailto:info@cybercare.hu" class="hover:text-cyber-green">info@cybercare.hu</a></p>
+        <p class="text-sm text-gray-500">Megkeresésre és konzultációra</p>
       </div>
 
-      <!-- Address -->
-      <div class="contact-card bg-white p-8 rounded-xl shadow-lg text-center">
-        <div class="w-16 h-16 bg-cyber-green/10 rounded-lg flex items-center justify-center mx-auto mb-6">
-          <svg class="w-8 h-8 text-cyber-green" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold text-cyber-dark mb-4">Telephely</h3>
-        <p class="text-gray-600 mb-2">2534 Tát</p>
-        <p class="text-gray-600 mb-2">Halomka liget 17.</p>
+      <div class="card-hover bg-white p-8 rounded-3xl shadow-sm border border-gray-100 text-center">
+        <div class="w-14 h-14 bg-cyber-green-light rounded-2xl flex items-center justify-center mx-auto mb-5 text-cyber-green font-black">HU</div>
+        <h3 class="text-xl font-black text-cyber-dark mb-3">Helyszín</h3>
+        <p class="text-gray-700 font-semibold mb-1">2534 Tát</p>
+        <p class="text-sm text-gray-500">Személyes egyeztetés előre megbeszélve</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Contact Form -->
 <section class="py-20 bg-white">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-16">
-      <h2 class="text-4xl font-bold text-cyber-dark mb-8">Írjon nekünk</h2>
-      <div class="w-16 h-1 bg-cyber-green mx-auto mb-8"></div>
-      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-        Töltse ki az alábbi űrlapot és hamarosan felvesszük Önnel a kapcsolatot.
-        Minden megkeresést személyesen válaszolunk meg.
-      </p>
-    </div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-[.9fr_1.1fr] gap-12 items-start">
+      <div>
+        <p class="section-kicker">Mit írj az üzenetbe?</p>
+        <h2 class="text-3xl sm:text-5xl font-black text-cyber-dark mt-3 mb-6">A legjobb megkeresés nem hosszú, hanem konkrét.</h2>
+        <p class="text-lg text-gray-600 leading-relaxed mb-8">Írd le röviden, jelenleg hogyan működik a folyamat, mi benne a legnagyobb gond, és mi lenne az ideális eredmény. A többit átbeszéljük.</p>
 
-    <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 border border-gray-100">
-      <form class="space-y-6" id="contactForm">
-        <div class="grid md:grid-cols-2 gap-6">
-          <div>
-            <label for="name" class="block text-sm font-semibold text-cyber-dark mb-2">Név *</label>
-            <input type="text" id="name" name="name" required
-                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyber-green focus:border-transparent transition-all duration-300">
+        <div class="space-y-4">
+          <div class="rounded-3xl bg-gray-50 p-5 border border-gray-100">
+            <h3 class="font-black text-cyber-dark mb-1">Példa 1</h3>
+            <p class="text-gray-600">“Excelben vezetjük a csomagokat, de sok a hiba és nehéz visszakeresni.”</p>
+          </div>
+          <div class="rounded-3xl bg-gray-50 p-5 border border-gray-100">
+            <h3 class="font-black text-cyber-dark mb-1">Példa 2</h3>
+            <p class="text-gray-600">“Hetente kézzel rakunk össze riportot, ezt automatizálni szeretnénk.”</p>
+          </div>
+          <div class="rounded-3xl bg-gray-50 p-5 border border-gray-100">
+            <h3 class="font-black text-cyber-dark mb-1">Példa 3</h3>
+            <p class="text-gray-600">“Van egy régi belső rendszerünk, lassú és nehéz továbbfejleszteni.”</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-[2rem] shadow-soft p-8 md:p-10 border border-gray-100">
+        <div class="mb-8">
+          <p class="section-kicker">Üzenet küldése</p>
+          <h2 class="text-3xl font-black text-cyber-dark mt-2">Kapcsolatfelvétel</h2>
+          <p class="text-gray-600 mt-3">Minden megkeresést személyesen nézünk át.</p>
+        </div>
+
+        <form class="space-y-6" id="contactForm">
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label for="name" class="block text-sm font-bold text-cyber-dark mb-2">Név *</label>
+              <input type="text" id="name" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-cyber-green focus:border-transparent transition-all">
+            </div>
+            <div>
+              <label for="company" class="block text-sm font-bold text-cyber-dark mb-2">Cég neve</label>
+              <input type="text" id="company" name="company" class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-cyber-green focus:border-transparent transition-all">
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label for="email" class="block text-sm font-bold text-cyber-dark mb-2">Email *</label>
+              <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-cyber-green focus:border-transparent transition-all">
+            </div>
+            <div>
+              <label for="phone" class="block text-sm font-bold text-cyber-dark mb-2">Telefon</label>
+              <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-cyber-green focus:border-transparent transition-all">
+            </div>
           </div>
 
           <div>
-            <label for="company" class="block text-sm font-semibold text-cyber-dark mb-2">Cég neve</label>
-            <input type="text" id="company" name="company"
-                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyber-green focus:border-transparent transition-all duration-300">
+            <label for="service" class="block text-sm font-bold text-cyber-dark mb-2">Érdeklődési terület</label>
+            <select id="service" name="service" class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-cyber-green focus:border-transparent transition-all">
+              <option value="">Válassz témát...</option>
+              <option value="it-consulting">IT konzultáció / folyamatfelmérés</option>
+              <option value="internal-webapp">Belső webapp / admin rendszer</option>
+              <option value="warehouse-logistics">Raktár / logisztikai rendszer</option>
+              <option value="reporting-dashboard">Riport / dashboard / adatvizualizáció</option>
+              <option value="ai-automation">AI segéd / automatizálás</option>
+              <option value="modernization">Meglévő rendszer modernizálása</option>
+              <option value="website">Céges weboldal / landing oldal</option>
+              <option value="other">Egyéb</option>
+            </select>
           </div>
-        </div>
 
-        <div class="grid md:grid-cols-2 gap-6">
           <div>
-            <label for="email" class="block text-sm font-semibold text-cyber-dark mb-2">Email *</label>
-            <input type="email" id="email" name="email" required
-                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyber-green focus:border-transparent transition-all duration-300">
+            <label for="message" class="block text-sm font-bold text-cyber-dark mb-2">Üzenet *</label>
+            <textarea id="message" name="message" rows="7" required placeholder="Például: jelenleg Excelben vezetjük..., ezt szeretnénk kiváltani..., fontos lenne a keresés / riport / jogosultság / QR / email értesítés..." class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-cyber-green focus:border-transparent transition-all resize-none"></textarea>
           </div>
 
-          <div>
-            <label for="phone" class="block text-sm font-semibold text-cyber-dark mb-2">Telefon</label>
-            <input type="tel" id="phone" name="phone"
-                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyber-green focus:border-transparent transition-all duration-300">
+          <div class="flex items-start">
+            <input type="checkbox" id="privacy" name="privacy" required class="mt-1 mr-3">
+            <label for="privacy" class="text-sm text-gray-600 leading-relaxed">
+              Elfogadom az <a href="#" onclick="openModal('adatvedelemModal'); return false;" class="text-cyber-green font-bold hover:underline">adatvédelmi tájékoztatót</a>, és hozzájárulok a megkeresésem megválaszolásához szükséges adatkezeléshez. *
+            </label>
           </div>
-        </div>
 
-        <div>
-          <label for="service" class="block text-sm font-semibold text-cyber-dark mb-2">Érdeklődési terület</label>
-          <select id="service" name="service"
-                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyber-green focus:border-transparent transition-all duration-300">
-            <option value="">Válasszon szolgáltatást...</option>
-            <option value="logistics">Logisztikai és raktározási szoftverfejlesztés</option>
-            <option value="data-viz">Adatvizualizáció és statisztikai megoldások</option>
-            <option value="ai-integration">Lokális mesterséges intelligencia integráció</option>
-            <option value="modernization">Meglévő informatikai rendszerek modernizálása</option>
-            <option value="consultation">Általános konzultáció</option>
-            <option value="other">Egyéb</option>
-          </select>
-        </div>
-
-        <div>
-          <label for="message" class="block text-sm font-semibold text-cyber-dark mb-2">Üzenet *</label>
-          <textarea id="message" name="message" rows="6" required
-                    placeholder="Írja le részletesen, milyen kihívással szembesül, és hogyan segíthetünk..."
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyber-green focus:border-transparent transition-all duration-300 resize-none"></textarea>
-        </div>
-
-        <div class="flex items-start">
-          <input type="checkbox" id="privacy" name="privacy" required class="mt-1 mr-3">
-          <label for="privacy" class="text-sm text-gray-600">
-            Elfogadom az
-            <a href="#" onclick="openModal('adatvedelemModal'); return false;"
-               class="text-cyber-green hover:underline">adatvédelmi szabályzatot</a>
-            és hozzájárulok személyes adataim kezeléséhez. *
-          </label>
-        </div>
-
-        <div class="text-center">
-          <button type="submit"
-                  class="bg-cyber-green text-white px-10 py-4 rounded-lg font-semibold hover:bg-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
+          <button type="submit" class="w-full bg-cyber-green text-white px-10 py-4 rounded-2xl font-black hover:opacity-95 transition-all duration-300 transform hover:scale-[1.01] shadow-green">
             Üzenet küldése
           </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- Business Hours & Map -->
 <section class="py-20 bg-gray-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid md:grid-cols-2 gap-12">
-      <!-- Business Hours -->
-      <div>
-        <h3 class="text-3xl font-bold text-cyber-dark mb-8">Kapcsolatfelvétel</h3>
-        <div class="bg-white p-8 rounded-xl shadow-lg">
-          <div class="space-y-4">
-            <div class="flex justify-between items-center py-2 border-b border-gray-100">
-              <span class="font-semibold text-cyber-dark">Hétfő - Péntek</span>
-              <span class="text-gray-600">8:00 - 18:00</span>
-            </div>
-            <div class="flex justify-between items-center py-2 border-b border-gray-100">
-              <span class="font-semibold text-cyber-dark">Szombat</span>
-              <span class="text-gray-600">Előzetes egyeztetés alapján</span>
-            </div>
-            <div class="flex justify-between items-center py-2">
-              <span class="font-semibold text-cyber-dark">Vasárnap</span>
-              <span class="text-gray-600">Zárva</span>
-            </div>
-          </div>
-
-          <div class="mt-8 p-4 bg-cyber-green/5 rounded-lg">
-            <p class="text-sm text-gray-600">
-              <strong class="text-cyber-green">Sürgős esetben:</strong>
-              24/7 elérhetőség email-en keresztül. Kritikus rendszerhibák esetén
-              2 órán belül válaszolunk.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Map -->
-      <div>
-        <h3 class="text-3xl font-bold text-cyber-dark mb-8">Telephely</h3>
-        <div class="bg-white p-8 rounded-xl shadow-lg">
-          <div class="h-64 rounded-lg overflow-hidden mb-6">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2694.904983086492!2d18.63673037680761!3d47.74419667127776!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476a5df6a9149c45%3A0x1f5f85c94898e1fb!2zVMOhdCwgSGFsb21rYSBsaWdldCAxNywgMjUzNA!5e0!3m2!1shu!2shu!4v1699456789012!5m2!1shu!2shu"
-              width="100%" height="100%" style="border:0;"
-              allowfullscreen="" loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              class="rounded-lg">
-            </iframe>
-          </div>
-
-          <div class="space-y-3">
-            <div class="flex items-center">
-              <svg class="w-5 h-5 text-cyber-green mr-3" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-              </svg>
-              <span class="text-gray-600">2534 Tát, Halomka liget 17.</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="py-20 bg-white">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-16">
-      <h2 class="text-4xl font-bold text-cyber-dark mb-8">Gyakran Ismételt Kérdések</h2>
-      <div class="w-16 h-1 bg-cyber-green mx-auto"></div>
+    <div class="text-center mb-12">
+      <p class="section-kicker">GYIK</p>
+      <h2 class="text-3xl sm:text-5xl font-black text-cyber-dark mt-3">Gyakori kérdések</h2>
     </div>
 
-    <div class="space-y-6">
-      <div class="bg-gray-50 p-6 rounded-xl">
-        <h3 class="text-xl font-bold text-cyber-dark mb-3">Mennyi idő alatt készül el egy projekt?</h3>
-        <p class="text-gray-600">
-          A projekt időtartama a komplexitástól függ. Egy egyszerű adatvizualizációs dashboard
-          2-4 hét alatt elkészül, míg egy komplex logisztikai rendszer 3-6 hónapot vehet igénybe.
-        </p>
+    <div class="space-y-5">
+      <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+        <h3 class="text-xl font-black text-cyber-dark mb-2">Kell kész specifikáció?</h3>
+        <p class="text-gray-600">Nem. Sőt, sokszor az első konzultáció lényege pont az, hogy közösen tisztázzuk, mire van valóban szükség.</p>
       </div>
-
-      <div class="bg-gray-50 p-6 rounded-xl">
-        <h3 class="text-xl font-bold text-cyber-dark mb-3">Milyen támogatást nyújtanak a projekt után?</h3>
-        <p class="text-gray-600">
-          Minden projekthez 6 hónap ingyenes támogatást biztosítunk, amely magában foglalja
-          a hibajavításokat és kisebb módosításokat. Ezt követően karbantartási szerződést köthetünk.
-        </p>
+      <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+        <h3 class="text-xl font-black text-cyber-dark mb-2">Kisebb cégeknek is vállaltok munkát?</h3>
+        <p class="text-gray-600">Igen. A fókusz kifejezetten az, hogy kisebb cégeknek is legyen elérhető, józan méretű, bővíthető informatikai megoldás.</p>
       </div>
-
-      <div class="bg-gray-50 p-6 rounded-xl">
-        <h3 class="text-xl font-bold text-cyber-dark mb-3">Dolgoznak kis- és középvállalkozásokkal is?</h3>
-        <p class="text-gray-600">
-          Igen! Szolgáltatásainkat minden méretű vállalkozás számára elérhetővé tesszük.
-          Rugalmas fizetési feltételeket és moduláris megoldásokat kínálunk.
-        </p>
+      <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+        <h3 class="text-xl font-black text-cyber-dark mb-2">Lehet először csak konzultáció?</h3>
+        <p class="text-gray-600">Igen. Sok esetben ez a legjobb első lépés, mert így nem fejlesztünk felesleges funkciókat.</p>
       </div>
-
-      <div class="bg-gray-50 p-6 rounded-xl">
-        <h3 class="text-xl font-bold text-cyber-dark mb-3">Hogyan biztosítják az adatok biztonságát?</h3>
-        <p class="text-gray-600">
-          Minden rendszerünk a legmagasabb biztonsági standardok szerint készül.
-          Lokális szervereket használunk, titkosított adatátvitelt és rendszeres biztonsági auditokat végzünk.
-        </p>
+      <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+        <h3 class="text-xl font-black text-cyber-dark mb-2">Vállaltok meglévő rendszer modernizálását?</h3>
+        <p class="text-gray-600">Igen, de először át kell nézni a jelenlegi működést, kódot és üzleti igényt, hogy biztonságosan lehessen dönteni a folytatásról.</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="py-20 bg-cyber-dark">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <h2 class="text-4xl font-bold text-white mb-8">Kezdjük el együtt!</h2>
-    <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-      💚 CyberCare – Informatikai gondoskodás mindenkinek
-    </p>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <a href="#contactForm"
-         class="bg-cyber-green text-white px-8 py-4 rounded-lg font-semibold hover:bg-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
-        Kapcsolatfelvétel!
-      </a>
-      <a href="{{ url_for('services') }}"
-         class="border-2 border-cyber-green text-cyber-green px-8 py-4 rounded-lg font-semibold hover:bg-cyber-green hover:text-white transition-all duration-300">
-        Szolgáltatásaink
-      </a>
     </div>
   </div>
 </section>
@@ -303,7 +169,6 @@
 
 {% block scripts %}
 <script>
-  // Contact form submit (API)
   document.addEventListener('DOMContentLoaded', function () {
     const contactForm = document.getElementById('contactForm');
     if (!contactForm) return;
