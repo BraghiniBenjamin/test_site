@@ -12,8 +12,13 @@ LOGO_URL = "https://raw.githubusercontent.com/BraghiniBenjamin/test_site/main/st
 def register_meeting_routes(app, engine_factory, send_email_func, safe_func):
     """Register CyberCare token-based meeting scheduling routes.
 
-    This module is intentionally separate from app.py so it can be enabled from wsgi.py
-    without touching the existing landing/contact site routes.
+    Supports two link types:
+    1) Pre-created DB token: /meeting/<token>
+    2) Self-registering outreach link: /meeting/<token>?company=...&email=...
+
+    The self-registering link is useful for Gmail draft generation: the token is created
+    in the DB when the recipient first opens the page, then it behaves like a normal
+    one-submission token.
     """
     if getattr(app, "_cybercare_meeting_routes_registered", False):
         return
@@ -90,6 +95,39 @@ def register_meeting_routes(app, engine_factory, send_email_func, safe_func):
             expires_dt = expires_dt.replace(tzinfo=timezone.utc)
         return datetime.now(timezone.utc) > expires_dt
 
+    def _create_token_record(token, company_name, recipient_email, source="CyberCare outreach link", expires_at=None):
+        company_name = (company_name or "").strip()
+        recipient_email = (recipient_email or "").strip()
+        if not token or not company_name or not recipient_email:
+            return None
+
+        eng = engine_factory()
+        with eng.begin() as conn:
+            conn.execute(
+                text("""
+                    INSERT INTO meeting_tokens (token, company_name, recipient_email, source, expires_at)
+                    VALUES (:token, :company_name, :recipient_email, :source, :expires_at)
+                    ON CONFLICT (token) DO NOTHING
+                """),
+                {
+                    "token": token,
+                    "company_name": company_name,
+                    "recipient_email": recipient_email,
+                    "source": source,
+                    "expires_at": expires_at,
+                },
+            )
+        return _load_token(token)
+
+    def _bootstrap_invite_from_query(token):
+        """Create token row on first open when the outreach email carries company/email params."""
+        company_name = (request.args.get("company") or request.args.get("c") or "").strip()
+        recipient_email = (request.args.get("email") or request.args.get("e") or "").strip()
+        source = (request.args.get("source") or "CyberCare outreach email").strip()
+        if not company_name or not recipient_email:
+            return None
+        return _create_token_record(token, company_name, recipient_email, source=source)
+
     @app.post("/api/meeting-token")
     def api_create_meeting_token():
         """Create one token link for outreach emails.
@@ -116,25 +154,11 @@ def register_meeting_routes(app, engine_factory, send_email_func, safe_func):
 
         token = secrets.token_urlsafe(24)
         _ensure_meeting_table()
-        eng = engine_factory()
-        with eng.begin() as conn:
-            conn.execute(
-                text("""
-                    INSERT INTO meeting_tokens (token, company_name, recipient_email, source, expires_at)
-                    VALUES (:token, :company_name, :recipient_email, :source, :expires_at)
-                """),
-                {
-                    "token": token,
-                    "company_name": company_name,
-                    "recipient_email": recipient_email,
-                    "source": source,
-                    "expires_at": expires_at,
-                },
-            )
+        row = _create_token_record(token, company_name, recipient_email, source=source, expires_at=expires_at)
 
         link = f"{_base_url()}/meeting/{token}"
         return jsonify({
-            "ok": True,
+            "ok": bool(row),
             "token": token,
             "meeting_url": link,
             "company_name": company_name,
@@ -146,6 +170,8 @@ def register_meeting_routes(app, engine_factory, send_email_func, safe_func):
         try:
             _ensure_meeting_table()
             row = _load_token(token)
+            if not row:
+                row = _bootstrap_invite_from_query(token)
         except Exception:
             row = None
 
