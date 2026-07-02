@@ -165,12 +165,103 @@
   </div>
 </section>
 
+<div id="contactFeedbackModal" class="fixed inset-0 z-[70] hidden items-center justify-center bg-cyber-dark/70 px-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="contactFeedbackTitle">
+  <div id="contactFeedbackCard" class="w-full max-w-lg translate-y-4 scale-95 rounded-[2rem] bg-white p-8 text-center shadow-soft opacity-0 transition-all duration-300">
+    <div id="contactFeedbackIcon" class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-cyber-green-light text-cyber-green">
+      <svg class="h-9 w-9" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+      </svg>
+    </div>
+    <p id="contactFeedbackKicker" class="section-kicker mb-3">Üzenet elküldve</p>
+    <h3 id="contactFeedbackTitle" class="mb-4 text-2xl font-black text-cyber-dark">Köszönjük a megkeresést!</h3>
+    <p id="contactFeedbackText" class="text-gray-600 leading-relaxed">Üzenetét megkaptuk, hamarosan válaszolunk.</p>
+    <div id="contactFeedbackProgress" class="mt-7 h-1.5 overflow-hidden rounded-full bg-gray-100">
+      <div class="h-full w-full origin-left rounded-full bg-cyber-green transition-transform duration-[5000ms] ease-linear"></div>
+    </div>
+    <button type="button" id="contactFeedbackClose" class="mt-6 hidden rounded-2xl border border-gray-200 px-6 py-3 font-bold text-cyber-dark transition hover:border-cyber-green hover:text-cyber-green">
+      Bezárás
+    </button>
+  </div>
+</div>
+
 {% endblock %}
 
 {% block scripts %}
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const contactForm = document.getElementById('contactForm');
+    const feedbackModal = document.getElementById('contactFeedbackModal');
+    const feedbackCard = document.getElementById('contactFeedbackCard');
+    const feedbackIcon = document.getElementById('contactFeedbackIcon');
+    const feedbackKicker = document.getElementById('contactFeedbackKicker');
+    const feedbackTitle = document.getElementById('contactFeedbackTitle');
+    const feedbackText = document.getElementById('contactFeedbackText');
+    const feedbackClose = document.getElementById('contactFeedbackClose');
+    const feedbackProgress = document.querySelector('#contactFeedbackProgress > div');
+    let feedbackTimer = null;
+
+    function showFeedbackModal({ title, text, kicker = 'Üzenet elküldve', success = true, autoClose = true }) {
+      if (!feedbackModal || !feedbackCard || !feedbackTitle || !feedbackText) return;
+
+      clearTimeout(feedbackTimer);
+      feedbackKicker.textContent = kicker;
+      feedbackTitle.textContent = title;
+      feedbackText.textContent = text;
+
+      feedbackIcon.className = success
+        ? 'mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-cyber-green-light text-cyber-green'
+        : 'mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-red-50 text-red-600';
+
+      if (feedbackClose) feedbackClose.classList.toggle('hidden', autoClose);
+      if (feedbackProgress) {
+        feedbackProgress.style.transitionDuration = '0ms';
+        feedbackProgress.style.transform = 'scaleX(1)';
+        window.requestAnimationFrame(() => {
+          window.requestAnimationFrame(() => {
+            feedbackProgress.style.transitionDuration = autoClose ? '5000ms' : '0ms';
+            feedbackProgress.style.transform = autoClose ? 'scaleX(0)' : 'scaleX(1)';
+          });
+        });
+      }
+
+      feedbackModal.classList.remove('hidden');
+      feedbackModal.classList.add('flex');
+      document.body.classList.add('overflow-hidden');
+
+      window.requestAnimationFrame(() => {
+        feedbackCard.classList.remove('translate-y-4', 'scale-95', 'opacity-0');
+        feedbackCard.classList.add('translate-y-0', 'scale-100', 'opacity-100');
+      });
+
+      if (autoClose) {
+        feedbackTimer = setTimeout(closeFeedbackModal, 5000);
+      }
+    }
+
+    function closeFeedbackModal() {
+      if (!feedbackModal || !feedbackCard) return;
+      clearTimeout(feedbackTimer);
+      feedbackCard.classList.add('translate-y-4', 'scale-95', 'opacity-0');
+      feedbackCard.classList.remove('translate-y-0', 'scale-100', 'opacity-100');
+      setTimeout(() => {
+        feedbackModal.classList.add('hidden');
+        feedbackModal.classList.remove('flex');
+        document.body.classList.remove('overflow-hidden');
+      }, 220);
+    }
+
+    if (feedbackClose) feedbackClose.addEventListener('click', closeFeedbackModal);
+    if (feedbackModal) {
+      feedbackModal.addEventListener('click', function (event) {
+        if (event.target === feedbackModal) closeFeedbackModal();
+      });
+    }
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && feedbackModal && !feedbackModal.classList.contains('hidden')) {
+        closeFeedbackModal();
+      }
+    });
+
     if (!contactForm) return;
 
     contactForm.addEventListener('submit', function (event) {
@@ -179,6 +270,8 @@
       const formData = new FormData(this);
       const submitButton = this.querySelector('button[type="submit"]');
       const originalText = submitButton ? submitButton.innerHTML : null;
+      const name = (formData.get('name') || '').toString().trim();
+      const company = (formData.get('company') || '').toString().trim();
 
       if (submitButton) {
         submitButton.innerHTML = 'Küldés...';
@@ -189,15 +282,35 @@
         .then(r => r.json())
         .then(data => {
           if (data && data.success) {
-            alert(data.message || 'Sikeres küldés!');
+            const addressedTo = company || name;
+            const title = addressedTo
+              ? `Köszönjük a megkeresést, ${addressedTo}!`
+              : 'Köszönjük a megkeresést!';
+            const text = company
+              ? 'Üzenetüket megkaptuk. Hamarosan átnézzük a megkeresést, és visszajelzünk a megadott elérhetőségen.'
+              : 'Üzenetedet megkaptuk. Hamarosan átnézzük a megkeresést, és visszajelzünk a megadott elérhetőségen.';
+
+            showFeedbackModal({ title, text, autoClose: true });
             this.reset();
           } else {
-            alert('Hiba: ' + (data && data.message ? data.message : 'Ismeretlen hiba'));
+            showFeedbackModal({
+              kicker: 'Sikertelen küldés',
+              title: 'Sajnos nem sikerült elküldeni az üzenetet.',
+              text: data && data.message ? data.message : 'Kérjük próbáld meg újra később, vagy írj közvetlenül az info@cybercare.hu címre.',
+              success: false,
+              autoClose: false,
+            });
           }
         })
         .catch(err => {
           console.error('Error:', err);
-          alert('Sajnos hiba történt. Kérjük próbálja újra később.');
+          showFeedbackModal({
+            kicker: 'Kapcsolati hiba',
+            title: 'Sajnos hiba történt küldés közben.',
+            text: 'Kérjük próbáld meg újra később, vagy írj közvetlenül az info@cybercare.hu címre.',
+            success: false,
+            autoClose: false,
+          });
         })
         .finally(() => {
           if (submitButton) {
