@@ -55,14 +55,13 @@ def _engine():
 
 
 def _code_hash(code: str) -> str:
-    # ha nincs PREVIEW_CODE_SALT, akkor fallback (kevésbé biztonságos)
     salt = (os.environ.get("PREVIEW_CODE_SALT") or "fallback-salt-change-me").strip()
     raw = f"{code}:{salt}".encode("utf-8")
     return hashlib.sha256(raw).hexdigest()
 
 
 # Light rate-limit in-memory (Render egy példányon belül működik)
-_PREVIEW_FAILS = {}  # ip -> (count, first_ts)
+_PREVIEW_FAILS = {}
 
 
 def _rate_limit_check(ip: str, max_tries=10, window_sec=600) -> bool:
@@ -90,7 +89,7 @@ def _ensure_preview_tables_and_seed():
     """
     - Létrehozza a preview táblákat, ha nem léteznek
     - Felveszi / frissíti a preview_pages rekordokat
-    - Felveszi a hozzá tartozó kódokat (hash-elve), ha nincs bent
+    - Preview kódokat csak ENV-ből vesz fel, hogy ne legyenek hardcode-olva a repo-ban.
     """
     eng = _engine()
 
@@ -116,36 +115,31 @@ def _ensure_preview_tables_and_seed():
     CREATE INDEX IF NOT EXISTS idx_preview_codes_page_key ON preview_codes(page_key);
     """
 
-    # ✅ Seed rekordok (bármennyit felvehetsz ide)
     seeds = [
         {
             "page_key": "George_Logistic_Team",
             "template_name": "George_Logistic_Team.html",
-            "raw_code": "UL7dISvX4zdaLiJ5mvgKvmxn",
+            "raw_code": (os.environ.get("PREVIEW_CODE_GEORGE_LOGISTIC_TEAM") or "").strip(),
         },
         {
             "page_key": "Visegrádi Kincseskert Vendégház",
             "template_name": "vendeghaz_demo.html",
-            "raw_code": "FDxTdbeyenFs0prF",
+            "raw_code": (os.environ.get("PREVIEW_CODE_VENDEGHAZ") or "").strip(),
         },
     ]
 
     with eng.begin() as conn:
-        # Táblák
         conn.execute(text(create_pages))
         for stmt in create_codes.split(";"):
             s = stmt.strip()
             if s:
                 conn.execute(text(s))
 
-        # Seed + upsert + code insert
         for item in seeds:
             page_key = item["page_key"]
             template_name = item["template_name"]
-            raw_code = item["raw_code"]
-            code_hash = _code_hash(raw_code)
+            raw_code = item.get("raw_code") or ""
 
-            # Page upsert
             conn.execute(
                 text("""
                 INSERT INTO preview_pages (page_key, template_name, is_active)
@@ -157,18 +151,18 @@ def _ensure_preview_tables_and_seed():
                 {"k": page_key, "t": template_name},
             )
 
-            # Code insert (ha nincs)
-            conn.execute(
-                text("""
-                INSERT INTO preview_codes (code_hash, page_key, is_active, expires_at)
-                VALUES (:h, :k, TRUE, NULL)
-                ON CONFLICT (code_hash) DO NOTHING
-                """),
-                {"h": code_hash, "k": page_key},
-            )
+            if raw_code:
+                code_hash = _code_hash(raw_code)
+                conn.execute(
+                    text("""
+                    INSERT INTO preview_codes (code_hash, page_key, is_active, expires_at)
+                    VALUES (:h, :k, TRUE, NULL)
+                    ON CONFLICT (code_hash) DO NOTHING
+                    """),
+                    {"h": code_hash, "k": page_key},
+                )
 
 
-# Induláskor egyszer fusson le
 try:
     _ensure_preview_tables_and_seed()
 except Exception as e:
@@ -433,17 +427,109 @@ def api_contact():
             reply_to=email,
         )
 
+        greeting = f"Tisztelt {s_company}!" if s_company else f"Kedves {s_name}!"
+        service_label = s_service or "Általános megkeresés"
+        company_row = (
+            f"""
+                            <tr>
+                              <td style="padding:10px 0;color:#6b7280;font-size:14px;border-bottom:1px solid #edf0ef;">Cég</td>
+                              <td style="padding:10px 0;color:#2a2c28;font-size:14px;font-weight:700;text-align:right;border-bottom:1px solid #edf0ef;">{s_company}</td>
+                            </tr>"""
+            if s_company
+            else ""
+        )
+
+        user_text = (
+            f"{greeting}\n\n"
+            "Köszönjük a megkeresést, üzenetét megkaptuk. "
+            "Hamarosan átnézzük a leírtakat, és jelentkezünk a megadott elérhetőségen.\n\n"
+            f"Megkeresés témája: {payload.get('service') or 'Általános megkeresés'}\n\n"
+            "Üdvözlettel:\nCyberCare"
+        )
+
         user_html = f"""<!DOCTYPE html>
-<html lang="hu"><head><meta charset="UTF-8"></head>
-<body>
-  <h2>Köszönjük megkeresését!</h2>
-  <p>Kedves {s_name}! Üzenetét megkaptuk, hamarosan válaszolunk.</p>
-</body></html>"""
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Köszönjük megkeresését – CyberCare</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f7f5;font-family:Arial,Helvetica,sans-serif;color:#2a2c28;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f4f7f5;margin:0;padding:28px 12px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:640px;background:#ffffff;border-radius:24px;overflow:hidden;box-shadow:0 24px 70px rgba(42,44,40,0.12);">
+          <tr>
+            <td style="background:#2a2c28;padding:30px 34px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td>
+                    <div style="font-size:24px;line-height:1;font-weight:900;color:#ffffff;letter-spacing:-0.5px;">CyberCare</div>
+                    <div style="font-size:11px;line-height:1.8;color:#a8b8ae;text-transform:uppercase;letter-spacing:2px;margin-top:6px;">Business IT Systems</div>
+                  </td>
+                  <td align="right">
+                    <div style="display:inline-block;background:#0b7b4a;color:#ffffff;border-radius:14px;padding:10px 14px;font-size:13px;font-weight:800;">Megkaptuk</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:34px;">
+              <div style="display:inline-block;background:#e8f5ee;color:#0b7b4a;border-radius:999px;padding:8px 13px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:18px;">Automatikus visszaigazolás</div>
+              <h1 style="margin:0 0 16px 0;color:#2a2c28;font-size:28px;line-height:1.18;font-weight:900;">Köszönjük a megkeresést!</h1>
+              <p style="margin:0 0 14px 0;color:#2a2c28;font-size:17px;line-height:1.7;font-weight:700;">{greeting}</p>
+              <p style="margin:0 0 22px 0;color:#5d665f;font-size:16px;line-height:1.7;">
+                Köszönjük, hogy felvette velünk a kapcsolatot. Üzenetét megkaptuk, hamarosan átnézzük a leírtakat, és jelentkezünk a megadott elérhetőségen.
+              </p>
+
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f8fbf9;border:1px solid #edf0ef;border-radius:18px;padding:8px 18px;margin:24px 0;">
+                <tr>
+                  <td>
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td style="padding:10px 0;color:#6b7280;font-size:14px;border-bottom:1px solid #edf0ef;">Név</td>
+                        <td style="padding:10px 0;color:#2a2c28;font-size:14px;font-weight:700;text-align:right;border-bottom:1px solid #edf0ef;">{s_name}</td>
+                      </tr>{company_row}
+                      <tr>
+                        <td style="padding:10px 0;color:#6b7280;font-size:14px;">Téma</td>
+                        <td style="padding:10px 0;color:#2a2c28;font-size:14px;font-weight:700;text-align:right;">{service_label}</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <div style="border-left:4px solid #0b7b4a;padding:14px 0 14px 18px;margin:24px 0;background:#ffffff;">
+                <p style="margin:0;color:#2a2c28;font-size:16px;line-height:1.7;font-weight:700;">Mi történik most?</p>
+                <p style="margin:6px 0 0 0;color:#5d665f;font-size:15px;line-height:1.7;">
+                  Először áttekintjük a megkeresést, majd szükség esetén pontosító kérdésekkel vagy időpontjavaslattal jelentkezünk.
+                </p>
+              </div>
+
+              <p style="margin:28px 0 0 0;color:#5d665f;font-size:15px;line-height:1.7;">
+                Üdvözlettel,<br>
+                <strong style="color:#2a2c28;">CyberCare</strong><br>
+                <a href="mailto:info@cybercare.hu" style="color:#0b7b4a;text-decoration:none;font-weight:700;">info@cybercare.hu</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="background:#f8fbf9;padding:18px 34px;color:#7a837d;font-size:12px;line-height:1.6;text-align:center;">
+              Ez egy automatikus visszaigazoló email. Kérjük, őrizze meg, amíg felvesszük Önnel a kapcsolatot.
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>"""
 
         send_email(
             to_email=email,
-            subject="Köszönjük megkeresését – CyberCare",
-            text_msg="Köszönjük, hogy felvette velünk a kapcsolatot. Üzenetét megkaptuk, hamarosan válaszolunk.",
+            subject="Megkaptuk a megkeresést – CyberCare",
+            text_msg=user_text,
             html=user_html,
         )
 
