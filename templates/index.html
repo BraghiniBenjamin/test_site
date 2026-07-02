@@ -4,87 +4,281 @@
 
 {% block head_extra %}
 <style>
-  .metric-card { background: linear-gradient(180deg, rgba(255,255,255,.13), rgba(255,255,255,.06)); }
+  .hero-kinetic {
+    min-height: calc(100vh - 4rem);
+  }
+  .aurora-orb {
+    position: absolute;
+    width: 34rem;
+    height: 34rem;
+    border-radius: 9999px;
+    filter: blur(52px);
+    opacity: .38;
+    pointer-events: none;
+    animation: auroraMove 13s ease-in-out infinite alternate;
+  }
+  .aurora-orb:nth-child(2) { animation-duration: 17s; animation-delay: -3s; }
+  .aurora-orb:nth-child(3) { animation-duration: 19s; animation-delay: -6s; }
+  @keyframes auroraMove {
+    0% { transform: translate3d(-3%, 2%, 0) scale(1); }
+    50% { transform: translate3d(8%, -5%, 0) scale(1.12); }
+    100% { transform: translate3d(-1%, 8%, 0) scale(.95); }
+  }
+
+  .headline-gradient {
+    background: linear-gradient(90deg, #ffffff 0%, #e8f5ee 30%, #41d28a 56%, #ffffff 82%);
+    background-size: 220% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: headlineSweep 6s linear infinite;
+  }
+  @keyframes headlineSweep { to { background-position: 220% center; } }
+
+  .hero-badge {
+    box-shadow: inset 0 0 28px rgba(255,255,255,.08), 0 18px 45px rgba(0,0,0,.22);
+  }
+  .hero-dashboard {
+    transform-style: preserve-3d;
+    animation: dashboardFloat 7s ease-in-out infinite;
+  }
+  @keyframes dashboardFloat {
+    0%, 100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+    50% { transform: translateY(-13px) rotateX(1.4deg) rotateY(-1.2deg); }
+  }
+  .scan-line {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 1.5rem;
+    pointer-events: none;
+  }
+  .scan-line::after {
+    content: '';
+    position: absolute;
+    left: -20%;
+    right: -20%;
+    top: -18%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, rgba(65, 210, 138, .95), transparent);
+    filter: drop-shadow(0 0 14px rgba(65,210,138,.8));
+    animation: scanDown 4.2s linear infinite;
+  }
+  @keyframes scanDown { to { top: 118%; } }
+
+  .pulse-dot {
+    position: relative;
+  }
+  .pulse-dot::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 9999px;
+    border: 1px solid rgba(65,210,138,.45);
+    animation: pulseRing 1.7s ease-out infinite;
+  }
+  @keyframes pulseRing {
+    0% { transform: scale(.65); opacity: .9; }
+    100% { transform: scale(1.7); opacity: 0; }
+  }
+
+  .ticker-wrap {
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  }
+  .ticker-track {
+    width: max-content;
+    animation: tickerMove 26s linear infinite;
+  }
+  @keyframes tickerMove { to { transform: translateX(-50%); } }
+
+  .flow-card {
+    transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+  }
+  .flow-card:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 30px 90px rgba(17, 24, 39, .14);
+    border-color: rgba(11, 123, 74, .35);
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px) scale(.985);
+    transition: opacity .75s ease, transform .75s ease;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .delay-1 { transition-delay: .08s; }
+  .delay-2 { transition-delay: .16s; }
+  .delay-3 { transition-delay: .24s; }
+  .delay-4 { transition-delay: .32s; }
+
+  .bar-fill {
+    transform-origin: left;
+    animation: barPulse 4s ease-in-out infinite;
+  }
+  @keyframes barPulse {
+    0%, 100% { transform: scaleX(.76); opacity: .78; }
+    50% { transform: scaleX(1); opacity: 1; }
+  }
+  .mini-node {
+    animation: nodeFloat 4.5s ease-in-out infinite;
+  }
+  .mini-node:nth-child(2) { animation-delay: -.8s; }
+  .mini-node:nth-child(3) { animation-delay: -1.6s; }
+  @keyframes nodeFloat {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .aurora-orb, .headline-gradient, .hero-dashboard, .scan-line::after, .ticker-track, .bar-fill, .mini-node, .pulse-dot::after { animation: none; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
 </style>
 {% endblock %}
 
 {% block content %}
 
-<section class="hero-bg min-h-[calc(100vh-4rem)] flex items-center relative">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
-    <div class="grid lg:grid-cols-[1.05fr_.95fr] gap-12 items-center">
-      <div class="text-center lg:text-left">
-        <div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-cyber-green-light mb-6">
-          <span class="h-2 w-2 rounded-full bg-cyber-green-light"></span>
-          Gyakorlatias IT partner magyar vállalkozásoknak
+<section class="hero-bg hero-kinetic flex items-center relative">
+  <div class="absolute inset-0 z-0">
+    <div class="aurora-orb bg-cyber-green top-[-12rem] left-[-8rem]"></div>
+    <div class="aurora-orb bg-emerald-300 bottom-[-16rem] right-[-10rem]"></div>
+    <div class="aurora-orb bg-white/30 top-[28%] right-[18%]"></div>
+  </div>
+
+  <div class="absolute left-0 right-0 top-0 z-10 ticker-wrap border-b border-white/10 bg-black/10 backdrop-blur-sm">
+    <div class="ticker-track flex gap-4 py-3 text-sm font-bold text-white/75">
+      <span>◆ Excelből belső rendszer</span><span>◆ Raktárkezelés QR-kóddal</span><span>◆ Automatikus email riport</span><span>◆ AI súgó asszisztens</span><span>◆ Jogosultság + naplózás</span><span>◆ Dashboard és KPI</span>
+      <span>◆ Excelből belső rendszer</span><span>◆ Raktárkezelés QR-kóddal</span><span>◆ Automatikus email riport</span><span>◆ AI súgó asszisztens</span><span>◆ Jogosultság + naplózás</span><span>◆ Dashboard és KPI</span>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-20">
+    <div class="grid lg:grid-cols-[1.02fr_.98fr] gap-12 items-center">
+      <div class="text-center lg:text-left reveal is-visible">
+        <div class="hero-badge inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/10 px-5 py-3 text-sm font-black text-cyber-green-light mb-7 backdrop-blur-xl">
+          <span class="pulse-dot h-2.5 w-2.5 rounded-full bg-cyber-green-light"></span>
+          IT konzultáció • webapp • automatizálás • riport
         </div>
 
-        <h1 class="cyber-title text-4xl sm:text-5xl lg:text-7xl font-black text-white leading-[1.02] mb-6">
-          Ne még egy weboldalt építsünk.<br>
-          <span class="text-cyber-green-light">Építsünk rendszert.</span>
+        <h1 class="cyber-title text-4xl sm:text-5xl lg:text-7xl font-black text-white leading-[1.02] mb-7">
+          A kézi adminból<br>
+          <span class="headline-gradient">élő rendszer lesz.</span>
         </h1>
 
         <p class="text-lg sm:text-xl text-gray-200 leading-relaxed max-w-2xl mx-auto lg:mx-0 mb-8">
-          A CyberCare abban segít, hogy az Excelben, emailben, kézi adminban és szétszórt fájlokban működő céges folyamatokból átlátható, mérhető és használható digitális rendszer legyen.
+          Nem csak szép weboldalt készítünk. Olyan belső rendszert építünk, ami kiváltja az Excel-táblákat, automatizálja a riportokat, és végre átláthatóvá teszi a napi működést.
         </p>
 
-        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-          <a href="{{ url_for('contact') }}#contactForm" class="bg-cyber-green text-white px-8 py-4 rounded-2xl font-black hover:opacity-95 transition-all duration-300 transform hover:scale-[1.02] shadow-green">
-            Kérek első egyeztetést
+        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-9">
+          <a href="{{ url_for('contact') }}#contactForm" class="bg-cyber-green text-white px-8 py-4 rounded-2xl font-black hover:opacity-95 transition-all duration-300 transform hover:scale-[1.03] shadow-green">
+            Nézzük meg a folyamatod
           </a>
           <a href="{{ url_for('services') }}" class="border border-white/25 text-white px-8 py-4 rounded-2xl font-bold hover:bg-white hover:text-cyber-dark transition-all duration-300 bg-white/5 backdrop-blur-sm">
-            Megoldások megnézése
+            Mit lehet automatizálni?
           </a>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3 max-w-xl mx-auto lg:mx-0">
+          <div class="rounded-2xl border border-white/10 bg-white/10 p-4 text-white backdrop-blur-sm">
+            <p class="text-2xl font-black">01</p>
+            <p class="text-xs text-gray-300">felmérés</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-white/10 p-4 text-white backdrop-blur-sm">
+            <p class="text-2xl font-black">MVP</p>
+            <p class="text-xs text-gray-300">első verzió</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-white/10 p-4 text-white backdrop-blur-sm">
+            <p class="text-2xl font-black">AI</p>
+            <p class="text-xs text-gray-300">később bővíthető</p>
+          </div>
         </div>
       </div>
 
-      <div class="glass-card rounded-[2rem] p-6 sm:p-8 shadow-soft">
-        <div class="rounded-3xl bg-white p-5 sm:p-6 text-cyber-dark shadow-soft">
-          <div class="flex items-center justify-between mb-6">
-            <div>
-              <p class="section-kicker">CyberCare Control Desk</p>
-              <h2 class="text-2xl font-black mt-1">Ahol rend lesz a működésben</h2>
+      <div class="hero-dashboard reveal is-visible delay-1">
+        <div class="relative rounded-[2rem] border border-white/15 bg-white/10 p-4 shadow-[0_35px_120px_rgba(0,0,0,.35)] backdrop-blur-2xl">
+          <div class="scan-line"></div>
+          <div class="rounded-[1.5rem] bg-[#111611]/95 border border-white/10 overflow-hidden">
+            <div class="flex items-center justify-between border-b border-white/10 px-5 py-4">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-300"></span>
+                <span class="w-3 h-3 rounded-full bg-cyber-green"></span>
+              </div>
+              <div class="text-xs uppercase tracking-[0.22em] text-gray-400">CyberCare Live Ops</div>
             </div>
-            <div class="w-12 h-12 rounded-2xl bg-cyber-green-light flex items-center justify-center text-cyber-green font-black">CC</div>
-          </div>
 
-          <div class="space-y-4">
-            <div class="rounded-2xl border border-gray-100 p-4 flex gap-4 items-start">
-              <span class="w-10 h-10 rounded-xl bg-cyber-green text-white flex items-center justify-center font-bold">1</span>
-              <div>
-                <h3 class="font-black">Folyamatfelmérés</h3>
-                <p class="text-gray-600 text-sm">Megnézzük, hol veszik el idő, adat és pénz a napi működésben.</p>
+            <div class="p-5 sm:p-6">
+              <div class="grid grid-cols-3 gap-3 mb-5">
+                <div class="rounded-2xl bg-white/8 border border-white/10 p-4">
+                  <p class="text-gray-400 text-xs mb-1">Manual work</p>
+                  <p class="text-white text-2xl font-black">-42%</p>
+                </div>
+                <div class="rounded-2xl bg-white/8 border border-white/10 p-4">
+                  <p class="text-gray-400 text-xs mb-1">Reports</p>
+                  <p class="text-white text-2xl font-black">Auto</p>
+                </div>
+                <div class="rounded-2xl bg-cyber-green/20 border border-cyber-green/30 p-4">
+                  <p class="text-gray-300 text-xs mb-1">Status</p>
+                  <p class="text-cyber-green-light text-2xl font-black">OK</p>
+                </div>
               </div>
-            </div>
-            <div class="rounded-2xl border border-gray-100 p-4 flex gap-4 items-start">
-              <span class="w-10 h-10 rounded-xl bg-cyber-green text-white flex items-center justify-center font-bold">2</span>
-              <div>
-                <h3 class="font-black">Kis, működő első verzió</h3>
-                <p class="text-gray-600 text-sm">Nem több hónapos bizonytalanság: először a legnagyobb fájdalmat oldjuk meg.</p>
-              </div>
-            </div>
-            <div class="rounded-2xl border border-gray-100 p-4 flex gap-4 items-start">
-              <span class="w-10 h-10 rounded-xl bg-cyber-green text-white flex items-center justify-center font-bold">3</span>
-              <div>
-                <h3 class="font-black">Továbbfejlesztés és támogatás</h3>
-                <p class="text-gray-600 text-sm">A rendszer a céggel együtt bővül: riport, jogosultság, export, AI segéd, integrációk.</p>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="grid grid-cols-3 gap-3 mt-4">
-          <div class="metric-card rounded-2xl p-4 text-center text-white border border-white/10">
-            <p class="text-2xl font-black">IT</p>
-            <p class="text-xs text-gray-300">konzultáció</p>
-          </div>
-          <div class="metric-card rounded-2xl p-4 text-center text-white border border-white/10">
-            <p class="text-2xl font-black">WMS</p>
-            <p class="text-xs text-gray-300">raktár rendszerek</p>
-          </div>
-          <div class="metric-card rounded-2xl p-4 text-center text-white border border-white/10">
-            <p class="text-2xl font-black">AI</p>
-            <p class="text-xs text-gray-300">automatizálás</p>
+              <div class="grid sm:grid-cols-[.95fr_1.05fr] gap-4 mb-5">
+                <div class="rounded-2xl bg-white/8 border border-white/10 p-4">
+                  <div class="flex items-center justify-between mb-4">
+                    <p class="text-white font-black">Folyamat térkép</p>
+                    <span class="text-[11px] text-cyber-green-light font-bold">LIVE</span>
+                  </div>
+                  <div class="space-y-3">
+                    <div>
+                      <div class="flex justify-between text-xs text-gray-400 mb-1"><span>Excel kiváltás</span><span>78%</span></div>
+                      <div class="h-2 rounded-full bg-white/10 overflow-hidden"><div class="bar-fill h-full rounded-full bg-cyber-green" style="width:78%"></div></div>
+                    </div>
+                    <div>
+                      <div class="flex justify-between text-xs text-gray-400 mb-1"><span>Riport automatika</span><span>92%</span></div>
+                      <div class="h-2 rounded-full bg-white/10 overflow-hidden"><div class="bar-fill h-full rounded-full bg-emerald-300" style="width:92%; animation-delay:-1.2s"></div></div>
+                    </div>
+                    <div>
+                      <div class="flex justify-between text-xs text-gray-400 mb-1"><span>Jogosultság</span><span>64%</span></div>
+                      <div class="h-2 rounded-full bg-white/10 overflow-hidden"><div class="bar-fill h-full rounded-full bg-white" style="width:64%; animation-delay:-2.1s"></div></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="rounded-2xl bg-white/8 border border-white/10 p-4">
+                  <p class="text-white font-black mb-4">Automatizálási lánc</p>
+                  <div class="grid grid-cols-3 gap-3 text-center">
+                    <div class="mini-node rounded-2xl bg-white/10 p-3 border border-white/10">
+                      <p class="text-xl mb-1">📥</p><p class="text-[11px] text-gray-300">adat</p>
+                    </div>
+                    <div class="mini-node rounded-2xl bg-cyber-green/20 p-3 border border-cyber-green/25">
+                      <p class="text-xl mb-1">⚙️</p><p class="text-[11px] text-gray-300">feldolgozás</p>
+                    </div>
+                    <div class="mini-node rounded-2xl bg-white/10 p-3 border border-white/10">
+                      <p class="text-xl mb-1">📊</p><p class="text-[11px] text-gray-300">riport</p>
+                    </div>
+                  </div>
+                  <div class="mt-4 rounded-2xl bg-black/25 border border-white/10 p-3 font-mono text-xs text-cyber-green-light">
+                    &gt; task completed<br>
+                    &gt; email report sent<br>
+                    &gt; dashboard refreshed
+                  </div>
+                </div>
+              </div>
+
+              <div class="rounded-2xl bg-white border border-white/10 p-4 text-cyber-dark">
+                <div class="flex items-start gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-cyber-green-light text-cyber-green flex items-center justify-center font-black">AI</div>
+                  <div>
+                    <p class="font-black">“Mutasd azokat a tételeket, ahol ma eltérés volt.”</p>
+                    <p class="text-gray-600 text-sm mt-1">A későbbi AI segéd célja: keresés, kitöltés, súgó és döntéstámogatás természetes nyelven.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -94,29 +288,29 @@
 
 <section class="py-20 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="max-w-3xl mb-12">
+    <div class="max-w-3xl mb-12 reveal">
       <p class="section-kicker">Mire jó ez a gyakorlatban?</p>
       <h2 class="text-3xl sm:text-5xl font-black text-cyber-dark mt-3 mb-5">A vállalkozásod nem attól lesz modernebb, hogy több appot használsz.</h2>
       <p class="text-lg text-gray-600 leading-relaxed">Hanem attól, hogy kevesebb kézi munkával, kevesebb hibával és jobb adatokból tudsz dönteni.</p>
     </div>
 
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <div class="card-hover rounded-3xl border border-gray-100 bg-white p-7 shadow-sm">
+      <div class="flow-card reveal delay-1 rounded-3xl border border-gray-100 bg-white p-7 shadow-sm" data-tilt>
         <div class="w-12 h-12 rounded-2xl bg-cyber-green-light text-cyber-green flex items-center justify-center mb-5 font-black">01</div>
         <h3 class="text-xl font-black text-cyber-dark mb-3">Excelből belső rendszer</h3>
         <p class="text-gray-600 leading-relaxed">Kereshető adatbázis, jogosultságok, státuszok, logok, exportok és egyszerű kezelőfelület.</p>
       </div>
-      <div class="card-hover rounded-3xl border border-gray-100 bg-white p-7 shadow-sm">
+      <div class="flow-card reveal delay-2 rounded-3xl border border-gray-100 bg-white p-7 shadow-sm" data-tilt>
         <div class="w-12 h-12 rounded-2xl bg-cyber-green-light text-cyber-green flex items-center justify-center mb-5 font-black">02</div>
         <h3 class="text-xl font-black text-cyber-dark mb-3">Raktár és nyomonkövetés</h3>
         <p class="text-gray-600 leading-relaxed">Csomagok, alkatrészek, QR kódok, rendelési folyamatok, készletmozgások és auditálható naplózás.</p>
       </div>
-      <div class="card-hover rounded-3xl border border-gray-100 bg-white p-7 shadow-sm">
+      <div class="flow-card reveal delay-3 rounded-3xl border border-gray-100 bg-white p-7 shadow-sm" data-tilt>
         <div class="w-12 h-12 rounded-2xl bg-cyber-green-light text-cyber-green flex items-center justify-center mb-5 font-black">03</div>
         <h3 class="text-xl font-black text-cyber-dark mb-3">Riportok és dashboardok</h3>
         <p class="text-gray-600 leading-relaxed">Automatikus email riportok, vezetői nézetek, hibák kiemelése és mérhető KPI-ok.</p>
       </div>
-      <div class="card-hover rounded-3xl border border-gray-100 bg-white p-7 shadow-sm">
+      <div class="flow-card reveal delay-4 rounded-3xl border border-gray-100 bg-white p-7 shadow-sm" data-tilt>
         <div class="w-12 h-12 rounded-2xl bg-cyber-green-light text-cyber-green flex items-center justify-center mb-5 font-black">04</div>
         <h3 class="text-xl font-black text-cyber-dark mb-3">AI segéd és automatizálás</h3>
         <p class="text-gray-600 leading-relaxed">Belső súgó asszisztens, adatok kitöltése, keresések gyorsítása és ismétlődő feladatok csökkentése.</p>
@@ -125,34 +319,34 @@
   </div>
 </section>
 
-<section class="py-20 bg-gray-50">
+<section class="py-20 bg-gray-50 overflow-hidden">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid lg:grid-cols-[.9fr_1.1fr] gap-12 items-center">
-      <div>
+      <div class="reveal">
         <p class="section-kicker">Fókusz</p>
         <h2 class="text-3xl sm:text-5xl font-black text-cyber-dark mt-3 mb-6">Kis- és középvállalkozásoknak, ahol már fáj a kézi admin.</h2>
         <p class="text-lg text-gray-600 leading-relaxed mb-8">
           A cél nem az, hogy mindent túlbonyolítsunk. A cél egy olyan rendszer, amit a munkatársak tényleg használnak, a vezetés pedig végre látja, mi történik.
         </p>
-        <a href="{{ url_for('services') }}" class="inline-flex items-center justify-center rounded-2xl bg-cyber-dark px-7 py-4 text-white font-black hover:bg-cyber-green transition">Részletes szolgáltatások</a>
+        <a href="{{ url_for('services') }}" class="inline-flex items-center justify-center rounded-2xl bg-cyber-dark px-7 py-4 text-white font-black hover:bg-cyber-green transition transform hover:scale-[1.03]">Részletes szolgáltatások</a>
       </div>
 
       <div class="grid sm:grid-cols-2 gap-5">
-        <div class="rounded-3xl bg-white p-7 shadow-sm border border-gray-100">
+        <div class="flow-card reveal delay-1 rounded-3xl bg-white p-7 shadow-sm border border-gray-100" data-tilt>
           <h3 class="font-black text-xl text-cyber-dark mb-3">IT konzultáció</h3>
           <p class="text-gray-600">Átnézzük a működést, priorizáljuk a fejlesztéseket, és kiválasztjuk, mivel érdemes kezdeni.</p>
         </div>
-        <div class="rounded-3xl bg-white p-7 shadow-sm border border-gray-100">
+        <div class="flow-card reveal delay-2 rounded-3xl bg-white p-7 shadow-sm border border-gray-100" data-tilt>
           <h3 class="font-black text-xl text-cyber-dark mb-3">MVP fejlesztés</h3>
           <p class="text-gray-600">Gyors első verzió, ami már használható, majd valós visszajelzések alapján bővíthető.</p>
         </div>
-        <div class="rounded-3xl bg-white p-7 shadow-sm border border-gray-100">
+        <div class="flow-card reveal delay-3 rounded-3xl bg-white p-7 shadow-sm border border-gray-100" data-tilt>
           <h3 class="font-black text-xl text-cyber-dark mb-3">Modernizálás</h3>
           <p class="text-gray-600">Régi, lassú vagy nehezen kezelhető megoldások rendbetétele, újratervezése.</p>
         </div>
-        <div class="rounded-3xl bg-white p-7 shadow-sm border border-gray-100">
-          <h3 class="font-black text-xl text-cyber-dark mb-3">Támogatás</h3>
-          <p class="text-gray-600">Nem csak átadásig gondolkodunk: karbantartás, javítás, új funkciók és konzultáció.</p>
+        <div class="flow-card reveal delay-4 rounded-3xl bg-cyber-dark p-7 text-white shadow-soft" data-tilt>
+          <h3 class="font-black text-xl mb-3">Támogatás</h3>
+          <p class="text-gray-300">Nem csak átadásig gondolkodunk: karbantartás, javítás, új funkciók és konzultáció.</p>
         </div>
       </div>
     </div>
@@ -161,22 +355,22 @@
 
 <section class="py-20 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center max-w-3xl mx-auto mb-14">
+    <div class="text-center max-w-3xl mx-auto mb-14 reveal">
       <p class="section-kicker">Miért CyberCare?</p>
       <h2 class="text-3xl sm:text-5xl font-black text-cyber-dark mt-3 mb-5">Nem csak fejlesztői szemmel nézzük a problémát.</h2>
       <p class="text-lg text-gray-600">Olyan megoldásokban gondolkodunk, amelyek a napi munkában is életképesek: egyszerű kezelhetőség, tiszta folyamat, mérhető eredmény.</p>
     </div>
 
     <div class="grid lg:grid-cols-3 gap-8">
-      <div class="rounded-3xl bg-cyber-green-light p-8 border border-cyber-green/10">
+      <div class="flow-card reveal delay-1 rounded-3xl bg-cyber-green-light p-8 border border-cyber-green/10" data-tilt>
         <h3 class="text-2xl font-black text-cyber-dark mb-4">Üzleti probléma először</h3>
         <p class="text-gray-700 leading-relaxed">Nem technológiával kezdünk, hanem azzal, hogy mi lassít, hol hibázik a folyamat, és hol térül meg a fejlesztés.</p>
       </div>
-      <div class="rounded-3xl bg-cyber-dark p-8 text-white shadow-soft">
+      <div class="flow-card reveal delay-2 rounded-3xl bg-cyber-dark p-8 text-white shadow-soft" data-tilt>
         <h3 class="text-2xl font-black mb-4">Gyártási / logisztikai szemlélet</h3>
         <p class="text-gray-300 leading-relaxed">A rendszer ne csak szép legyen, hanem bírja a valós használatot: jogosultság, státusz, napló, visszakereshetőség.</p>
       </div>
-      <div class="rounded-3xl bg-cyber-green-light p-8 border border-cyber-green/10">
+      <div class="flow-card reveal delay-3 rounded-3xl bg-cyber-green-light p-8 border border-cyber-green/10" data-tilt>
         <h3 class="text-2xl font-black text-cyber-dark mb-4">Érthető kommunikáció</h3>
         <p class="text-gray-700 leading-relaxed">Nem kell technikai nyelven beszélned. A cél az, hogy pontosan értsd, mit kapsz, miért készül és hogyan fogod használni.</p>
       </div>
@@ -187,7 +381,7 @@
 <section class="py-20 bg-gray-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid lg:grid-cols-[.85fr_1.15fr] gap-12 items-center">
-      <div class="rounded-[2rem] bg-white p-8 shadow-soft border border-gray-100 text-center">
+      <div class="reveal rounded-[2rem] bg-white p-8 shadow-soft border border-gray-100 text-center" data-tilt>
         <div class="w-32 h-32 rounded-full mx-auto mb-6 overflow-hidden ring-4 ring-cyber-green-light shadow-md">
           <img src="{{ url_for('static', filename='images/Braghini_Benjamin_CEO.png') }}" alt="Braghini Benjamin" class="w-full h-full object-cover" />
         </div>
@@ -196,26 +390,67 @@
         <p class="text-gray-600 leading-relaxed">IT és szoftverfejlesztési háttér, gyártási környezetben szerzett gyakorlati szemlélettel.</p>
       </div>
 
-      <div>
+      <div class="reveal delay-2">
         <p class="section-kicker">Személyes megközelítés</p>
         <h2 class="text-3xl sm:text-5xl font-black text-cyber-dark mt-3 mb-6">Egy partner, aki nem csak “megcsinálja a weboldalt”, hanem gondolkodik a működéseden.</h2>
         <p class="text-lg text-gray-600 leading-relaxed mb-8">A CyberCare iránya: kisebb cégeknek is elérhető, modern és gyakorlatias informatikai megoldásokat adni. Első lépésként lehet egy konzultáció, egy egyszerű riport, egy raktármodul vagy egy belső admin felület – a lényeg, hogy valós problémát oldjon meg.</p>
         <div class="flex flex-col sm:flex-row gap-4">
           <a href="{{ url_for('about') }}" class="inline-flex justify-center rounded-2xl border border-cyber-green text-cyber-green px-7 py-4 font-black hover:bg-cyber-green hover:text-white transition">Több rólunk</a>
-          <a href="{{ url_for('contact') }}#contactForm" class="inline-flex justify-center rounded-2xl bg-cyber-green text-white px-7 py-4 font-black hover:opacity-90 transition">Beszéljünk róla</a>
+          <a href="{{ url_for('contact') }}#contactForm" class="inline-flex justify-center rounded-2xl bg-cyber-green text-white px-7 py-4 font-black hover:opacity-90 transition shadow-green">Beszéljünk róla</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="py-20 bg-cyber-dark">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+<section class="py-20 bg-cyber-dark relative overflow-hidden">
+  <div class="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-cyber-green/20 blur-3xl"></div>
+  <div class="absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-white/10 blur-3xl"></div>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 reveal">
     <p class="section-kicker text-cyber-green-light">Első lépés</p>
     <h2 class="text-3xl sm:text-5xl font-black text-white mt-3 mb-6">Van egy folyamatod, amit már unalmas kézzel csinálni?</h2>
     <p class="text-xl text-gray-300 mb-8">Írd le röviden, mi a gond. Megnézzük, hogy konzultációval, automatizálással vagy egy belső rendszerrel érdemes-e kezdeni.</p>
-    <a href="{{ url_for('contact') }}#contactForm" class="inline-flex bg-cyber-green text-white px-9 py-4 rounded-2xl font-black hover:opacity-95 transition shadow-green">Kapcsolatfelvétel</a>
+    <a href="{{ url_for('contact') }}#contactForm" class="inline-flex bg-cyber-green text-white px-9 py-4 rounded-2xl font-black hover:opacity-95 transition shadow-green transform hover:scale-[1.03]">Kapcsolatfelvétel</a>
   </div>
 </section>
 
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const revealItems = document.querySelectorAll('.reveal');
+    if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      revealItems.forEach(item => observer.observe(item));
+    } else {
+      revealItems.forEach(item => item.classList.add('is-visible'));
+    }
+
+    if (!prefersReducedMotion) {
+      document.querySelectorAll('[data-tilt]').forEach(card => {
+        card.addEventListener('mousemove', (event) => {
+          const rect = card.getBoundingClientRect();
+          const x = event.clientX - rect.left;
+          const y = event.clientY - rect.top;
+          const rotateY = ((x / rect.width) - .5) * 5;
+          const rotateX = -((y / rect.height) - .5) * 5;
+          card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = '';
+        });
+      });
+    }
+  });
+</script>
 {% endblock %}
